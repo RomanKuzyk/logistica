@@ -3,7 +3,7 @@
 	url = git@github.com:RomanKuzyk/logistica-nodejs.git
 [submodule "mobile-app-ios"]
 	path = mobile-app-ios
-	url = ./mobile-app-ios
+	url = git@github.com:RomanKuzyk/logistica-mobile-app-ios.git
 [submodule "baf"]
 	path = baf
-	url = ./baf
+	url = git@github.com:RomanKuzyk/logistica-baf.git
