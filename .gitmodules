@@ -1,0 +1,9 @@
+[submodule "api-nodejs"]
+	path = api-nodejs
+	url = git@github.com:RomanKuzyk/logistica-nodejs.git
+[submodule "mobile-app-ios"]
+	path = mobile-app-ios
+	url = http://ec2-52-28-57-153.eu-central-1.compute.amazonaws.com/dnipro/dnoffice.git
+[submodule "baf"]
+	path = baf
+	url = ./baf
