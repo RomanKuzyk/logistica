@@ -9,12 +9,22 @@
 ### 2. Межі змін
 - Не переносити файли між repo без окремого підтвердження.
 - Не робити root-level destructive cleanup.
-- Не ініціалізувати root git repo без окремого рішення.
+- У root `logistica/` працювати як у parent repo з submodules, а не як у monorepo.
 
 ### 3. Документування
 - Крос-проектні правила/контекст — у root docs.
 - Локальні технічні рішення — в repo docs.
 - Якщо знання важливе для двох частин платформи, допускається короткий дубль у двох knowledge файлах з лінком на первинне джерело.
+
+### 3.1 Git / submodules
+- Зміни в коді спочатку комітити і пушити у відповідний submodule repo.
+- Лише після цього комітити в parent `logistica` оновлений gitlink.
+- Для нового clone:
+  - `git clone --recurse-submodules ...`
+- Якщо submodules не ініціалізовані:
+  - `git submodule update --init --recursive`
+- Після зміни `.gitmodules`:
+  - `git submodule sync --recursive`
 
 ### 4. BAF правила
 - `baf/` — це BAF-level hub, не source of truth сам по собі.

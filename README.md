@@ -38,4 +38,50 @@
 ## Поточний принцип організації
 - Root workspace docs описують платформу як систему.
 - Кожен repo зберігає власні локальні rules/knowledge.
-- Root folder поки що не оформлений як окремий git repo.
+- `logistica/` оформлений як **parent git repo**.
+- `api-nodejs/`, `mobile-app-ios/` і `baf/` підключені як **git submodules**.
+
+## Як клонити workspace
+
+### Повний клон одразу з submodules
+```bash
+git clone --recurse-submodules git@github.com:RomanKuzyk/logistica.git
+```
+
+### Якщо repo вже склонувався без submodules
+```bash
+git submodule update --init --recursive
+```
+
+### Коли в parent repo змінюються submodule pointers
+```bash
+git pull
+git submodule sync --recursive
+git submodule update --init --recursive
+```
+
+## Поточні remote repo
+- parent workspace:
+  - `git@github.com:RomanKuzyk/logistica.git`
+- backend:
+  - `git@github.com:RomanKuzyk/logistica-nodejs.git`
+- mobile app:
+  - `git@github.com:RomanKuzyk/logistica-mobile-app-ios.git`
+- BAF:
+  - `git@github.com:RomanKuzyk/logistica-baf.git`
+
+## Майбутній переїзд на Forgejo
+- Поточна структура вже сумісна з переїздом на Forgejo.
+- Для міграції достатньо:
+  1. створити 4 repo у Forgejo;
+  2. оновити `origin` у:
+     - `logistica/`
+     - `api-nodejs/`
+     - `mobile-app-ios/`
+     - `baf/`
+  3. оновити URLs у `.gitmodules`;
+  4. виконати:
+     ```bash
+     git submodule sync --recursive
+     ```
+- Тобто міняти layout workspace не потрібно, змінюються лише remotes.

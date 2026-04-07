@@ -70,7 +70,12 @@
   - `AGENTS.md`
   - `KNOWLEDGE.md`
   - platform docs
+- Root `logistica/` уже оформлений як parent repo з submodules.
 - Це дає змогу починати нові сесії з `logistica/`, а не лише з окремих repo.
 
 ### Найближчі практичні задачі
-- Якщо root-level coordination docs стануть інтенсивно використовуватись — пізніше окремо вирішити, чи робити `logistica/` meta-repo.
+- Коли прийде час переїзду на Forgejo:
+  - створити 4 відповідні repo;
+  - оновити `origin` у всіх repo;
+  - оновити `.gitmodules`;
+  - виконати `git submodule sync --recursive`.

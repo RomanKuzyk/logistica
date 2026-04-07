@@ -2,7 +2,9 @@
 
 ## Root workspace
 - `logistica/`
+  - parent git repo
   - platform-level docs і coordination context
+  - submodule pointers на `api-nodejs`, `mobile-app-ios`, `baf`
 
 ## Repo / snapshot map
 
@@ -46,3 +48,13 @@
 - Backend runtime: `api-nodejs/`
 - Mobile analysis: `mobile-app-ios/` branch `1.0.0`
 - BAF snapshot analysis: `baf/baf-configuration/`
+
+## Git hosting map
+- parent:
+  - `git@github.com:RomanKuzyk/logistica.git`
+- backend:
+  - `git@github.com:RomanKuzyk/logistica-nodejs.git`
+- mobile:
+  - `git@github.com:RomanKuzyk/logistica-mobile-app-ios.git`
+- BAF:
+  - `git@github.com:RomanKuzyk/logistica-baf.git`

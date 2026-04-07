@@ -48,14 +48,38 @@
 
 ## 5) Робочі домовленості
 - Не змішувати git-історії проектів.
-- Root folder поки що **не ініціалізований як git repo**; це допустимо.
-- Docs у root можна вести вже зараз, незалежно від того, чи буде root meta-repo створено пізніше.
+- Root folder **ініціалізований як parent git repo**.
+- `api-nodejs/`, `mobile-app-ios/` і `baf/` підключені як submodules.
 - Якщо BAF частина зростатиме далі, треба:
   - розвивати `baf/` як окремий repo із власними docs/scripts;
   - переносити BAF-specific docs з тимчасових згадок у `api-nodejs` у BAF-level docs;
   - підтримувати актуальні крос-посилання між трьома repo.
 
-## 6) Правила документування
+## 6) Git topology
+- Parent repo:
+  - `logistica`
+- Submodules:
+  - `api-nodejs` → `git@github.com:RomanKuzyk/logistica-nodejs.git`
+  - `mobile-app-ios` → `git@github.com:RomanKuzyk/logistica-mobile-app-ios.git`
+  - `baf` → `git@github.com:RomanKuzyk/logistica-baf.git`
+- Практичне правило:
+  - спочатку пушити зміни в submodule repo;
+  - потім оновлювати gitlink у parent `logistica` і пушити parent repo.
+
+## 7) Клонування і sync
+- Повний clone:
+  - `git clone --recurse-submodules git@github.com:RomanKuzyk/logistica.git`
+- Якщо submodules ще не підтягнуті:
+  - `git submodule update --init --recursive`
+- Після зміни `.gitmodules` або після зміни remote URLs:
+  - `git submodule sync --recursive`
+
+## 8) Forgejo migration note
+- Поточна структура свідомо зроблена сумісною з майбутнім переїздом на self-hosted Forgejo.
+- Для міграції достатньо змінити remotes у 4 repo і URLs у `.gitmodules`.
+- Workspace layout при цьому міняти не треба.
+
+## 9) Правила документування
 - Секрети не дублювати.
 - Інтеграційні токени/секретні URL описувати лише узагальнено.
 - Для прод-інцидентів важливіше зберегти:
@@ -64,7 +88,7 @@
   - мінімальний фікс,
   - backlog/непокриті зони.
 
-## 7) Журнал змін
+## 10) Журнал змін
 ### 2026-04-07
 - Створено root-level `AGENTS.md` і `KNOWLEDGE.md` для workspace `logistica/`.
 - Додано окремі platform-level docs:
@@ -83,3 +107,14 @@
 - Узгоджено підхід до knowledge:
   - root docs = крос-репозиторний контекст;
   - repo docs = локальні технічні рішення.
+
+### 2026-04-08
+- `logistica/` оформлено як parent git repo.
+- `api-nodejs/`, `mobile-app-ios/` і `baf/` підключено як submodules.
+- Структуру remotes підготовлено під GitHub repo:
+  - `logistica`
+  - `logistica-nodejs`
+  - `logistica-mobile-app-ios`
+  - `logistica-baf`
+- Зафіксовано clone/sync workflow для submodules.
+- Зафіксовано, що ця схема без structural changes переноситься на Forgejo.
