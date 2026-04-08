@@ -116,7 +116,6 @@ class _AuthGatePageState extends State<AuthGatePage> {
           helperText:
               'Для початку використання програми\nбудь ласка, відскануйте qr код з особистого кабінету',
           onPrimaryPressed: null,
-          onDemoMode: null,
           showProgress: true,
         );
       case AuthStatus.registrationRequired:
@@ -126,8 +125,6 @@ class _AuthGatePageState extends State<AuthGatePage> {
           helperText:
               'Для початку використання програми\nбудь ласка, відскануйте qr код з особистого кабінету',
           onPrimaryPressed: _startRegistrationScan,
-          onDemoMode:
-              _controller.canUseDemoMode ? _controller.useDemoMode : null,
           errorMessage: _controller.errorMessage,
         );
       case AuthStatus.registering:
@@ -137,7 +134,6 @@ class _AuthGatePageState extends State<AuthGatePage> {
           helperText:
               'Для початку використання програми\nбудь ласка, відскануйте qr код з особистого кабінету',
           onPrimaryPressed: null,
-          onDemoMode: null,
           errorMessage: _controller.errorMessage,
           showProgress: true,
         );
@@ -151,8 +147,6 @@ class _AuthGatePageState extends State<AuthGatePage> {
           helperText:
               'Для початку використання програми\nбудь ласка, відскануйте qr код з особистого кабінету',
           onPrimaryPressed: _startWork,
-          onDemoMode:
-              _controller.canUseDemoMode ? _controller.useDemoMode : null,
         );
       case AuthStatus.error:
         return _StartScreen(
@@ -161,8 +155,6 @@ class _AuthGatePageState extends State<AuthGatePage> {
           helperText:
               'Для початку використання програми\nбудь ласка, відскануйте qr код з особистого кабінету',
           onPrimaryPressed: _controller.bootstrap,
-          onDemoMode:
-              _controller.canUseDemoMode ? _controller.useDemoMode : null,
           errorMessage: _controller.errorMessage ?? 'Unknown error',
         );
     }
@@ -175,7 +167,6 @@ class _StartScreen extends StatelessWidget {
     required this.appVersionLabel,
     required this.helperText,
     required this.onPrimaryPressed,
-    required this.onDemoMode,
     this.errorMessage,
     this.showProgress = false,
   });
@@ -184,7 +175,6 @@ class _StartScreen extends StatelessWidget {
   final String appVersionLabel;
   final String helperText;
   final VoidCallback? onPrimaryPressed;
-  final VoidCallback? onDemoMode;
   final String? errorMessage;
   final bool showProgress;
 
@@ -266,20 +256,6 @@ class _StartScreen extends StatelessWidget {
             color: Colors.black87,
           ),
         ),
-        if (onDemoMode != null) ...<Widget>[
-          const SizedBox(height: 4),
-          TextButton(
-            onPressed: onDemoMode,
-            style: TextButton.styleFrom(
-              foregroundColor: const Color(0xFF1877F2),
-              textStyle: const TextStyle(
-                fontSize: 15,
-                fontWeight: FontWeight.w400,
-              ),
-            ),
-            child: const Text('Demo'),
-          ),
-        ],
         const SizedBox(height: 12),
       ],
     );

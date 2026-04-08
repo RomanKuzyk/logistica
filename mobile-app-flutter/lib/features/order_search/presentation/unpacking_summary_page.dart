@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_app_flutter/app/app_services.dart';
 import 'package:mobile_app_flutter/features/order_search/domain/order_buy_search_item.dart';
 import 'package:mobile_app_flutter/features/order_search/presentation/unpacking_item_page.dart';
 
@@ -6,9 +7,11 @@ class UnpackingSummaryPage extends StatelessWidget {
   const UnpackingSummaryPage({
     super.key,
     required this.order,
+    required this.services,
   });
 
   final OrderBuySearchItem order;
+  final AppServices services;
 
   @override
   Widget build(BuildContext context) {
@@ -89,7 +92,10 @@ class UnpackingSummaryPage extends StatelessWidget {
               onPressed: () {
                 Navigator.of(context).push(
                   MaterialPageRoute<void>(
-                    builder: (_) => UnpackingItemPage(order: order),
+                    builder: (_) => UnpackingItemPage(
+                      order: order,
+                      services: services,
+                    ),
                   ),
                 );
               },

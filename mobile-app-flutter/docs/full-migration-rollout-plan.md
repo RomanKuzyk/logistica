@@ -218,26 +218,33 @@
 ### Already done
 - Docker-based Android build environment;
 - перший робочий debug APK;
+- app name `GlobalCars Logistica`;
+- reproducible `make apk` build flow with artifact `build/gc-logistica.apk`;
 - bootstrap/auth/settings/work menu partial parity;
 - receive search/list/detail partial parity;
 - scanner capture baseline;
 - `ORDER_BUY_SEARCH`, `ORDER_LIST`, `TRABLES_LIST`, `REJECT_ORDER_BUY` підключені.
+- `SAVE_PHOTO` + S3 upload path already connected.
+- unpacking flow already connected:
+  - `ORDER_BUY_SEARCH_UNPACKING`
+  - `ORDER_LIST`
+  - `TRABLES_LIST`
+  - `UNPACKING_ORDER_BUY`
+  - print-after-success path
+- reprint print path via `LABEL_ORDER` already connected.
 
 ### Still missing before receive flow is operational
-- `SAVE_PHOTO`;
-- legacy media upload path;
-- `RESIVE_ORDER_BUY` final submit path;
-- print parity;
-- full visual parity по всіх receive detail states.
+- `RESIVE_ORDER_BUY` final device-level verification against legacy edge cases;
+- receive print parity;
+- full visual parity по всіх receive detail states;
+- manifest backend parity;
+- remaining work menu flows beyond current screenshot baseline.
 
 ## Найближчий порядок робіт
 
-1. Дозвірити `01–12` до повного visual parity.
+1. Дозвірити `01–12` і наступні screenshot batches до повного visual parity.
 2. Зафіксувати screenshot-by-screenshot checklist у docs.
-3. Закрити `SAVE_PHOTO` + media path.
-4. Замкнути `RESIVE_ORDER_BUY`.
-5. Перенести `Розпакувати`.
-6. Перенести `Передрукувати`.
-7. Перенести `Формування маніфесту`.
-8. Перенести `Деталі замовлення (PL)`.
-9. Лише після цього брати ancillary flows.
+3. Довести `RESIVE_ORDER_BUY` та receive print parity до production-level repeatability.
+4. Перенести `Формування маніфесту`.
+5. Закрити решту `Деталі замовлення (PL)` edge cases.
+6. Доробити ancillary flows після screenshot-backed screens.

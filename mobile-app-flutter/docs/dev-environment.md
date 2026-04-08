@@ -43,6 +43,7 @@ cp config/dart_defines.example.json config/dart_defines.local.json
 У локальному файлі мають бути:
 - API contract variables:
   - `GC_API_URL`
+  - `GC_API_EXT_URL`
   - `GC_API_USER`
   - `GC_API_PASSWORD`
   - `GC_API_SALT`
@@ -91,6 +92,22 @@ docker compose run --rm flutter flutter test
 docker compose run --rm flutter flutter build apk
 ```
 
+### APK build через `make`
+З кореня workspace:
+```bash
+make apk
+```
+
+З каталогу `mobile-app-flutter/`:
+```bash
+make apk
+```
+
+Результат:
+```bash
+build/gc-logistica.apk
+```
+
 ### Запуск з local dart defines
 ```bash
 ./scripts/flutter-docker flutter run \
@@ -114,3 +131,6 @@ docker compose run --rm flutter flutter build apk
 - Flutter SDK на host наразі відсутній.
 - Docker доступний, тому перший reproducible build path вже підготовлено.
 - Compose-based `pub get`, `analyze` і `test` уже підтверджені як робочі.
+- Для Android print dependencies Docker image тепер також preinstalls:
+  - `platforms;android-35`
+  - `cmake;3.22.1`

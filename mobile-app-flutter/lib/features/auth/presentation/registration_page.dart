@@ -4,17 +4,13 @@ class RegistrationPage extends StatefulWidget {
   const RegistrationPage({
     super.key,
     required this.onRegister,
-    required this.onDemoMode,
     required this.busy,
-    required this.canUseDemoMode,
     this.errorMessage,
     this.deviceId,
   });
 
   final Future<void> Function(String employeeCode) onRegister;
-  final VoidCallback onDemoMode;
   final bool busy;
-  final bool canUseDemoMode;
   final String? errorMessage;
   final String? deviceId;
 
@@ -81,13 +77,6 @@ class _RegistrationPageState extends State<RegistrationPage> {
               onPressed: widget.busy ? null : _submit,
               child: Text(widget.busy ? 'Registering...' : 'Register'),
             ),
-            if (widget.canUseDemoMode) ...<Widget>[
-              const SizedBox(height: 8),
-              OutlinedButton(
-                onPressed: widget.busy ? null : widget.onDemoMode,
-                child: const Text('Demo mode'),
-              ),
-            ],
             if (widget.errorMessage != null) ...<Widget>[
               const SizedBox(height: 12),
               Text(

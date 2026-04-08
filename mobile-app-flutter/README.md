@@ -13,6 +13,16 @@
   - scanner capture route;
   - parity-oriented receive order search/list/detail flow для `ORDER_BUY_SEARCH`;
   - `ORDER_LIST`, `TRABLES_LIST`, `REJECT_ORDER_BUY` та local receive validations.
+  - unpacking end-to-end flow:
+    - `ORDER_BUY_SEARCH_UNPACKING`
+    - `ORDER_LIST`
+    - `TRABLES_LIST`
+    - `UNPACKING_ORDER_BUY`
+    - item photo / documents photo
+    - document type validation
+    - print-after-success parity
+  - reprint print path for `LABEL_ORDER`;
+  - read-only order details preview з реальним image/site link behavior;
   - official Amplify-based S3 media path для Flutter:
     - camera capture
     - PNG normalization
@@ -20,6 +30,8 @@
     - `SAVE_PHOTO`
     - local pending-upload queue + manual sync із settings
   - перший робочий Android debug APK, зібраний через Docker.
+  - назва Android app already виставлена як `GlobalCars Logistica`;
+  - demo mode за замовчуванням вимкнений.
 - Flutter SDK на host усе ще не встановлений, але проект уже можна валідувати і збирати через Docker.
 
 ## Вхідні дані для rewrite
@@ -46,22 +58,33 @@
 - `docs/legacy-alert-and-validation-patterns.md`
 
 ## Найближчі кроки
-1. Дозвірити весь screenshot baseline `01–12` до повного visual parity.
-2. Добити receive detail UI parity після реального media path.
-3. Перенести unpacking flow end-to-end.
-4. Підтягнути reprint/manifest/details backend parity.
-5. Добити решту work menu flows без redesign.
+1. Дозвірити решту screenshot baseline за межами `01–12`.
+2. Добити receive print parity замість placeholder button.
+3. Перенести manifest flow backend parity.
+4. Доробити решту details/reprint edge cases без redesign.
+5. Добити ancillary work menu flows без redesign.
 
 ## Поточний Android artifact
 - Debug APK збирається в:
   - `build/app/outputs/flutter-apk/app-debug.apk`
+- Зручний artifact для тестування:
+  - `build/gc-logistica.apk`
 - APK збирається з локальними `dart-define` через:
   - `config/dart_defines.local.json`
+
+## Build
+- З кореня workspace:
+  - `make apk`
+- Із каталогу проекту:
+  - `make apk`
+- Обидва варіанти збирають debug APK і копіюють його в:
+  - `build/gc-logistica.apk`
 
 ## Конфігурація
 - API secrets не закомічені в repo.
 - Для реального backend-запуску потрібні `dart-define` значення:
   - `GC_API_URL`
+  - `GC_API_EXT_URL`
   - `GC_API_USER`
   - `GC_API_PASSWORD`
   - `GC_API_SALT`

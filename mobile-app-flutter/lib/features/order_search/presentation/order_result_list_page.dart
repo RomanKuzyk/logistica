@@ -54,8 +54,14 @@ class OrderResultListPage extends StatelessWidget {
               Navigator.of(context).push(
                 MaterialPageRoute<void>(
                   builder: (_) => switch (mode) {
-                    WorkMode.unpack => UnpackingSummaryPage(order: item),
-                    WorkMode.reprint => ReprintActionPage(order: item),
+                    WorkMode.unpack => UnpackingSummaryPage(
+                        order: item,
+                        services: services,
+                      ),
+                    WorkMode.reprint => ReprintActionPage(
+                        order: item,
+                        services: services,
+                      ),
                     WorkMode.details => OrderDetailsPreviewPage(order: item),
                     _ => OrderSearchDetailPage(
                         order: item,

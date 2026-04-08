@@ -1,6 +1,7 @@
 class AppConfig {
   const AppConfig({
     required this.apiUrl,
+    required this.apiExtUrl,
     required this.apiUser,
     required this.apiPassword,
     required this.apiSalt,
@@ -15,6 +16,10 @@ class AppConfig {
       apiUrl: const String.fromEnvironment(
         'GC_API_URL',
         defaultValue: 'https://api.globalcars.com.ua/api/v1',
+      ),
+      apiExtUrl: const String.fromEnvironment(
+        'GC_API_EXT_URL',
+        defaultValue: 'https://api.globalcars.com.ua/ext/',
       ),
       apiUser: const String.fromEnvironment('GC_API_USER', defaultValue: ''),
       apiPassword:
@@ -31,11 +36,12 @@ class AppConfig {
         defaultValue: '',
       ),
       allowDemoMode:
-          const bool.fromEnvironment('GC_ALLOW_DEMO_MODE', defaultValue: true),
+          const bool.fromEnvironment('GC_ALLOW_DEMO_MODE', defaultValue: false),
     );
   }
 
   final String apiUrl;
+  final String apiExtUrl;
   final String apiUser;
   final String apiPassword;
   final String apiSalt;
@@ -46,6 +52,9 @@ class AppConfig {
 
   bool get hasApiCredentials =>
       apiUser.isNotEmpty && apiPassword.isNotEmpty && apiSalt.isNotEmpty;
+
+  String get normalizedApiExtUrl =>
+      apiExtUrl.endsWith('/') ? apiExtUrl : '$apiExtUrl/';
 
   bool get hasAwsStorageConfig =>
       awsRegion.isNotEmpty &&

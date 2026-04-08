@@ -92,8 +92,14 @@ class _OrderSearchPageState extends State<OrderSearchPage> {
           Navigator.of(context).push(
             MaterialPageRoute<void>(
               builder: (_) => switch (widget.mode) {
-                WorkMode.unpack => UnpackingSummaryPage(order: results.first),
-                WorkMode.reprint => ReprintActionPage(order: results.first),
+                WorkMode.unpack => UnpackingSummaryPage(
+                    order: results.first,
+                    services: widget.services,
+                  ),
+                WorkMode.reprint => ReprintActionPage(
+                    order: results.first,
+                    services: widget.services,
+                  ),
                 WorkMode.details =>
                   OrderDetailsPreviewPage(order: results.first),
                 _ => OrderSearchDetailPage(

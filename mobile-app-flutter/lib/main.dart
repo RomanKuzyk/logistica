@@ -7,6 +7,7 @@ import 'package:mobile_app_flutter/core/logging/app_logger.dart';
 import 'package:mobile_app_flutter/core/media/aws_media_storage_service.dart';
 import 'package:mobile_app_flutter/core/media/legacy_media_service.dart';
 import 'package:mobile_app_flutter/core/media/pending_media_upload_store.dart';
+import 'package:mobile_app_flutter/core/printing/legacy_print_service.dart';
 import 'package:mobile_app_flutter/core/storage/local_settings_store.dart';
 import 'package:mobile_app_flutter/features/auth/data/auth_repository.dart';
 import 'package:mobile_app_flutter/features/auth/data/device_identity_service.dart';
@@ -39,6 +40,10 @@ Future<void> main() async {
     apiClient: apiClient,
     logger: logger,
   );
+  final LegacyPrintService printService = LegacyPrintService(
+    config: config,
+    logger: logger,
+  );
   final AuthRepository authRepository = AuthRepository(
     apiClient: apiClient,
     deviceIdentityService: deviceIdentityService,
@@ -52,6 +57,7 @@ Future<void> main() async {
     apiClient: apiClient,
     authRepository: authRepository,
     mediaService: mediaService,
+    printService: printService,
     appVersionLabel:
         'Version ${packageInfo.version} (${packageInfo.buildNumber})',
   );

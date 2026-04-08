@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_app_flutter/features/order_search/domain/order_buy_search_item.dart';
 import 'package:mobile_app_flutter/shared/widgets/legacy_alert_dialog.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class OrderDetailsPreviewPage extends StatelessWidget {
   const OrderDetailsPreviewPage({
@@ -16,6 +17,22 @@ class OrderDetailsPreviewPage extends StatelessWidget {
       title: 'Information',
       message: '$label буде підключено наступним кроком.',
     );
+  }
+
+  Future<void> _openSellerSite(BuildContext context) async {
+    final Uri? uri = Uri.tryParse(order.link);
+    if (uri == null) {
+      _showPlaceholder(context, 'Некоректне посилання продавця');
+      return;
+    }
+
+    final bool launched = await launchUrl(
+      uri,
+      mode: LaunchMode.externalApplication,
+    );
+    if (!launched && context.mounted) {
+      _showPlaceholder(context, 'Не вдалося відкрити сайт продавця');
+    }
   }
 
   @override
@@ -60,29 +77,41 @@ class OrderDetailsPreviewPage extends StatelessWidget {
             style: const TextStyle(fontSize: 18),
           ),
           const SizedBox(height: 18),
-          Container(
+          SizedBox(
             height: 180,
-            alignment: Alignment.center,
-            child: const Text(
-              'Sorry\nIMAGE\nNOT AVAILABLE',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 26,
-                height: 1,
-                color: Color(0xFFCFCFCF),
-                fontWeight: FontWeight.w700,
-              ),
-            ),
+            child: order.link.isEmpty
+                ? _buildImagePlaceholder()
+                : Image.network(
+                    order.link,
+                    fit: BoxFit.contain,
+                    errorBuilder: (_, __, ___) => _buildImagePlaceholder(),
+                  ),
           ),
           TextButton(
-            onPressed: () =>
-                _showPlaceholder(context, 'Перехід на сайт продавця'),
+            onPressed:
+                order.link.isEmpty ? null : () => _openSellerSite(context),
             child: const Text(
               'Перехід на сайт продавця',
               style: TextStyle(fontSize: 18),
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildImagePlaceholder() {
+    return Container(
+      alignment: Alignment.center,
+      child: const Text(
+        'Sorry\nIMAGE\nNOT AVAILABLE',
+        textAlign: TextAlign.center,
+        style: TextStyle(
+          fontSize: 26,
+          height: 1,
+          color: Color(0xFFCFCFCF),
+          fontWeight: FontWeight.w700,
+        ),
       ),
     );
   }

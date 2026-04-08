@@ -13,6 +13,8 @@ RUN sdkmanager \
     "platform-tools" \
     "platforms;android-34" \
     "build-tools;35.0.0" \
-    "ndk;28.2.13676358"
+    "ndk;28.2.13676358" \
+    "platforms;android-35" \
+    "cmake;3.22.1"
 
 CMD ["bash"]

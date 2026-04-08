@@ -1,13 +1,58 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_app_flutter/app/app_services.dart';
+import 'package:mobile_app_flutter/core/printing/legacy_print_service.dart';
 import 'package:mobile_app_flutter/features/order_search/domain/order_buy_search_item.dart';
+import 'package:mobile_app_flutter/shared/widgets/legacy_alert_dialog.dart';
 
-class ReprintActionPage extends StatelessWidget {
+class ReprintActionPage extends StatefulWidget {
   const ReprintActionPage({
     super.key,
     required this.order,
+    required this.services,
   });
 
   final OrderBuySearchItem order;
+  final AppServices services;
+
+  @override
+  State<ReprintActionPage> createState() => _ReprintActionPageState();
+}
+
+class _ReprintActionPageState extends State<ReprintActionPage> {
+  bool _busy = false;
+
+  Future<void> _print() async {
+    setState(() => _busy = true);
+    final LegacyPrintResult result =
+        await widget.services.printService.printOrderLabel(widget.order.idRef);
+    if (!mounted) {
+      return;
+    }
+    setState(() => _busy = false);
+
+    switch (result.status) {
+      case LegacyPrintStatus.completed:
+        return;
+      case LegacyPrintStatus.cancelled:
+        return showLegacyAlertDialog(
+          context,
+          title: 'Print',
+          message: 'User push cancel button...',
+        );
+      case LegacyPrintStatus.dataUnavailable:
+        return showLegacyAlertDialog(
+          context,
+          title: 'Print',
+          message: 'Sorry print is not compleated data is null..',
+        );
+      case LegacyPrintStatus.failed:
+        return showLegacyAlertDialog(
+          context,
+          title: 'Print',
+          message: 'Sorry print is not compleated..: ${result.errorMessage}',
+        );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +100,7 @@ class ReprintActionPage extends StatelessWidget {
                 border: Border.all(color: const Color(0xFF7A7A7A)),
               ),
               child: Text(
-                order.displayNumber,
+                widget.order.displayNumber,
                 style: const TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.w700,
@@ -66,21 +111,7 @@ class ReprintActionPage extends StatelessWidget {
             SizedBox(
               height: 52,
               child: FilledButton(
-                onPressed: () {
-                  showDialog<void>(
-                    context: context,
-                    builder: (BuildContext context) => AlertDialog(
-                      title: const Text('Print'),
-                      content: const Text('User push cancel button...'),
-                      actions: <Widget>[
-                        TextButton(
-                          onPressed: () => Navigator.of(context).pop(),
-                          child: const Text('Done'),
-                        ),
-                      ],
-                    ),
-                  );
-                },
+                onPressed: _busy ? null : _print,
                 style: FilledButton.styleFrom(
                   backgroundColor: const Color(0xFF1877F2),
                   foregroundColor: Colors.white,
@@ -90,7 +121,7 @@ class ReprintActionPage extends StatelessWidget {
                     fontWeight: FontWeight.w400,
                   ),
                 ),
-                child: const Text('Друк стікера'),
+                child: Text(_busy ? 'Зачекайте...' : 'Друк стікера'),
               ),
             ),
           ],

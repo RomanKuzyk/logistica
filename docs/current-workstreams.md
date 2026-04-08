@@ -73,9 +73,13 @@
   - `TRABLES_LIST`
   - `REJECT_ORDER_BUY`
   - local receive validations
-  - unpacking summary/item UI shells
-  - reprint action shell
+  - unpacking end-to-end parity:
+    - item photo / documents photo
+    - `UNPACKING_ORDER_BUY`
+    - print-after-success flow
+  - reprint print flow via `LABEL_ORDER`
   - manifest list/scan shells
+  - order details preview with image/site link behavior
 - Для media parity уже підключено:
   - official Amplify Flutter auth/storage stack під існуючий Cognito/S3 contract
   - camera capture
@@ -85,6 +89,10 @@
   - local pending-upload queue
   - manual sync через settings
 - Зібрано перший робочий Android debug APK з локальними `dart-define`.
+- App name already виставлено як `GlobalCars Logistica`.
+- З кореня workspace працює:
+  - `make apk`
+  - artifact: `mobile-app-flutter/build/gc-logistica.apk`
 - `01–12` screenshot batch уже суттєво підтягнуто по візуальному parity; далі лишається добивати receive media path і наступні flow.
 - Підтверджено, що в host-середовищі відсутні `flutter` і `dart`, але Docker toolchain уже достатній для базової валідації.
 - Перевірено curated Codex skills: готового Flutter/Android skill немає.
@@ -95,10 +103,10 @@
   - без нового функціоналу.
 
 ### Найближчі практичні задачі
-- Дозвірити весь screenshot baseline `01–12` до повного visual parity.
+- Дозвірити весь screenshot baseline `01–12` і наступні batches до повного visual parity.
 - Дозавершити receive detail end-to-end на реальному девайсі після media parity.
-- Перенести unpacking flow end-to-end.
-- Підтягнути reprint/manifest/details backend parity.
+- Підтягнути manifest backend parity.
+- Добити решту reprint/details edge cases без redesign.
 - Продовжити Android MVP за execution backlog з `mobile-app-ios/docs/flutter-screen-mapping-and-backlog.md`.
 
 ## 4) `BAF / 1C`

@@ -91,11 +91,10 @@
   - receive order results list
   - receive order detail flow
   - unpacking search page
-  - unpacking summary shell
-  - unpacking item shell
-  - reprint search/action shell
+  - unpacking item flow
+  - reprint search/action flow
   - manifest list/scan shell
-  - order details search/read-only preview shell
+  - order details search/read-only preview
 - Перший scanner/search parity already перенесено для receive mode:
   - підтримані scanner formats `qr`, `code128`, `ean13`, `ean8`, `code39`
   - перенесено legacy tracking normalization
@@ -107,18 +106,23 @@
     - `TRABLES_LIST`
     - `REJECT_ORDER_BUY`
     - local receive validations (`фото перевізного`, `сума`, `Без НП`)
-  - `Фото перевізного` / `Фото прийома` / `Друк стікера` поки лишаються незавершеними, бо legacy flow залежить від S3 upload + `SAVE_PHOTO`
+  - `Фото перевізного` / `Фото прийома` уже замкнуті через S3 upload + `SAVE_PHOTO`
   - перший Android debug APK уже збирається через Docker
   - для `Розпакувати` уже підключено:
     - `ORDER_BUY_SEARCH_UNPACKING`
-    - search/list routing
-    - visual shells для `14–18`
+    - `ORDER_LIST`
+    - `TRABLES_LIST`
+    - `UNPACKING_ORDER_BUY`
+    - item photo
+    - documents photo
+    - document type validation
+    - print-after-success parity
   - для `Передрукувати` уже підключено:
     - search routing
-    - visual action shell
+    - `LABEL_ORDER` print path
   - для `Деталі замовлення (PL)` уже підключено:
     - `ORDER_ALL_BUY_SEARCH`
-    - read-only preview shell
+    - read-only preview with real image/site link handling
   - для `Формування маніфесту` уже підключено:
     - list shell
     - scan shell
@@ -132,6 +136,7 @@
   - запуск через `--dart-define-from-file`.
 - Для зручності додано helper script:
   - `scripts/flutter-docker`
+  - `GC_API_EXT_URL` окремо задається через `dart-define`, бо print path у legacy app йде через `/ext/`
 
 ## 10) Журнал змін
 ### 2026-04-08
@@ -201,3 +206,10 @@
   - upload у S3
   - `SAVE_PHOTO`
   - manual sync pending uploads із settings screen
+- App name для Android виставлено як `GlobalCars Logistica`.
+- Demo mode за замовчуванням вимкнений на рівні `GC_ALLOW_DEMO_MODE=false`.
+- Додано reproducible build target:
+  - `make apk`
+  - artifact: `build/gc-logistica.apk`
+- Для reprint flow уже перенесено server-backed друк через `/ext/print/LABEL_ORDER/...`.
+- Для details preview прибрано placeholder-поведінку там, де legacy app уже вміла показати image/site link.

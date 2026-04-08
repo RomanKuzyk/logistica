@@ -157,13 +157,21 @@ Flutter implementation strategy:
   - `AwsMediaStorageService`
   - `LegacyMediaService`
   - `PendingMediaUploadStore`
+  - `LegacyPrintService`
+  - `UnpackingRepository`
+  - `UnpackingController`
 - Поточний UI шар для bootstrap/settings/work menu/receive search ведеться з explicit орієнтацією на legacy screenshot parity `01–12`, без redesign.
 - Перший Android debug APK уже збирається через Docker toolchain.
 - Уже замкнуто receive media path:
   - camera -> PNG -> S3 -> `SAVE_PHOTO`
   - manual sync pending uploads із settings
+- Уже замкнуто unpacking path:
+  - item photo / documents photo
+  - `UNPACKING_ORDER_BUY`
+  - print-after-success parity
+- Уже замкнуто reprint path:
+  - `/ext/print/LABEL_ORDER/...`
 - Ще не імплементовано:
-  - receive flow device-level verification end-to-end
-  - unpacking media/backend path
+  - receive flow print parity
   - manifest flow backend parity
-  - printer integration
+  - решта ancillary flows beyond current screenshot baseline
