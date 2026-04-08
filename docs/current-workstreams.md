@@ -72,6 +72,7 @@
   - `REJECT_ORDER_BUY`
   - local receive validations
 - Зібрано перший робочий Android debug APK з локальними `dart-define`.
+- `01–12` screenshot batch уже суттєво підтягнуто по візуальному parity; далі лишається добивати receive media path і наступні flow.
 - Підтверджено, що в host-середовищі відсутні `flutter` і `dart`, але Docker toolchain уже достатній для базової валідації.
 - Перевірено curated Codex skills: готового Flutter/Android skill немає.
 - Створено локальний custom skill `~/.codex/skills/flutter-android-workflow/`.

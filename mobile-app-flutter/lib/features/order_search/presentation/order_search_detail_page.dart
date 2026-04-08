@@ -193,18 +193,32 @@ class _OrderSearchDetailPageState extends State<OrderSearchDetailPage> {
             : 'Оберіть проблему';
 
         return Scaffold(
-          appBar: AppBar(title: const Text('Картка замовлення')),
+          backgroundColor: Colors.white,
+          appBar: AppBar(
+            backgroundColor: Colors.white,
+            foregroundColor: Colors.blue,
+            elevation: 0,
+            scrolledUnderElevation: 0,
+            title: const Text(''),
+          ),
           body: AbsorbPointer(
             absorbing: _controller.isBusy,
             child: Stack(
               children: <Widget>[
                 ListView(
-                  padding: const EdgeInsets.all(16),
+                  padding: const EdgeInsets.fromLTRB(16, 0, 16, 24),
                   children: <Widget>[
+                    Container(
+                      height: 24,
+                      color: const Color(0xFFF7F7F7),
+                    ),
+                    const SizedBox(height: 6),
                     Text(
                       widget.order.displayNumber,
-                      style: Theme.of(context).textTheme.titleLarge,
-                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        fontSize: 18,
+                        color: Colors.black54,
+                      ),
                     ),
                     const SizedBox(height: 12),
                     Text(
@@ -227,7 +241,10 @@ class _OrderSearchDetailPageState extends State<OrderSearchDetailPage> {
                     Text(
                       widget.order.waybill,
                       textAlign: TextAlign.center,
-                      style: Theme.of(context).textTheme.titleMedium,
+                      style: const TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
                     const SizedBox(height: 12),
                     Text(
@@ -251,45 +268,61 @@ class _OrderSearchDetailPageState extends State<OrderSearchDetailPage> {
                     const SizedBox(height: 16),
                     _ActionButton(
                       label: 'Перелік товарів',
-                      color: Colors.blue,
+                      color: const Color(0xFF1877F2),
                       onPressed: _openOrderItems,
                     ),
                     _ActionButton(
                       label: 'Фото перевізного',
-                      color: Colors.cyan.shade600,
+                      color: const Color(0xFF38B6CC),
                       onPressed: () =>
                           _showPhotoPlaceholder('Фото перевізного'),
                     ),
                     _ActionButton(
                       label: 'Друк стікера',
-                      color: Colors.cyan.shade600,
+                      color: const Color(0xFF38B6CC),
                       onPressed: () => _showPhotoPlaceholder('Друк стікера'),
                     ),
                     _ActionButton(
                       label: 'Фото прийома',
-                      color: Colors.cyan.shade600,
+                      color: const Color(0xFF38B6CC),
                       onPressed: () => _showPhotoPlaceholder('Фото прийома'),
                     ),
                     _ActionButton(
                       label: trableLabel,
-                      color: _controller.selectedTrable.isSelected
-                          ? Colors.red
-                          : Colors.grey.shade600,
+                      color: const Color(0xFFB08D5C),
                       onPressed: _openTrables,
                     ),
-                    const SizedBox(height: 8),
+                    const SizedBox(height: 6),
                     TextField(
                       controller: _commentController,
+                      textAlign: TextAlign.center,
                       decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                        hintText: 'Коментар',
+                        isDense: true,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.zero,
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.zero,
+                          borderSide: BorderSide(color: Color(0xFF8E8E8E)),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.zero,
+                          borderSide: BorderSide(color: Color(0xFF1877F2)),
+                        ),
+                        hintText: 'Кометар до проблеми',
+                        hintStyle: TextStyle(color: Color(0xFFC8C8C8)),
+                        contentPadding:
+                            EdgeInsets.symmetric(horizontal: 12, vertical: 10),
                       ),
                       onChanged: _controller.setComments,
                     ),
                     const SizedBox(height: 12),
                     Row(
                       children: <Widget>[
-                        const Text('Без НП :'),
+                        const Text(
+                          'Без НП :',
+                          style: TextStyle(fontSize: 18),
+                        ),
                         const SizedBox(width: 8),
                         Switch(
                           value: _controller.isSumDisabled,
@@ -310,8 +343,28 @@ class _OrderSearchDetailPageState extends State<OrderSearchDetailPage> {
                               decimal: true,
                             ),
                             decoration: const InputDecoration(
-                              border: OutlineInputBorder(),
+                              isDense: true,
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.zero,
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.zero,
+                                borderSide: BorderSide(color: Color(0xFF8E8E8E)),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.zero,
+                                borderSide: BorderSide(color: Color(0xFF1877F2)),
+                              ),
                               hintText: '0.00',
+                              contentPadding: EdgeInsets.symmetric(
+                                horizontal: 12,
+                                vertical: 10,
+                              ),
+                            ),
+                            style: const TextStyle(
+                              fontSize: 22,
+                              fontWeight: FontWeight.w700,
+                              color: Colors.black87,
                             ),
                             onChanged: _controller.setSumma,
                           ),
@@ -325,7 +378,9 @@ class _OrderSearchDetailPageState extends State<OrderSearchDetailPage> {
                           child: FilledButton(
                             onPressed: _rejectOrder,
                             style: FilledButton.styleFrom(
-                              backgroundColor: Colors.red.shade700,
+                              backgroundColor: const Color(0xFFD44242),
+                              shape: const RoundedRectangleBorder(),
+                              padding: const EdgeInsets.symmetric(vertical: 16),
                             ),
                             child: const Text('ПОВЕРНУТИ'),
                           ),
@@ -335,7 +390,9 @@ class _OrderSearchDetailPageState extends State<OrderSearchDetailPage> {
                           child: FilledButton(
                             onPressed: _acceptOrder,
                             style: FilledButton.styleFrom(
-                              backgroundColor: Colors.green,
+                              backgroundColor: const Color(0xFF36C85A),
+                              shape: const RoundedRectangleBorder(),
+                              padding: const EdgeInsets.symmetric(vertical: 16),
                             ),
                             child: const Text('ПРИЙНЯТИ'),
                           ),
@@ -380,7 +437,12 @@ class _ActionButton extends StatelessWidget {
         style: FilledButton.styleFrom(
           backgroundColor: color,
           foregroundColor: Colors.white,
+          shape: const RoundedRectangleBorder(),
           padding: const EdgeInsets.symmetric(vertical: 16),
+          textStyle: const TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.w400,
+          ),
         ),
         child: Text(label, textAlign: TextAlign.center),
       ),

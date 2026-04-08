@@ -40,22 +40,6 @@ class _SettingsPageState extends State<SettingsPage> {
     super.dispose();
   }
 
-  Future<void> _save() async {
-    await widget.settingsStore
-        .setScannerFinishCharacters(_scannerController.text.trim());
-    await widget.settingsStore
-        .setBackgroundSyncTimer(_backgroundSyncController.text.trim());
-    await widget.settingsStore.setSaveBackgroundFile(_saveBackgroundFile);
-
-    if (!mounted) {
-      return;
-    }
-
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Налаштування збережено')),
-    );
-  }
-
   Future<void> _persistSilently() async {
     await widget.settingsStore
         .setScannerFinishCharacters(_scannerController.text.trim());
@@ -93,17 +77,34 @@ class _SettingsPageState extends State<SettingsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Settings')),
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        foregroundColor: Colors.blue,
+        elevation: 0,
+        scrolledUnderElevation: 0,
+        title: const Text(
+          'Settings',
+          style: TextStyle(
+            color: Colors.black87,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        centerTitle: true,
+      ),
       body: ListView(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.fromLTRB(16, 32, 16, 16),
         children: <Widget>[
-          const SizedBox(height: 16),
           Text(
             'Налаштування',
             textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.headlineSmall,
+            style: const TextStyle(
+              fontSize: 22,
+              fontWeight: FontWeight.w400,
+              color: Colors.black87,
+            ),
           ),
-          const SizedBox(height: 24),
+          const SizedBox(height: 36),
           SwitchListTile(
             value: _disconnectValue,
             onChanged: _busy
@@ -115,17 +116,43 @@ class _SettingsPageState extends State<SettingsPage> {
                     _disconnect();
                   },
             title: const Text('Відмінити реєстрацію'),
+            contentPadding: EdgeInsets.zero,
           ),
           const SizedBox(height: 8),
+          const Text(
+            'Після сканування додати код (HEX String)',
+            style: TextStyle(
+              fontSize: 13,
+              color: Colors.black54,
+            ),
+          ),
+          const SizedBox(height: 4),
           TextField(
             controller: _scannerController,
             decoration: const InputDecoration(
-              labelText: 'Після сканування додати код (HEX String)',
-              border: OutlineInputBorder(),
+              isDense: true,
+              border: OutlineInputBorder(borderRadius: BorderRadius.zero),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.zero,
+                borderSide: BorderSide(color: Color(0xFFE3E3E3)),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.zero,
+                borderSide: BorderSide(color: Color(0xFF1877F2)),
+              ),
+              contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
             ),
             onChanged: (_) => _persistSilently(),
           ),
           const SizedBox(height: 16),
+          const Text(
+            'Час сінхронізації',
+            style: TextStyle(
+              fontSize: 13,
+              color: Colors.black54,
+            ),
+          ),
+          const SizedBox(height: 6),
           SwitchListTile(
             value: _saveBackgroundFile,
             onChanged: (bool value) async {
@@ -135,26 +162,43 @@ class _SettingsPageState extends State<SettingsPage> {
               await _persistSilently();
             },
             title: const Text('Зберігати фото у фоновому режимі'),
+            contentPadding: EdgeInsets.zero,
           ),
           const SizedBox(height: 8),
           TextField(
             controller: _backgroundSyncController,
             decoration: const InputDecoration(
-              labelText: 'Час синхронізації',
-              border: OutlineInputBorder(),
+              isDense: true,
+              border: OutlineInputBorder(borderRadius: BorderRadius.zero),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.zero,
+                borderSide: BorderSide(color: Color(0xFFE3E3E3)),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.zero,
+                borderSide: BorderSide(color: Color(0xFF1877F2)),
+              ),
+              contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
             ),
             keyboardType: TextInputType.number,
             onChanged: (_) => _persistSilently(),
           ),
           const SizedBox(height: 16),
-          FilledButton.tonal(
-            onPressed: _busy ? null : _save,
-            child: const Text('Зберегти налаштування'),
-          ),
-          const SizedBox(height: 12),
-          FilledButton(
+          SizedBox(
+            height: 46,
+            child: FilledButton(
             onPressed: _busy ? null : _syncNow,
-            child: Text(_busy ? 'Зачекайте...' : 'Сінхронізувати вже'),
+              style: FilledButton.styleFrom(
+                backgroundColor: const Color(0xFF1877F2),
+                foregroundColor: Colors.white,
+                shape: const RoundedRectangleBorder(),
+                textStyle: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
+              child: Text(_busy ? 'Зачекайте...' : 'Сінхронізувати вже'),
+            ),
           ),
         ],
       ),

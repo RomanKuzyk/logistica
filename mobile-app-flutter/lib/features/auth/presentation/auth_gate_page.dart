@@ -76,12 +76,17 @@ class _AuthGatePageState extends State<AuthGatePage> {
       animation: _controller,
       builder: (BuildContext context, _) {
         return Scaffold(
+          backgroundColor: Colors.white,
           appBar: AppBar(
+            backgroundColor: Colors.white,
+            foregroundColor: Colors.blue,
+            elevation: 0,
+            scrolledUnderElevation: 0,
             title: const Text(''),
             actions: <Widget>[
               IconButton(
                 onPressed: _openSettings,
-                icon: const Icon(Icons.edit_square),
+                icon: const Icon(Icons.edit_outlined),
               ),
             ],
           ),
@@ -111,14 +116,11 @@ class _AuthGatePageState extends State<AuthGatePage> {
               'Для початку використання програми\nбудь ласка, відскануйте qr код з особистого кабінету',
           onPrimaryPressed: null,
           onDemoMode: null,
-          errorMessage: _controller.backendVersion == null
-              ? null
-              : 'Backend version: ${_controller.backendVersion}',
           showProgress: true,
         );
       case AuthStatus.registrationRequired:
         return _StartScreen(
-          buttonLabel: 'Register new user',
+          buttonLabel: 'Розпочати',
           appVersionLabel: widget.services.appVersionLabel,
           helperText:
               'Для початку використання програми\nбудь ласка, відскануйте qr код з особистого кабінету',
@@ -142,18 +144,13 @@ class _AuthGatePageState extends State<AuthGatePage> {
       case AuthStatus.startingWork:
         final user = _controller.currentUser;
         return _StartScreen(
-          buttonLabel: user == null
-              ? 'Розпочати'
-              : 'Розпочати: ${user.displayName.toUpperCase()}',
+          buttonLabel: user == null ? 'Розпочати' : 'Розпочати: ${user.displayName}',
           appVersionLabel: widget.services.appVersionLabel,
           helperText:
               'Для початку використання програми\nбудь ласка, відскануйте qr код з особистого кабінету',
           onPrimaryPressed: _startWork,
           onDemoMode:
               _controller.canUseDemoMode ? _controller.useDemoMode : null,
-          errorMessage: _controller.backendVersion == null
-              ? null
-              : 'Backend version: ${_controller.backendVersion}',
         );
       case AuthStatus.error:
         return _StartScreen(
@@ -194,25 +191,47 @@ class _StartScreen extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
-        const SizedBox(height: 24),
-        const Center(
-          child: CircleAvatar(
-            radius: 76,
-            backgroundColor: Color(0xFFF3F3F3),
-            child: Icon(Icons.lock_person_outlined, size: 88),
+        const SizedBox(height: 20),
+        Center(
+          child: Container(
+            width: 132,
+            height: 132,
+            decoration: BoxDecoration(
+              color: const Color(0xFFF4F4F4),
+              border: Border.all(color: const Color(0xFFE6E6E6)),
+            ),
+            child: const Icon(
+              Icons.lock_person_outlined,
+              size: 86,
+              color: Colors.black54,
+            ),
           ),
         ),
         const SizedBox(height: 24),
-        FilledButton(
-          onPressed: onPrimaryPressed,
-          style: FilledButton.styleFrom(
-            padding: const EdgeInsets.symmetric(vertical: 18),
-            shape: const RoundedRectangleBorder(),
+        Container(
+          decoration: BoxDecoration(
+            border: Border.all(color: const Color(0xFF0F4786), width: 1.2),
           ),
-          child: Text(
-            buttonLabel,
-            textAlign: TextAlign.center,
-            style: const TextStyle(fontSize: 18),
+          child: FilledButton(
+            onPressed: onPrimaryPressed,
+            style: FilledButton.styleFrom(
+              backgroundColor: const Color(0xFF1877F2),
+              disabledBackgroundColor: const Color(0xFF1877F2),
+              foregroundColor: Colors.white,
+              disabledForegroundColor: Colors.white70,
+              padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
+              shape: const RoundedRectangleBorder(),
+              textStyle: const TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w400,
+              ),
+            ),
+            child: Text(
+              buttonLabel,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              textAlign: TextAlign.center,
+            ),
           ),
         ),
         if (showProgress) ...<Widget>[
@@ -231,17 +250,31 @@ class _StartScreen extends StatelessWidget {
         Text(
           helperText,
           textAlign: TextAlign.center,
+          style: const TextStyle(
+            fontSize: 14,
+            color: Colors.black87,
+          ),
         ),
         const SizedBox(height: 8),
         Text(
           appVersionLabel,
           textAlign: TextAlign.center,
-          style: Theme.of(context).textTheme.bodySmall,
+          style: const TextStyle(
+            fontSize: 14,
+            color: Colors.black87,
+          ),
         ),
         if (onDemoMode != null) ...<Widget>[
-          const SizedBox(height: 8),
+          const SizedBox(height: 4),
           TextButton(
             onPressed: onDemoMode,
+            style: TextButton.styleFrom(
+              foregroundColor: const Color(0xFF1877F2),
+              textStyle: const TextStyle(
+                fontSize: 15,
+                fontWeight: FontWeight.w400,
+              ),
+            ),
             child: const Text('Demo'),
           ),
         ],

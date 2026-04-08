@@ -16,7 +16,28 @@ class OrderResultListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Знайдені замовлення')),
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        backgroundColor: Colors.black,
+        foregroundColor: Colors.white,
+        elevation: 0,
+        scrolledUnderElevation: 0,
+        title: const Text(''),
+        actions: const <Widget>[
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16),
+            child: Center(
+              child: Text(
+                'Обрати',
+                style: TextStyle(
+                  color: Colors.white38,
+                  fontSize: 16,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
       body: ListView.separated(
         itemCount: results.length,
         separatorBuilder: (_, __) => const Divider(height: 1),
@@ -34,8 +55,8 @@ class OrderResultListPage extends StatelessWidget {
               );
             },
             child: Container(
-              color: Colors.grey.shade100,
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+              color: index.isEven ? const Color(0xFFEDEDF1) : Colors.white,
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
@@ -46,10 +67,19 @@ class OrderResultListPage extends StatelessWidget {
                           item.displayNumber.isEmpty
                               ? 'Без номера'
                               : item.displayNumber,
-                          style: Theme.of(context).textTheme.titleMedium,
+                          style: const TextStyle(
+                            fontSize: 14,
+                            color: Colors.black54,
+                          ),
                         ),
                       ),
-                      Text(item.count.toString()),
+                      Text(
+                        item.count.toString(),
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
                     ],
                   ),
                   const SizedBox(height: 12),
@@ -68,15 +98,25 @@ class OrderResultListPage extends StatelessWidget {
                   Text(
                     item.waybill,
                     textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.titleMedium,
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
                   const SizedBox(height: 12),
                   Container(
-                    padding: const EdgeInsets.all(12),
                     color: Colors.white,
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 16,
+                    ),
                     child: Text(
                       item.nameOrders,
                       textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        fontSize: 18,
+                        color: Colors.black87,
+                      ),
                     ),
                   ),
                   const SizedBox(height: 16),
@@ -85,7 +125,7 @@ class OrderResultListPage extends StatelessWidget {
                     textAlign: TextAlign.center,
                     style: const TextStyle(
                       color: Colors.red,
-                      fontSize: 18,
+                      fontSize: 19,
                       fontWeight: FontWeight.w700,
                     ),
                   ),
@@ -94,7 +134,7 @@ class OrderResultListPage extends StatelessWidget {
                     textAlign: TextAlign.center,
                     style: const TextStyle(
                       color: Colors.black,
-                      fontSize: 18,
+                      fontSize: 19,
                       fontWeight: FontWeight.w700,
                     ),
                   ),

@@ -94,6 +94,7 @@
   - перенесено legacy tracking normalization
   - manual input і scanner input використовують один і той самий пошуковий flow
   - start screen, settings screen, work menu і receive search screen приведені ближче до `01–12` screenshot parity
+  - receive result list і receive detail screen також підтягнуті ближче до `07–12` legacy style baseline
   - receive detail тепер має parity-oriented дії для:
     - `ORDER_LIST`
     - `TRABLES_LIST`
