@@ -39,7 +39,11 @@ class OrderSearchController extends ChangeNotifier {
   String get screenDescription => switch (mode) {
         WorkMode.receive =>
           'Будь ласка, внесіть текст для пошуку замовлення (викуп).',
-        _ => 'Режим ще не реалізований.',
+        WorkMode.unpack =>
+          'Відскануйте номер викупу для початку обслуговування',
+        WorkMode.reprint => 'Будь ласка, внесіть текст для пошуку.',
+        WorkMode.details => 'Будь ласка, внесіть текст для пошуку.',
+        WorkMode.manifest => 'Режим ще не реалізований.',
       };
 
   void setSearchInput(String value) {
@@ -66,23 +70,17 @@ class OrderSearchController extends ChangeNotifier {
       return;
     }
 
-    if (mode != WorkMode.receive) {
-      status = OrderSearchStatus.error;
-      errorMessage = 'Цей режим ще не реалізований.';
-      results = const <OrderBuySearchItem>[];
-      terminalEventId++;
-      notifyListeners();
-      return;
-    }
-
     status = OrderSearchStatus.loading;
     errorMessage = null;
     results = const <OrderBuySearchItem>[];
     notifyListeners();
 
     try {
-      final List<OrderBuySearchItem> items =
-          await _repository.searchReceiveOrders(query);
+      final List<OrderBuySearchItem> items = switch (mode) {
+        WorkMode.receive => await _repository.searchReceiveOrders(query),
+        WorkMode.unpack => await _repository.searchUnpackingOrders(query),
+        _ => throw const ApiParsingException('Цей режим ще не реалізований.'),
+      };
       results = items;
       totalCod = items.fold<double>(
           0, (double sum, OrderBuySearchItem item) => sum + item.summaCod);

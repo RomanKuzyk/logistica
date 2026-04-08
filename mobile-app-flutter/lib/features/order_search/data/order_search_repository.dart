@@ -15,6 +15,15 @@ class OrderSearchRepository {
 
     return items.map(OrderBuySearchItemMapper.fromApi).toList();
   }
+
+  Future<List<OrderBuySearchItem>> searchUnpackingOrders(String filter) async {
+    final List<Map<String, dynamic>> items = await _apiClient.execute(
+      function: 'ORDER_BUY_SEARCH_UNPACKING',
+      parameter: filter,
+    );
+
+    return items.map(OrderBuySearchItemMapper.fromApi).toList();
+  }
 }
 
 class OrderBuySearchItemMapper {

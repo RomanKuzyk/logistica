@@ -71,7 +71,16 @@ class WorkMenuPage extends StatelessWidget {
           ),
           _LegacyMenuButton(
             title: 'Розпакувати',
-            onTap: () => _showPlaceholder(context, 'Unpacking'),
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute<void>(
+                  builder: (_) => OrderSearchPage(
+                    services: services,
+                    mode: WorkMode.unpack,
+                  ),
+                ),
+              );
+            },
           ),
           _LegacyMenuButton(
             title: 'Передрукувати',

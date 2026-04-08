@@ -89,6 +89,9 @@
   - receive order search page
   - receive order results list
   - receive order detail flow
+  - unpacking search page
+  - unpacking summary shell
+  - unpacking item shell
 - Перший scanner/search parity already перенесено для receive mode:
   - підтримані scanner formats `qr`, `code128`, `ean13`, `ean8`, `code39`
   - перенесено legacy tracking normalization
@@ -102,6 +105,10 @@
     - local receive validations (`фото перевізного`, `сума`, `Без НП`)
   - `Фото перевізного` / `Фото прийома` / `Друк стікера` поки лишаються незавершеними, бо legacy flow залежить від S3 upload + `SAVE_PHOTO`
   - перший Android debug APK уже збирається через Docker
+  - для `Розпакувати` уже підключено:
+    - `ORDER_BUY_SEARCH_UNPACKING`
+    - search/list routing
+    - visual shells для `14–18`
 
 ## 9) Secret/config strategy
 - Legacy iOS app тримає backend secrets у коді, але Flutter rewrite цього не повторює.

@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_app_flutter/app/app_services.dart';
 import 'package:mobile_app_flutter/features/order_search/domain/order_buy_search_item.dart';
+import 'package:mobile_app_flutter/features/order_search/domain/work_mode.dart';
 import 'package:mobile_app_flutter/features/order_search/presentation/order_search_detail_page.dart';
+import 'package:mobile_app_flutter/features/order_search/presentation/unpacking_summary_page.dart';
 
 class OrderResultListPage extends StatelessWidget {
   const OrderResultListPage({
     super.key,
     required this.results,
     required this.services,
+    required this.mode,
   });
 
   final List<OrderBuySearchItem> results;
   final AppServices services;
+  final WorkMode mode;
 
   @override
   Widget build(BuildContext context) {
@@ -47,10 +51,12 @@ class OrderResultListPage extends StatelessWidget {
             onTap: () {
               Navigator.of(context).push(
                 MaterialPageRoute<void>(
-                  builder: (_) => OrderSearchDetailPage(
-                    order: item,
-                    services: services,
-                  ),
+                  builder: (_) => mode == WorkMode.unpack
+                      ? UnpackingSummaryPage(order: item)
+                      : OrderSearchDetailPage(
+                          order: item,
+                          services: services,
+                        ),
                 ),
               );
             },
