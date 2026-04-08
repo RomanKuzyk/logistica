@@ -58,6 +58,7 @@
 - `docs/tooling-and-skills.md`
 - `docs/dev-environment.md`
 - `docs/app-architecture.md`
+- `docs/full-migration-rollout-plan.md`
 - Legacy migration docs:
   - `../mobile-app-ios/docs/flutter-android-migration-plan.md`
   - `../mobile-app-ios/docs/flutter-screen-mapping-and-backlog.md`
@@ -156,3 +157,8 @@
 - Для локальних збірок використовується:
   - `config/dart_defines.local.json`
   - він не комітиться, але його значення вбудовуються в локально зібраний APK.
+- Зафіксовано rollout rule для Flutter rewrite:
+  - спочатку screenshot/UI parity;
+  - потім interaction parity;
+  - потім backend parity;
+  - без нового функціоналу і без redesign.

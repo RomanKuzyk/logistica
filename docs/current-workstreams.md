@@ -75,8 +75,13 @@
 - Підтверджено, що в host-середовищі відсутні `flutter` і `dart`, але Docker toolchain уже достатній для базової валідації.
 - Перевірено curated Codex skills: готового Flutter/Android skill немає.
 - Створено локальний custom skill `~/.codex/skills/flutter-android-workflow/`.
+- У `mobile-app-flutter/docs/full-migration-rollout-plan.md` зафіксовано повний rollout order:
+  - спочатку visual parity за screenshot baseline;
+  - потім interaction/backend parity;
+  - без нового функціоналу.
 
 ### Найближчі практичні задачі
+- Дозвірити весь screenshot baseline `01–12` до повного visual parity.
 - Додати legacy S3/media upload flow для `SAVE_PHOTO`.
 - Замкнути `RESIVE_ORDER_BUY` end-to-end після media parity.
 - Перенести unpacking flow.

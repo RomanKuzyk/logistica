@@ -36,12 +36,13 @@
 - `docs/tooling-and-skills.md`
 - `docs/dev-environment.md`
 - `docs/app-architecture.md`
+- `docs/full-migration-rollout-plan.md`
 
 ## Найближчі кроки
-1. Підключити legacy `SAVE_PHOTO` / S3 media upload flow.
-2. Замкнути `RESIVE_ORDER_BUY` end-to-end після photo parity.
-3. Перенести unpacking flow.
-4. Підключити printer integration.
+1. Дозвірити весь screenshot baseline `01–12` до повного visual parity.
+2. Підключити legacy `SAVE_PHOTO` / S3 media upload flow.
+3. Замкнути `RESIVE_ORDER_BUY` end-to-end після photo parity.
+4. Перенести unpacking flow.
 5. Підтягнути решту work menu flows без redesign.
 
 ## Поточний Android artifact
