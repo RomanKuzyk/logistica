@@ -1,0 +1,7 @@
+{
+  "GC_API_URL": "https://api.globalcars.com.ua/api/v1",
+  "GC_API_USER": "replace_me",
+  "GC_API_PASSWORD": "replace_me",
+  "GC_API_SALT": "replace_me",
+  "GC_ALLOW_DEMO_MODE": "true"
+}

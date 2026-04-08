@@ -4,11 +4,17 @@
 Підготувати новий Flutter-клієнт як Android-first порт legacy iOS app без зміни бізнес-поведінки.
 
 ## Мінімальний bootstrap scope
-1. Встановити Flutter SDK.
+1. Встановити Flutter SDK або підняти Docker toolchain.
 2. Переконатися, що доступні Android SDK / emulator / adb.
 3. Згенерувати Flutter application scaffold.
 4. Зафіксувати базову структуру feature modules.
 5. Винести platform integrations у контрольовані adapter-і.
+
+## Статус
+- Scaffold уже створений.
+- `android/` і `ios/` уже присутні.
+- Базова feature-oriented структура `lib/` уже закладена.
+- Початковий auth/bootstrap flow уже імплементований.
 
 ## Рекомендований стартовий стек
 - Flutter stable

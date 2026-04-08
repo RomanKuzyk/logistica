@@ -5,7 +5,12 @@
 ## Поточний статус
 - Каталог підготовлено як стартову точку для rewrite legacy iOS app на Flutter.
 - Поточна ціль першого етапу: **Android-first порт** без змін бізнес-процесів, backend contract і UX-поведінки.
-- Flutter SDK у цьому середовищі наразі **не встановлений**, тому каталог поки містить документацію, правила і план старту, а не згенерований Flutter scaffold.
+- У проекті вже є:
+  - Flutter application scaffold;
+  - `android/` і `ios/` platform folders;
+  - Docker-based build environment;
+  - базовий application layer для auth/bootstrap/settings/work menu shell.
+- Flutter SDK на host усе ще не встановлений, але проект уже можна валідувати через Docker.
 
 ## Вхідні дані для rewrite
 - Legacy iOS baseline: `../mobile-app-ios/`
@@ -25,9 +30,25 @@
 - `KNOWLEDGE.md`
 - `docs/project-bootstrap.md`
 - `docs/tooling-and-skills.md`
+- `docs/dev-environment.md`
+- `docs/app-architecture.md`
 
 ## Найближчі кроки
-1. Встановити Flutter SDK і Android toolchain.
-2. Згенерувати baseline Flutter-проект.
-3. Зафіксувати architecture skeleton.
-4. Почати Phase 1 Android MVP за execution backlog з `mobile-app-ios`.
+1. Доробити feature-level implementation після auth/bootstrap shell.
+2. Додати scanner capture flow.
+3. Додати receive order flow (`ORDER_BUY_SEARCH` / `RESIVE_ORDER_BUY`).
+4. Підключити media upload і printer integration.
+
+## Конфігурація
+- API secrets не закомічені в repo.
+- Для реального backend-запуску потрібні `dart-define` значення:
+  - `GC_API_URL`
+  - `GC_API_USER`
+  - `GC_API_PASSWORD`
+  - `GC_API_SALT`
+- Без них проект лишається валідним як scaffold і UI shell, але network auth flow завершиться конфігураційною помилкою.
+- Практичний dev-варіант:
+  1. скопіювати `config/dart_defines.example.json`
+  2. створити локальний файл `config/dart_defines.local.json`
+  3. запускати Flutter з:
+     - `--dart-define-from-file=config/dart_defines.local.json`

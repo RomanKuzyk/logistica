@@ -53,14 +53,24 @@
   - `KNOWLEDGE.md`
   - `docs/project-bootstrap.md`
   - `docs/tooling-and-skills.md`
-- Підтверджено, що в поточному середовищі відсутні `flutter` і `dart`, тому поки підготовлено лише planning/bootstrap layer.
+- Додано реальний Flutter scaffold:
+  - `android/`
+  - `ios/`
+  - `lib/`
+  - `pubspec.yaml`
+- Реалізовано початковий application layer:
+  - auth/bootstrap
+  - settings
+  - work menu shell
+- Підтверджено, що в host-середовищі відсутні `flutter` і `dart`, але Docker toolchain уже достатній для базової валідації.
 - Перевірено curated Codex skills: готового Flutter/Android skill немає.
 - Створено локальний custom skill `~/.codex/skills/flutter-android-workflow/`.
 
 ### Найближчі практичні задачі
 - Встановити Flutter SDK і Android toolchain.
-- Згенерувати базовий Flutter scaffold.
-- Зафіксувати project structure для feature-based implementation.
+- Додати scanner capture flow.
+- Додати receive order flow.
+- Додати media upload flow.
 - Почати Android MVP за execution backlog з `mobile-app-ios/docs/flutter-screen-mapping-and-backlog.md`.
 
 ## 4) `BAF / 1C`

@@ -1,0 +1,15 @@
+services:
+  flutter:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    working_dir: /workspace
+    volumes:
+      - .:/workspace
+      - flutter-pub-cache:/sdks/.pub-cache
+    environment:
+      CI: "true"
+    command: bash
+
+volumes:
+  flutter-pub-cache:

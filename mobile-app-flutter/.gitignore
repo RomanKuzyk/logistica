@@ -1,0 +1,23 @@
+# Flutter / Dart / IDE
+.dart_tool/
+.packages
+.pub/
+build/
+.flutter-plugins
+.flutter-plugins-dependencies
+.pub-cache/
+.idea/
+.vscode/
+*.iml
+config/dart_defines.local.json
+config/dart_defines.*.json
+!config/dart_defines.example.json
+
+# Android / iOS generated
+android/.gradle/
+ios/Pods/
+ios/.symlinks/
+ios/Flutter/ephemeral/
+
+# macOS
+.DS_Store

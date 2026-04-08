@@ -31,14 +31,15 @@
 - Зберігати максимально близьку UX/flow-поведінку до legacy app.
 
 ## 5) Tooling status
-- У поточному середовищі **не встановлені** `flutter` і `dart`.
+- У поточному host-середовищі **не встановлені** `flutter` і `dart`.
 - Доступні:
   - `java`
   - `adb`
 - Відсутні:
   - `gradle`
   - Flutter SDK
-- Висновок: поки можна готувати docs, структуру проекту і local skills; scaffold Flutter app потребує встановлення SDK.
+- Docker доступний і вже використовується як reproducible Flutter toolchain.
+- Висновок: локальний host toolchain ще неповний, але проект уже можна розвивати і валідовати через Docker.
 
 ## 6) Skills
 - Перевірено installable curated skills через `skill-installer`.
@@ -54,13 +55,67 @@
 ## 7) Основні planning docs
 - `docs/project-bootstrap.md`
 - `docs/tooling-and-skills.md`
+- `docs/dev-environment.md`
+- `docs/app-architecture.md`
 - Legacy migration docs:
   - `../mobile-app-ios/docs/flutter-android-migration-plan.md`
   - `../mobile-app-ios/docs/flutter-screen-mapping-and-backlog.md`
 
-## 8) Журнал змін
+## 8) Поточний implementation scope
+- Створено Flutter project scaffold із platform folders:
+  - `android/`
+  - `ios/`
+- Додано базову project structure:
+  - `lib/app`
+  - `lib/core`
+  - `lib/features`
+  - `lib/shared`
+- Реалізовано початковий application layer:
+  - `AppConfig`
+  - `ApiClient`
+  - `ApiSigner`
+  - `LocalSettingsStore`
+  - `DeviceIdentityService`
+  - `AuthRepository`
+  - `AuthController`
+- Реалізовано початкові UI flow:
+  - auth/bootstrap gate
+  - registration page
+  - settings page
+  - work menu shell
+- Реєстрація нового користувача на цьому етапі підтримує manual employee code entry.
+- QR scanner capture ще не реалізований і залишається окремим наступним кроком.
+
+## 9) Secret/config strategy
+- Legacy iOS app тримає backend secrets у коді, але Flutter rewrite цього не повторює.
+- Для Flutter проекту прийнято підхід:
+  - секрети не комітяться;
+  - tracked only: `config/dart_defines.example.json`;
+  - local secrets: `config/dart_defines.local.json`;
+  - запуск через `--dart-define-from-file`.
+- Для зручності додано helper script:
+  - `scripts/flutter-docker`
+
+## 10) Журнал змін
 ### 2026-04-08
 - Підготовлено стартовий каркас `mobile-app-flutter/`.
-- Зафіксовано, що Flutter SDK у середовищі відсутній, тому робота поки на рівні planning/bootstrap docs.
+- Згенеровано Flutter scaffold і додано platform folders `android/` та `ios/`.
+- Додано базовий application layer для:
+  - auth/bootstrap
+  - settings
+  - work menu shell
+- Реалізовано compatibility-aware legacy `/api/v1` client із MD5 signing contract.
+- Зафіксовано, що host Flutter SDK у середовищі відсутній, але Docker toolchain уже робочий.
 - Перевірено curated installable skills: готового Flutter/Android skill не знайдено.
 - Створено локальний custom skill `flutter-android-workflow` для подальшої роботи з цим rewrite.
+- Додано Docker-based dev/build environment.
+- Додано practical secret/config workflow через:
+  - `config/dart_defines.example.json`
+  - `config/dart_defines.local.json` (gitignored)
+  - `--dart-define-from-file`
+  - `scripts/flutter-docker`
+- Валідація через Docker:
+  - `flutter pub get` — ok
+  - `flutter analyze` — ok
+  - `flutter test` — ok
+  - `flutter build apk --debug` — розпочато, підтверджено Android-side dependency setup; повний build лишається окремою наступною валідацією
