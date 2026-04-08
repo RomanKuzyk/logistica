@@ -1,6 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:mobile_app_flutter/core/api/api_exceptions.dart';
 import 'package:mobile_app_flutter/core/logging/app_logger.dart';
+import 'package:mobile_app_flutter/core/media/legacy_media_service.dart';
+import 'package:mobile_app_flutter/core/media/legacy_photo_type.dart';
 import 'package:mobile_app_flutter/features/order_search/data/receive_order_repository.dart';
 import 'package:mobile_app_flutter/features/order_search/domain/legacy_rpc_result.dart';
 import 'package:mobile_app_flutter/features/order_search/domain/order_item.dart';
@@ -10,11 +12,14 @@ class OrderSearchDetailController extends ChangeNotifier {
   OrderSearchDetailController({
     required ReceiveOrderRepository repository,
     required AppLogger logger,
+    required LegacyMediaService mediaService,
   })  : _repository = repository,
-        _logger = logger;
+        _logger = logger,
+        _mediaService = mediaService;
 
   final ReceiveOrderRepository _repository;
   final AppLogger _logger;
+  final LegacyMediaService _mediaService;
 
   bool isBusy = false;
   bool isSumDisabled = false;
@@ -67,6 +72,16 @@ class OrderSearchDetailController extends ChangeNotifier {
     notifyListeners();
   }
 
+  void setFacturePhotoFileName(String value) {
+    facturePhotoFileName = value;
+    notifyListeners();
+  }
+
+  void setReceivePhotoFileName(String value) {
+    receivePhotoFileName = value;
+    notifyListeners();
+  }
+
   void setSumDisabled(bool value) {
     isSumDisabled = value;
     if (value) {
@@ -100,6 +115,24 @@ class OrderSearchDetailController extends ChangeNotifier {
         photoFileName: receivePhotoFileName,
         facturePhotoFileName: facturePhotoFileName,
         summa: _normalizedSumma(),
+      ),
+    );
+  }
+
+  Future<String?> captureFacturePhoto(String orderBuyIdRef) async {
+    return _runBusy(
+      () => _mediaService.captureAndSavePhoto(
+        idRef: orderBuyIdRef,
+        typeIdRef: LegacyPhotoType.photoFacture,
+      ),
+    );
+  }
+
+  Future<String?> captureReceivePhoto(String orderBuyIdRef) async {
+    return _runBusy(
+      () => _mediaService.captureAndSavePhoto(
+        idRef: orderBuyIdRef,
+        typeIdRef: LegacyPhotoType.photoReceiveFromCourier,
       ),
     );
   }

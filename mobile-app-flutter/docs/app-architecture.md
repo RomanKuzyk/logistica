@@ -106,6 +106,22 @@ Flutter implementation strategy:
 - user-facing текст не нормалізувати без потреби
 - legacy mobile compatibility lessons врахувати:
   - backend error payload shape має бути очікуваним для client parser
+- Flutter не несе legacy iOS workaround для `errorsstack.message`:
+  - для нового Flutter клієнта `errorsstack` обробляється як plain string, як це зараз повертає backend
+
+## Media/upload architecture
+Для Flutter обрано такий шлях:
+- official `AmplifyAuthCognito` + `AmplifyStorageS3`
+- існуючий `Cognito Identity Pool` і той самий S3 bucket
+- camera capture через `image_picker`
+- локальна нормалізація у PNG
+- окрема local queue для pending uploads
+- `SAVE_PHOTO` викликається тільки після успішного upload у S3
+
+Це свідомо відрізняється від прямого копіювання iOS implementation:
+- немає залежності від iOS-only runtime behavior;
+- немає очікування, що Amplify сам забезпечить background sync;
+- background/media retry контролюється application layer.
 
 ## Phase 1 execution priority
 1. bootstrap
@@ -138,11 +154,16 @@ Flutter implementation strategy:
   - `OrderSearchDetailController`
   - `OrderItemListPage`
   - `TrablePickerPage`
+  - `AwsMediaStorageService`
+  - `LegacyMediaService`
+  - `PendingMediaUploadStore`
 - Поточний UI шар для bootstrap/settings/work menu/receive search ведеться з explicit орієнтацією на legacy screenshot parity `01–12`, без redesign.
 - Перший Android debug APK уже збирається через Docker toolchain.
+- Уже замкнуто receive media path:
+  - camera -> PNG -> S3 -> `SAVE_PHOTO`
+  - manual sync pending uploads із settings
 - Ще не імплементовано:
-  - receive detail media workflow (`SAVE_PHOTO` + S3 upload path)
-  - повний `RESIVE_ORDER_BUY` media-dependent path
-  - media upload flow
-  - manifest flow
+  - receive flow device-level verification end-to-end
+  - unpacking media/backend path
+  - manifest flow backend parity
   - printer integration

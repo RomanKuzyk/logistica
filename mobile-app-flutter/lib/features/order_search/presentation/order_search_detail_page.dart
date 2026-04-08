@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_app_flutter/app/app_services.dart';
 import 'package:mobile_app_flutter/core/api/api_exceptions.dart';
+import 'package:mobile_app_flutter/core/media/media_exceptions.dart';
 import 'package:mobile_app_flutter/features/order_search/data/receive_order_repository.dart';
 import 'package:mobile_app_flutter/features/order_search/domain/order_buy_search_item.dart';
 import 'package:mobile_app_flutter/features/order_search/domain/order_item.dart';
@@ -8,6 +9,7 @@ import 'package:mobile_app_flutter/features/order_search/domain/trable.dart';
 import 'package:mobile_app_flutter/features/order_search/presentation/order_item_list_page.dart';
 import 'package:mobile_app_flutter/features/order_search/presentation/order_search_detail_controller.dart';
 import 'package:mobile_app_flutter/features/order_search/presentation/trable_picker_page.dart';
+import 'package:mobile_app_flutter/shared/widgets/legacy_alert_dialog.dart';
 
 class OrderSearchDetailPage extends StatefulWidget {
   const OrderSearchDetailPage({
@@ -36,6 +38,7 @@ class _OrderSearchDetailPageState extends State<OrderSearchDetailPage> {
     _controller = OrderSearchDetailController(
       repository: ReceiveOrderRepository(apiClient: widget.services.apiClient),
       logger: widget.services.logger,
+      mediaService: widget.services.mediaService,
     );
   }
 
@@ -98,18 +101,10 @@ class _OrderSearchDetailPageState extends State<OrderSearchDetailPage> {
         return;
       }
 
-      await showDialog<void>(
-        context: context,
-        builder: (BuildContext context) => AlertDialog(
-          title: const Text('Completed'),
-          content: const Text('Замовлення повертаємо. Дякую !'),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () => Navigator.of(context).pop(),
-              child: const Text('OK'),
-            ),
-          ],
-        ),
+      await showLegacyAlertDialog(
+        context,
+        title: 'Completed',
+        message: 'Замовлення повертаємо. Дякую !',
       );
 
       if (!mounted) {
@@ -146,18 +141,10 @@ class _OrderSearchDetailPageState extends State<OrderSearchDetailPage> {
         return;
       }
 
-      await showDialog<void>(
-        context: context,
-        builder: (BuildContext context) => AlertDialog(
-          title: const Text('Completed'),
-          content: const Text('Заявка опрацьована. Дякую !'),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () => Navigator.of(context).pop(),
-              child: const Text('OK'),
-            ),
-          ],
-        ),
+      await showLegacyAlertDialog(
+        context,
+        title: 'Completed',
+        message: 'Заявка опрацьована. Дякую !',
       );
 
       if (!mounted) {
@@ -170,26 +157,41 @@ class _OrderSearchDetailPageState extends State<OrderSearchDetailPage> {
     }
   }
 
-  void _showPhotoPlaceholder(String title) {
-    _showMessage(
-      '$title буде підключено окремим кроком разом із legacy S3 upload flow.',
-      title: title,
-    );
+  Future<void> _captureFacturePhoto() async {
+    try {
+      final String? fileName =
+          await _controller.captureFacturePhoto(widget.order.idRef);
+      if (fileName != null) {
+        _controller.setFacturePhotoFileName(fileName);
+      }
+    } on MediaException catch (error) {
+      if (error is MediaCancelledException) {
+        return;
+      }
+      _showMessage(error.message, title: 'PHOTO');
+    }
+  }
+
+  Future<void> _captureReceivePhoto() async {
+    try {
+      final String? fileName =
+          await _controller.captureReceivePhoto(widget.order.idRef);
+      if (fileName != null) {
+        _controller.setReceivePhotoFileName(fileName);
+      }
+    } on MediaException catch (error) {
+      if (error is MediaCancelledException) {
+        return;
+      }
+      _showMessage(error.message, title: 'PHOTO');
+    }
   }
 
   void _showMessage(String message, {String title = 'Errors'}) {
-    showDialog<void>(
-      context: context,
-      builder: (BuildContext context) => AlertDialog(
-        title: Text(title),
-        content: Text(message),
-        actions: <Widget>[
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Done'),
-          ),
-        ],
-      ),
+    showLegacyAlertDialog(
+      context,
+      title: title,
+      message: message,
     );
   }
 
@@ -284,18 +286,19 @@ class _OrderSearchDetailPageState extends State<OrderSearchDetailPage> {
                     _ActionButton(
                       label: 'Фото перевізного',
                       color: const Color(0xFF38B6CC),
-                      onPressed: () =>
-                          _showPhotoPlaceholder('Фото перевізного'),
+                      onPressed: _captureFacturePhoto,
                     ),
                     _ActionButton(
                       label: 'Друк стікера',
                       color: const Color(0xFF38B6CC),
-                      onPressed: () => _showPhotoPlaceholder('Друк стікера'),
+                      onPressed: () => _showMessage(
+                          'Функція друку буде підключена окремо.',
+                          title: 'Print'),
                     ),
                     _ActionButton(
                       label: 'Фото прийома',
                       color: const Color(0xFF38B6CC),
-                      onPressed: () => _showPhotoPlaceholder('Фото прийома'),
+                      onPressed: _captureReceivePhoto,
                     ),
                     _ActionButton(
                       label: trableLabel,
@@ -359,11 +362,13 @@ class _OrderSearchDetailPageState extends State<OrderSearchDetailPage> {
                               ),
                               enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.zero,
-                                borderSide: BorderSide(color: Color(0xFF8E8E8E)),
+                                borderSide:
+                                    BorderSide(color: Color(0xFF8E8E8E)),
                               ),
                               focusedBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.zero,
-                                borderSide: BorderSide(color: Color(0xFF1877F2)),
+                                borderSide:
+                                    BorderSide(color: Color(0xFF1877F2)),
                               ),
                               hintText: '0.00',
                               contentPadding: EdgeInsets.symmetric(

@@ -75,7 +75,8 @@ class OrderDetailsPreviewPage extends StatelessWidget {
             ),
           ),
           TextButton(
-            onPressed: () => _showPlaceholder(context, 'Перехід на сайт продавця'),
+            onPressed: () =>
+                _showPlaceholder(context, 'Перехід на сайт продавця'),
             child: const Text(
               'Перехід на сайт продавця',
               style: TextStyle(fontSize: 18),

@@ -5,7 +5,7 @@ import 'package:mobile_app_flutter/features/manifest/presentation/manifest_list_
 import 'package:mobile_app_flutter/features/order_search/domain/work_mode.dart';
 import 'package:mobile_app_flutter/features/order_search/presentation/order_search_page.dart';
 
-class WorkMenuPage extends StatelessWidget {
+class WorkMenuPage extends StatefulWidget {
   const WorkMenuPage({
     super.key,
     required this.user,
@@ -14,6 +14,22 @@ class WorkMenuPage extends StatelessWidget {
 
   final AuthUser user;
   final AppServices services;
+
+  @override
+  State<WorkMenuPage> createState() => _WorkMenuPageState();
+}
+
+class _WorkMenuPageState extends State<WorkMenuPage> {
+  WorkMode? _selectedMode;
+
+  Future<void> _openMode(WorkMode mode, Widget page) async {
+    setState(() {
+      _selectedMode = mode;
+    });
+    await Navigator.of(context).push(
+      MaterialPageRoute<void>(builder: (_) => page),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +42,7 @@ class WorkMenuPage extends StatelessWidget {
         scrolledUnderElevation: 0,
         centerTitle: true,
         title: Text(
-          user.displayName,
+          widget.user.displayName,
           style: const TextStyle(
             fontWeight: FontWeight.w600,
             fontSize: 18,
@@ -53,65 +69,55 @@ class WorkMenuPage extends StatelessWidget {
           const SizedBox(height: 8),
           _LegacyMenuButton(
             title: 'Прийняти замовлення',
-            onTap: () {
-              Navigator.of(context).push(
-                MaterialPageRoute<void>(
-                  builder: (_) => OrderSearchPage(
-                    services: services,
-                    mode: WorkMode.receive,
-                  ),
-                ),
-              );
-            },
+            enabled: _selectedMode != WorkMode.receive,
+            onTap: () => _openMode(
+              WorkMode.receive,
+              OrderSearchPage(
+                services: widget.services,
+                mode: WorkMode.receive,
+              ),
+            ),
           ),
           _LegacyMenuButton(
             title: 'Розпакувати',
-            onTap: () {
-              Navigator.of(context).push(
-                MaterialPageRoute<void>(
-                  builder: (_) => OrderSearchPage(
-                    services: services,
-                    mode: WorkMode.unpack,
-                  ),
-                ),
-              );
-            },
+            enabled: _selectedMode != WorkMode.unpack,
+            onTap: () => _openMode(
+              WorkMode.unpack,
+              OrderSearchPage(
+                services: widget.services,
+                mode: WorkMode.unpack,
+              ),
+            ),
           ),
           _LegacyMenuButton(
             title: 'Передрукувати',
-            onTap: () {
-              Navigator.of(context).push(
-                MaterialPageRoute<void>(
-                  builder: (_) => OrderSearchPage(
-                    services: services,
-                    mode: WorkMode.reprint,
-                  ),
-                ),
-              );
-            },
+            enabled: _selectedMode != WorkMode.reprint,
+            onTap: () => _openMode(
+              WorkMode.reprint,
+              OrderSearchPage(
+                services: widget.services,
+                mode: WorkMode.reprint,
+              ),
+            ),
           ),
           _LegacyMenuButton(
             title: 'Формування маніфесту',
-            onTap: () {
-              Navigator.of(context).push(
-                MaterialPageRoute<void>(
-                  builder: (_) => const ManifestListPage(),
-                ),
-              );
-            },
+            enabled: _selectedMode != WorkMode.manifest,
+            onTap: () => _openMode(
+              WorkMode.manifest,
+              const ManifestListPage(),
+            ),
           ),
           _LegacyMenuButton(
             title: 'Деталі замовлення (PL)',
-            onTap: () {
-              Navigator.of(context).push(
-                MaterialPageRoute<void>(
-                  builder: (_) => OrderSearchPage(
-                    services: services,
-                    mode: WorkMode.details,
-                  ),
-                ),
-              );
-            },
+            enabled: _selectedMode != WorkMode.details,
+            onTap: () => _openMode(
+              WorkMode.details,
+              OrderSearchPage(
+                services: widget.services,
+                mode: WorkMode.details,
+              ),
+            ),
           ),
         ],
       ),
@@ -122,10 +128,12 @@ class WorkMenuPage extends StatelessWidget {
 class _LegacyMenuButton extends StatelessWidget {
   const _LegacyMenuButton({
     required this.title,
+    required this.enabled,
     required this.onTap,
   });
 
   final String title;
+  final bool enabled;
   final VoidCallback onTap;
 
   @override
@@ -136,10 +144,12 @@ class _LegacyMenuButton extends StatelessWidget {
         height: 52,
         width: double.infinity,
         child: FilledButton(
-          onPressed: onTap,
+          onPressed: enabled ? onTap : null,
           style: FilledButton.styleFrom(
             backgroundColor: const Color(0xFF1877F2),
             foregroundColor: Colors.white,
+            disabledBackgroundColor: const Color(0xFF1877F2),
+            disabledForegroundColor: Colors.white38,
             shape: const RoundedRectangleBorder(),
             padding: const EdgeInsets.symmetric(horizontal: 16),
             textStyle: const TextStyle(

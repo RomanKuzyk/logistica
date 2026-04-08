@@ -173,6 +173,10 @@
   - binary upload у S3/Amplify
   - лише потім `SAVE_PHOTO`
 - Отже `RESIVE_ORDER_BUY` end-to-end навмисно не замикається фальшивим local stub без завершення media path.
+- Для Flutter прийнято окреме правило compatibility:
+  - Flutter хендлить backend помилки так, як вони приходять зараз;
+  - `errorsstack` трактується як string;
+  - legacy iOS-specific compatibility object для `errorsstack.message` не переноситься.
 - Робочий Android artifact зараз збирається у:
   - `build/app/outputs/flutter-apk/app-debug.apk`
 - Для локальних збірок використовується:
@@ -186,3 +190,14 @@
 - Зафіксовано окремо legacy alert contract:
   - operator-facing flows у legacy iOS app майже всюди використовують modal alerts;
   - `SnackBar`-орієнтована поведінка не відповідає legacy parity.
+- Для Flutter media path обрано такий контракт:
+  - official `amplify_flutter` + `amplify_auth_cognito` + `amplify_storage_s3`
+  - без зміни існуючого Cognito Identity Pool / S3 bucket contract
+  - background magic від Amplify не очікується;
+  - замість цього використовується власна local pending-upload queue.
+- Для receive detail уже підключено:
+  - camera capture через `image_picker`
+  - PNG normalization до 1024px width
+  - upload у S3
+  - `SAVE_PHOTO`
+  - manual sync pending uploads із settings screen

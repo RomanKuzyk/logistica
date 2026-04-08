@@ -36,6 +36,7 @@ class _AuthGatePageState extends State<AuthGatePage> {
         builder: (_) => SettingsPage(
           settingsStore: widget.services.settingsStore,
           authController: _controller,
+          mediaService: widget.services.mediaService,
         ),
       ),
     );
@@ -144,7 +145,8 @@ class _AuthGatePageState extends State<AuthGatePage> {
       case AuthStatus.startingWork:
         final user = _controller.currentUser;
         return _StartScreen(
-          buttonLabel: user == null ? 'Розпочати' : 'Розпочати: ${user.displayName}',
+          buttonLabel:
+              user == null ? 'Розпочати' : 'Розпочати: ${user.displayName}',
           appVersionLabel: widget.services.appVersionLabel,
           helperText:
               'Для початку використання програми\nбудь ласка, відскануйте qr код з особистого кабінету',

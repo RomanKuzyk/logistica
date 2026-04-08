@@ -3,5 +3,8 @@
   "GC_API_USER": "replace_me",
   "GC_API_PASSWORD": "replace_me",
   "GC_API_SALT": "replace_me",
+  "GC_AWS_REGION": "replace_me",
+  "GC_AWS_IDENTITY_POOL_ID": "replace_me",
+  "GC_AWS_STORAGE_BUCKET": "replace_me",
   "GC_ALLOW_DEMO_MODE": "true"
 }

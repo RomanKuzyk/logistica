@@ -84,8 +84,7 @@ class _OrderSearchPageState extends State<OrderSearchPage> {
         showLegacyAlertDialog(
           context,
           title: 'Errors',
-          message:
-              'Ми нічого не знайшли по вказаним умовам пошуку! \n$query',
+          message: 'Ми нічого не знайшли по вказаним умовам пошуку! \n$query',
         );
       case OrderSearchStatus.loaded:
         final List<OrderBuySearchItem> results = _controller.results;
@@ -95,7 +94,8 @@ class _OrderSearchPageState extends State<OrderSearchPage> {
               builder: (_) => switch (widget.mode) {
                 WorkMode.unpack => UnpackingSummaryPage(order: results.first),
                 WorkMode.reprint => ReprintActionPage(order: results.first),
-                WorkMode.details => OrderDetailsPreviewPage(order: results.first),
+                WorkMode.details =>
+                  OrderDetailsPreviewPage(order: results.first),
                 _ => OrderSearchDetailPage(
                     order: results.first,
                     services: widget.services,
@@ -164,17 +164,19 @@ class _OrderSearchPageState extends State<OrderSearchPage> {
             children: <Widget>[
               Container(
                 color: const Color(0xFFF0F0F0),
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 18),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 18),
                 child: Column(
                   children: <Widget>[
                     Text(
                       widget.mode.title.toUpperCase(),
                       textAlign: TextAlign.center,
-                      style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                            fontSize: 22,
-                            fontWeight: FontWeight.w500,
-                            color: const Color(0xFF2B2B2B),
-                          ),
+                      style:
+                          Theme.of(context).textTheme.headlineSmall?.copyWith(
+                                fontSize: 22,
+                                fontWeight: FontWeight.w500,
+                                color: const Color(0xFF2B2B2B),
+                              ),
                     ),
                     const SizedBox(height: 8),
                     Text(

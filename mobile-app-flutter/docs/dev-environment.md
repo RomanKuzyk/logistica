@@ -40,6 +40,17 @@ Docker добре підходить для:
 cp config/dart_defines.example.json config/dart_defines.local.json
 ```
 
+У локальному файлі мають бути:
+- API contract variables:
+  - `GC_API_URL`
+  - `GC_API_USER`
+  - `GC_API_PASSWORD`
+  - `GC_API_SALT`
+- AWS media variables:
+  - `GC_AWS_REGION`
+  - `GC_AWS_IDENTITY_POOL_ID`
+  - `GC_AWS_STORAGE_BUCKET`
+
 ### Відкрити shell у контейнері
 ```bash
 docker compose run --rm flutter

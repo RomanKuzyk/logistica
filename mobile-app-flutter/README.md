@@ -13,6 +13,12 @@
   - scanner capture route;
   - parity-oriented receive order search/list/detail flow для `ORDER_BUY_SEARCH`;
   - `ORDER_LIST`, `TRABLES_LIST`, `REJECT_ORDER_BUY` та local receive validations.
+  - official Amplify-based S3 media path для Flutter:
+    - camera capture
+    - PNG normalization
+    - direct upload to existing AWS bucket
+    - `SAVE_PHOTO`
+    - local pending-upload queue + manual sync із settings
   - перший робочий Android debug APK, зібраний через Docker.
 - Flutter SDK на host усе ще не встановлений, але проект уже можна валідувати і збирати через Docker.
 
@@ -41,10 +47,10 @@
 
 ## Найближчі кроки
 1. Дозвірити весь screenshot baseline `01–12` до повного visual parity.
-2. Підключити legacy `SAVE_PHOTO` / S3 media upload flow.
-3. Замкнути `RESIVE_ORDER_BUY` end-to-end після photo parity.
-4. Перенести unpacking flow.
-5. Підтягнути решту work menu flows без redesign.
+2. Добити receive detail UI parity після реального media path.
+3. Перенести unpacking flow end-to-end.
+4. Підтягнути reprint/manifest/details backend parity.
+5. Добити решту work menu flows без redesign.
 
 ## Поточний Android artifact
 - Debug APK збирається в:
@@ -59,6 +65,9 @@
   - `GC_API_USER`
   - `GC_API_PASSWORD`
   - `GC_API_SALT`
+  - `GC_AWS_REGION`
+  - `GC_AWS_IDENTITY_POOL_ID`
+  - `GC_AWS_STORAGE_BUCKET`
 - Без них проект лишається валідним як scaffold і UI shell, але network auth flow завершиться конфігураційною помилкою.
 - Практичний dev-варіант:
   1. скопіювати `config/dart_defines.example.json`

@@ -76,6 +76,14 @@
   - unpacking summary/item UI shells
   - reprint action shell
   - manifest list/scan shells
+- Для media parity уже підключено:
+  - official Amplify Flutter auth/storage stack під існуючий Cognito/S3 contract
+  - camera capture
+  - PNG normalization
+  - direct upload to S3
+  - `SAVE_PHOTO`
+  - local pending-upload queue
+  - manual sync через settings
 - Зібрано перший робочий Android debug APK з локальними `dart-define`.
 - `01–12` screenshot batch уже суттєво підтягнуто по візуальному parity; далі лишається добивати receive media path і наступні flow.
 - Підтверджено, що в host-середовищі відсутні `flutter` і `dart`, але Docker toolchain уже достатній для базової валідації.
@@ -88,10 +96,10 @@
 
 ### Найближчі практичні задачі
 - Дозвірити весь screenshot baseline `01–12` до повного visual parity.
-- Додати legacy S3/media upload flow для `SAVE_PHOTO`.
-- Замкнути `RESIVE_ORDER_BUY` end-to-end після media parity.
-- Перенести unpacking flow.
-- Почати Android MVP за execution backlog з `mobile-app-ios/docs/flutter-screen-mapping-and-backlog.md`.
+- Дозавершити receive detail end-to-end на реальному девайсі після media parity.
+- Перенести unpacking flow end-to-end.
+- Підтягнути reprint/manifest/details backend parity.
+- Продовжити Android MVP за execution backlog з `mobile-app-ios/docs/flutter-screen-mapping-and-backlog.md`.
 
 ## 4) `BAF / 1C`
 

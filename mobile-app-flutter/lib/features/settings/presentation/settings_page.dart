@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_app_flutter/core/media/legacy_media_service.dart';
 import 'package:mobile_app_flutter/core/storage/local_settings_store.dart';
 import 'package:mobile_app_flutter/features/auth/presentation/auth_controller.dart';
 import 'package:mobile_app_flutter/shared/widgets/legacy_alert_dialog.dart';
@@ -8,10 +9,12 @@ class SettingsPage extends StatefulWidget {
     super.key,
     required this.settingsStore,
     required this.authController,
+    required this.mediaService,
   });
 
   final LocalSettingsStore settingsStore;
   final AuthController authController;
+  final LegacyMediaService mediaService;
 
   @override
   State<SettingsPage> createState() => _SettingsPageState();
@@ -50,10 +53,15 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 
   Future<void> _syncNow() async {
+    final summary = await widget.mediaService.syncPendingUploads();
+    if (!mounted) {
+      return;
+    }
     await showLegacyAlertDialog(
       context,
       title: 'Information',
-      message: 'Розпочата сінхронізація ..',
+      message:
+          'Сінхронізація завершена.\nУспішно: ${summary.succeeded}\nПомилок: ${summary.failed}\nЗалишилось: ${summary.remaining}',
     );
   }
 
@@ -143,7 +151,8 @@ class _SettingsPageState extends State<SettingsPage> {
                 borderRadius: BorderRadius.zero,
                 borderSide: BorderSide(color: Color(0xFF1877F2)),
               ),
-              contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+              contentPadding:
+                  EdgeInsets.symmetric(horizontal: 10, vertical: 10),
             ),
             onChanged: (_) => _persistSilently(),
           ),
@@ -181,7 +190,8 @@ class _SettingsPageState extends State<SettingsPage> {
                 borderRadius: BorderRadius.zero,
                 borderSide: BorderSide(color: Color(0xFF1877F2)),
               ),
-              contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+              contentPadding:
+                  EdgeInsets.symmetric(horizontal: 10, vertical: 10),
             ),
             keyboardType: TextInputType.number,
             onChanged: (_) => _persistSilently(),
@@ -190,7 +200,7 @@ class _SettingsPageState extends State<SettingsPage> {
           SizedBox(
             height: 46,
             child: FilledButton(
-            onPressed: _busy ? null : _syncNow,
+              onPressed: _busy ? null : _syncNow,
               style: FilledButton.styleFrom(
                 backgroundColor: const Color(0xFF1877F2),
                 foregroundColor: Colors.white,
