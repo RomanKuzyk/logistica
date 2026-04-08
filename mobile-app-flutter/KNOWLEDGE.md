@@ -59,6 +59,7 @@
 - `docs/dev-environment.md`
 - `docs/app-architecture.md`
 - `docs/full-migration-rollout-plan.md`
+- `docs/legacy-alert-and-validation-patterns.md`
 - Legacy migration docs:
   - `../mobile-app-ios/docs/flutter-android-migration-plan.md`
   - `../mobile-app-ios/docs/flutter-screen-mapping-and-backlog.md`
@@ -182,3 +183,6 @@
   - потім interaction parity;
   - потім backend parity;
   - без нового функціоналу і без redesign.
+- Зафіксовано окремо legacy alert contract:
+  - operator-facing flows у legacy iOS app майже всюди використовують modal alerts;
+  - `SnackBar`-орієнтована поведінка не відповідає legacy parity.

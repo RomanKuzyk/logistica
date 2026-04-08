@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_app_flutter/features/order_search/domain/order_buy_search_item.dart';
+import 'package:mobile_app_flutter/shared/widgets/legacy_alert_dialog.dart';
 
 class UnpackingItemPage extends StatefulWidget {
   const UnpackingItemPage({
@@ -20,8 +21,10 @@ class _UnpackingItemPageState extends State<UnpackingItemPage> {
   bool noDocumentsEnabled = false;
 
   void _showPlaceholder(String label) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('$label буде підключено наступним кроком.')),
+    showLegacyAlertDialog(
+      context,
+      title: 'Information',
+      message: '$label буде підключено наступним кроком.',
     );
   }
 

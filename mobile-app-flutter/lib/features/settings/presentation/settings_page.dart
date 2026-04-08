@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_app_flutter/core/storage/local_settings_store.dart';
 import 'package:mobile_app_flutter/features/auth/presentation/auth_controller.dart';
+import 'package:mobile_app_flutter/shared/widgets/legacy_alert_dialog.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({
@@ -49,8 +50,10 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 
   Future<void> _syncNow() async {
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Розпочата сінхронізація ..')),
+    await showLegacyAlertDialog(
+      context,
+      title: 'Information',
+      message: 'Розпочата сінхронізація ..',
     );
   }
 

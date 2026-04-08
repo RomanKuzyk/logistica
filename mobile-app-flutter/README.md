@@ -37,6 +37,7 @@
 - `docs/dev-environment.md`
 - `docs/app-architecture.md`
 - `docs/full-migration-rollout-plan.md`
+- `docs/legacy-alert-and-validation-patterns.md`
 
 ## Найближчі кроки
 1. Дозвірити весь screenshot baseline `01–12` до повного visual parity.

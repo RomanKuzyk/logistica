@@ -10,6 +10,7 @@ import 'package:mobile_app_flutter/features/order_search/presentation/order_sear
 import 'package:mobile_app_flutter/features/order_search/presentation/order_search_detail_page.dart';
 import 'package:mobile_app_flutter/features/order_search/presentation/unpacking_summary_page.dart';
 import 'package:mobile_app_flutter/features/scanner_capture/presentation/scanner_capture_page.dart';
+import 'package:mobile_app_flutter/shared/widgets/legacy_alert_dialog.dart';
 
 class OrderSearchPage extends StatefulWidget {
   const OrderSearchPage({
@@ -72,15 +73,19 @@ class _OrderSearchPageState extends State<OrderSearchPage> {
       case OrderSearchStatus.error:
         final String? message = _controller.errorMessage;
         if (message != null && message.isNotEmpty) {
-          ScaffoldMessenger.of(context)
-              .showSnackBar(SnackBar(content: Text(message)));
+          showLegacyAlertDialog(
+            context,
+            title: 'Errors',
+            message: 'Error : $message',
+          );
         }
       case OrderSearchStatus.empty:
         final String query = _controller.normalizedQuery;
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-              content: Text(
-                  'Ми нічого не знайшли по вказаним умовам пошуку.\n$query')),
+        showLegacyAlertDialog(
+          context,
+          title: 'Errors',
+          message:
+              'Ми нічого не знайшли по вказаним умовам пошуку! \n$query',
         );
       case OrderSearchStatus.loaded:
         final List<OrderBuySearchItem> results = _controller.results;
