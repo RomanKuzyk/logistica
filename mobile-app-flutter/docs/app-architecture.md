@@ -112,7 +112,9 @@ Flutter implementation strategy:
 2. auth/registration
 3. settings
 4. work menu shell
-5. receive order shell
+5. scanner capture
+6. receive order search shell
+7. receive detail and media flow
 
 ## Поточний статус реалізації
 - Уже імплементовано:
@@ -124,12 +126,23 @@ Flutter implementation strategy:
   - `AuthRepository`
   - `AuthController`
   - `AuthGatePage`
-  - `RegistrationPage`
   - `SettingsPage`
   - `WorkMenuPage`
+  - `ScannerCapturePage`
+  - `OrderSearchRepository`
+  - `OrderSearchController`
+  - `OrderSearchPage`
+  - `OrderResultListPage`
+  - `OrderSearchDetailPage`
+  - `ReceiveOrderRepository`
+  - `OrderSearchDetailController`
+  - `OrderItemListPage`
+  - `TrablePickerPage`
+- Поточний UI шар для bootstrap/settings/work menu/receive search ведеться з explicit орієнтацією на legacy screenshot parity `01–12`, без redesign.
+- Перший Android debug APK уже збирається через Docker toolchain.
 - Ще не імплементовано:
-  - camera/scanner integration
-  - receive order flow
+  - receive detail media workflow (`SAVE_PHOTO` + S3 upload path)
+  - повний `RESIVE_ORDER_BUY` media-dependent path
   - media upload flow
   - manifest flow
   - printer integration

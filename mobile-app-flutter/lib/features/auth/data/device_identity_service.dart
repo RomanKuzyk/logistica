@@ -6,7 +6,8 @@ import 'package:mobile_app_flutter/core/logging/app_logger.dart';
 import 'package:mobile_app_flutter/core/storage/local_settings_store.dart';
 
 class DeviceIdentityService {
-  DeviceIdentityService({required LocalSettingsStore settingsStore, required AppLogger logger})
+  DeviceIdentityService(
+      {required LocalSettingsStore settingsStore, required AppLogger logger})
       : _settingsStore = settingsStore,
         _logger = logger;
 
@@ -32,7 +33,8 @@ class DeviceIdentityService {
         }
       }
     } catch (error, stackTrace) {
-      _logger.warning('Falling back to installation ID', error: error, stackTrace: stackTrace);
+      _logger.warning('Falling back to installation ID',
+          error: error, stackTrace: stackTrace);
     }
 
     return _settingsStore.getOrCreateInstallationId();

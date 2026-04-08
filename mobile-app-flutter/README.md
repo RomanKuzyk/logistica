@@ -9,8 +9,12 @@
   - Flutter application scaffold;
   - `android/` і `ios/` platform folders;
   - Docker-based build environment;
-  - базовий application layer для auth/bootstrap/settings/work menu shell.
-- Flutter SDK на host усе ще не встановлений, але проект уже можна валідувати через Docker.
+  - базовий application layer для auth/bootstrap/settings/work menu shell;
+  - scanner capture route;
+  - parity-oriented receive order search/list/detail flow для `ORDER_BUY_SEARCH`;
+  - `ORDER_LIST`, `TRABLES_LIST`, `REJECT_ORDER_BUY` та local receive validations.
+  - перший робочий Android debug APK, зібраний через Docker.
+- Flutter SDK на host усе ще не встановлений, але проект уже можна валідувати і збирати через Docker.
 
 ## Вхідні дані для rewrite
 - Legacy iOS baseline: `../mobile-app-ios/`
@@ -34,10 +38,17 @@
 - `docs/app-architecture.md`
 
 ## Найближчі кроки
-1. Доробити feature-level implementation після auth/bootstrap shell.
-2. Додати scanner capture flow.
-3. Додати receive order flow (`ORDER_BUY_SEARCH` / `RESIVE_ORDER_BUY`).
-4. Підключити media upload і printer integration.
+1. Підключити legacy `SAVE_PHOTO` / S3 media upload flow.
+2. Замкнути `RESIVE_ORDER_BUY` end-to-end після photo parity.
+3. Перенести unpacking flow.
+4. Підключити printer integration.
+5. Підтягнути решту work menu flows без redesign.
+
+## Поточний Android artifact
+- Debug APK збирається в:
+  - `build/app/outputs/flutter-apk/app-debug.apk`
+- APK збирається з локальними `dart-define` через:
+  - `config/dart_defines.local.json`
 
 ## Конфігурація
 - API secrets не закомічені в repo.

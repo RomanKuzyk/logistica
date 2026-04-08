@@ -59,7 +59,8 @@ class AuthRepository {
       parameter: userId,
     );
 
-    final String name = items.isEmpty ? '' : (items.first['name']?.toString() ?? '');
+    final String name =
+        items.isEmpty ? '' : (items.first['name']?.toString() ?? '');
     _logger.info('Loaded employee profile for $userId');
 
     return AuthUser(

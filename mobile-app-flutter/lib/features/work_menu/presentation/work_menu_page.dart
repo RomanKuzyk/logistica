@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_app_flutter/app/app_services.dart';
 import 'package:mobile_app_flutter/features/auth/domain/auth_user.dart';
-import 'package:mobile_app_flutter/shared/widgets/app_section_card.dart';
+import 'package:mobile_app_flutter/features/order_search/domain/work_mode.dart';
+import 'package:mobile_app_flutter/features/order_search/presentation/order_search_page.dart';
 
 class WorkMenuPage extends StatelessWidget {
-  const WorkMenuPage({super.key, required this.user});
+  const WorkMenuPage({
+    super.key,
+    required this.user,
+    required this.services,
+  });
 
   final AuthUser user;
+  final AppServices services;
 
   void _showPlaceholder(BuildContext context, String feature) {
     ScaffoldMessenger.of(context).showSnackBar(
@@ -16,46 +23,107 @@ class WorkMenuPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Work')),
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        foregroundColor: Colors.black87,
+        elevation: 0,
+        scrolledUnderElevation: 0,
+        centerTitle: true,
+        title: Text(
+          user.displayName,
+          style: const TextStyle(
+            fontWeight: FontWeight.w600,
+            fontSize: 18,
+          ),
+        ),
+      ),
       body: ListView(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.fromLTRB(16, 28, 16, 16),
         children: <Widget>[
-          Text(
-            user.displayName.isEmpty ? 'Розпочати роботу' : 'Розпочати: ${user.displayName.toUpperCase()}',
-            style: Theme.of(context).textTheme.headlineSmall,
+          Container(
+            height: 46,
+            alignment: Alignment.center,
+            color: const Color(0xFFF0F0F0),
+            child: const Text(
+              'Оберіть дію',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.w400,
+                color: Colors.black87,
+              ),
+            ),
           ),
-          const SizedBox(height: 16),
-          AppSectionCard(
-            title: 'Receive order',
-            subtitle: 'ORDER_BUY_SEARCH / RESIVE_ORDER_BUY',
-            icon: Icons.inventory_2_outlined,
-            onTap: () => _showPlaceholder(context, 'Receive order'),
+          const SizedBox(height: 8),
+          _LegacyMenuButton(
+            title: 'Прийняти замовлення',
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute<void>(
+                  builder: (_) => OrderSearchPage(
+                    services: services,
+                    mode: WorkMode.receive,
+                  ),
+                ),
+              );
+            },
           ),
-          AppSectionCard(
-            title: 'Unpacking',
-            subtitle: 'ORDER_BUY_SEARCH_UNPACKING / UNPACKING_ORDER_BUY',
-            icon: Icons.unarchive_outlined,
+          _LegacyMenuButton(
+            title: 'Розпакувати',
             onTap: () => _showPlaceholder(context, 'Unpacking'),
           ),
-          AppSectionCard(
-            title: 'Reprint',
-            subtitle: 'Print and label re-issue flow',
-            icon: Icons.print_outlined,
+          _LegacyMenuButton(
+            title: 'Передрукувати',
             onTap: () => _showPlaceholder(context, 'Reprint'),
           ),
-          AppSectionCard(
-            title: 'Order details',
-            subtitle: 'Read-only order information flow',
-            icon: Icons.info_outline,
-            onTap: () => _showPlaceholder(context, 'Order details'),
-          ),
-          AppSectionCard(
-            title: 'Manifest',
-            subtitle: 'LIST_OPEN_MANIFEST / MANIFEST_ADD_DELETE',
-            icon: Icons.qr_code_scanner_outlined,
+          _LegacyMenuButton(
+            title: 'Формування маніфесту',
             onTap: () => _showPlaceholder(context, 'Manifest'),
           ),
+          _LegacyMenuButton(
+            title: 'Деталі замовлення (PL)',
+            onTap: () => _showPlaceholder(context, 'Order details'),
+          ),
         ],
+      ),
+    );
+  }
+}
+
+class _LegacyMenuButton extends StatelessWidget {
+  const _LegacyMenuButton({
+    required this.title,
+    required this.onTap,
+  });
+
+  final String title;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8),
+      child: SizedBox(
+        height: 52,
+        width: double.infinity,
+        child: FilledButton(
+          onPressed: onTap,
+          style: FilledButton.styleFrom(
+            backgroundColor: const Color(0xFF1877F2),
+            foregroundColor: Colors.white,
+            shape: const RoundedRectangleBorder(),
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            textStyle: const TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.w400,
+            ),
+          ),
+          child: Text(
+            title,
+            textAlign: TextAlign.center,
+          ),
+        ),
       ),
     );
   }

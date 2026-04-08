@@ -14,9 +14,11 @@ class AppConfig {
         defaultValue: 'https://api.globalcars.com.ua/api/v1',
       ),
       apiUser: const String.fromEnvironment('GC_API_USER', defaultValue: ''),
-      apiPassword: const String.fromEnvironment('GC_API_PASSWORD', defaultValue: ''),
+      apiPassword:
+          const String.fromEnvironment('GC_API_PASSWORD', defaultValue: ''),
       apiSalt: const String.fromEnvironment('GC_API_SALT', defaultValue: ''),
-      allowDemoMode: const bool.fromEnvironment('GC_ALLOW_DEMO_MODE', defaultValue: true),
+      allowDemoMode:
+          const bool.fromEnvironment('GC_ALLOW_DEMO_MODE', defaultValue: true),
     );
   }
 

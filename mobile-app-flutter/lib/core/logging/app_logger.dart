@@ -4,7 +4,8 @@ class AppLogger {
   const AppLogger();
 
   void info(String message, {Object? error, StackTrace? stackTrace}) {
-    developer.log(message, name: 'mobile-app-flutter', error: error, stackTrace: stackTrace);
+    developer.log(message,
+        name: 'mobile-app-flutter', error: error, stackTrace: stackTrace);
   }
 
   void warning(String message, {Object? error, StackTrace? stackTrace}) {

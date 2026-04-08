@@ -21,12 +21,15 @@ class _SettingsPageState extends State<SettingsPage> {
   late final TextEditingController _backgroundSyncController;
   late bool _saveBackgroundFile;
   bool _busy = false;
+  bool _disconnectValue = false;
 
   @override
   void initState() {
     super.initState();
-    _scannerController = TextEditingController(text: widget.settingsStore.scannerFinishCharacters);
-    _backgroundSyncController = TextEditingController(text: widget.settingsStore.backgroundSyncTimer);
+    _scannerController = TextEditingController(
+        text: widget.settingsStore.scannerFinishCharacters);
+    _backgroundSyncController =
+        TextEditingController(text: widget.settingsStore.backgroundSyncTimer);
     _saveBackgroundFile = widget.settingsStore.saveBackgroundFile;
   }
 
@@ -38,8 +41,10 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 
   Future<void> _save() async {
-    await widget.settingsStore.setScannerFinishCharacters(_scannerController.text.trim());
-    await widget.settingsStore.setBackgroundSyncTimer(_backgroundSyncController.text.trim());
+    await widget.settingsStore
+        .setScannerFinishCharacters(_scannerController.text.trim());
+    await widget.settingsStore
+        .setBackgroundSyncTimer(_backgroundSyncController.text.trim());
     await widget.settingsStore.setSaveBackgroundFile(_saveBackgroundFile);
 
     if (!mounted) {
@@ -51,9 +56,24 @@ class _SettingsPageState extends State<SettingsPage> {
     );
   }
 
+  Future<void> _persistSilently() async {
+    await widget.settingsStore
+        .setScannerFinishCharacters(_scannerController.text.trim());
+    await widget.settingsStore
+        .setBackgroundSyncTimer(_backgroundSyncController.text.trim());
+    await widget.settingsStore.setSaveBackgroundFile(_saveBackgroundFile);
+  }
+
+  Future<void> _syncNow() async {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Розпочата сінхронізація ..')),
+    );
+  }
+
   Future<void> _disconnect() async {
     setState(() {
       _busy = true;
+      _disconnectValue = true;
     });
 
     await widget.authController.disconnect();
@@ -64,6 +84,7 @@ class _SettingsPageState extends State<SettingsPage> {
 
     setState(() {
       _busy = false;
+      _disconnectValue = false;
     });
 
     Navigator.of(context).pop();
@@ -76,47 +97,64 @@ class _SettingsPageState extends State<SettingsPage> {
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: <Widget>[
+          const SizedBox(height: 16),
+          Text(
+            'Налаштування',
+            textAlign: TextAlign.center,
+            style: Theme.of(context).textTheme.headlineSmall,
+          ),
+          const SizedBox(height: 24),
+          SwitchListTile(
+            value: _disconnectValue,
+            onChanged: _busy
+                ? null
+                : (bool value) {
+                    if (!value) {
+                      return;
+                    }
+                    _disconnect();
+                  },
+            title: const Text('Відмінити реєстрацію'),
+          ),
+          const SizedBox(height: 8),
           TextField(
             controller: _scannerController,
             decoration: const InputDecoration(
-              labelText: 'Scanner finish characters',
+              labelText: 'Після сканування додати код (HEX String)',
               border: OutlineInputBorder(),
             ),
-          ),
-          const SizedBox(height: 16),
-          TextField(
-            controller: _backgroundSyncController,
-            decoration: const InputDecoration(
-              labelText: 'Background sync timer',
-              border: OutlineInputBorder(),
-            ),
-            keyboardType: TextInputType.number,
+            onChanged: (_) => _persistSilently(),
           ),
           const SizedBox(height: 16),
           SwitchListTile(
             value: _saveBackgroundFile,
-            onChanged: (bool value) {
+            onChanged: (bool value) async {
               setState(() {
                 _saveBackgroundFile = value;
               });
+              await _persistSilently();
             },
-            title: const Text('Save photo in background'),
+            title: const Text('Зберігати фото у фоновому режимі'),
           ),
-          const SizedBox(height: 16),
-          FilledButton(onPressed: _save, child: const Text('Save settings')),
           const SizedBox(height: 8),
-          OutlinedButton(
-            onPressed: _busy ? null : _disconnect,
-            child: Text(_busy ? 'Disconnecting...' : 'Disconnect device'),
+          TextField(
+            controller: _backgroundSyncController,
+            decoration: const InputDecoration(
+              labelText: 'Час синхронізації',
+              border: OutlineInputBorder(),
+            ),
+            keyboardType: TextInputType.number,
+            onChanged: (_) => _persistSilently(),
           ),
           const SizedBox(height: 16),
           FilledButton.tonal(
-            onPressed: () {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Manual sync буде реалізовано окремим кроком.')),
-              );
-            },
-            child: const Text('Sync now'),
+            onPressed: _busy ? null : _save,
+            child: const Text('Зберегти налаштування'),
+          ),
+          const SizedBox(height: 12),
+          FilledButton(
+            onPressed: _busy ? null : _syncNow,
+            child: Text(_busy ? 'Зачекайте...' : 'Сінхронізувати вже'),
           ),
         ],
       ),

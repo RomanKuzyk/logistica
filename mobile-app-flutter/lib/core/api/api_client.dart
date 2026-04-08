@@ -19,6 +19,8 @@ class ApiClient {
   final ApiSigner _signer;
   final http.Client _httpClient;
 
+  AppLogger get logger => _logger;
+
   Future<List<Map<String, dynamic>>> execute({
     required String function,
     required String parameter,
@@ -49,28 +51,35 @@ class ApiClient {
     try {
       response = await _httpClient.post(
         uri,
-        headers: const <String, String>{'Content-Type': 'application/json; charset=utf-8'},
+        headers: const <String, String>{
+          'Content-Type': 'application/json; charset=utf-8'
+        },
         body: jsonEncode(envelope),
       );
     } catch (error, stackTrace) {
-      _logger.error('Transport error for $function', error: error, stackTrace: stackTrace);
+      _logger.error('Transport error for $function',
+          error: error, stackTrace: stackTrace);
       throw ApiTransportException('Transport error: $error');
     }
 
     if (response.statusCode < 200 || response.statusCode >= 300) {
-      throw ApiTransportException('HTTP ${response.statusCode}: ${response.body}');
+      throw ApiTransportException(
+          'HTTP ${response.statusCode}: ${response.body}');
     }
 
     final Object? decoded;
     try {
       decoded = jsonDecode(response.body);
     } catch (error, stackTrace) {
-      _logger.error('Failed to decode JSON for $function', error: error, stackTrace: stackTrace);
-      throw const ApiParsingException('Не вдалося розібрати JSON-відповідь backend.');
+      _logger.error('Failed to decode JSON for $function',
+          error: error, stackTrace: stackTrace);
+      throw const ApiParsingException(
+          'Не вдалося розібрати JSON-відповідь backend.');
     }
 
     if (decoded is! Map<String, dynamic>) {
-      throw const ApiParsingException('Backend повернув неочікуваний JSON-формат.');
+      throw const ApiParsingException(
+          'Backend повернув неочікуваний JSON-формат.');
     }
 
     final bool successful = decoded['successful'] == true;
@@ -78,14 +87,17 @@ class ApiClient {
       final Object? errorsStack = decoded['errorsstack'];
       final String message = switch (errorsStack) {
         String value => value,
-        Map<String, dynamic> map => (map['message'] ?? 'Unknown business error').toString(),
+        Map<String, dynamic> map =>
+          (map['message'] ?? 'Unknown business error').toString(),
         _ => 'Unknown business error',
       };
       throw ApiBusinessException(message);
     }
 
-    final Map<String, dynamic>? executed = decoded['executed'] as Map<String, dynamic>?;
-    final Map<String, dynamic>? result = executed?['result'] as Map<String, dynamic>?;
+    final Map<String, dynamic>? executed =
+        decoded['executed'] as Map<String, dynamic>?;
+    final Map<String, dynamic>? result =
+        executed?['result'] as Map<String, dynamic>?;
     final Object? items = result?['Items'];
 
     if (items == null) {
@@ -93,7 +105,8 @@ class ApiClient {
     }
 
     if (items is! List) {
-      throw const ApiParsingException('Backend повернув неочікуваний тип поля Items.');
+      throw const ApiParsingException(
+          'Backend повернув неочікуваний тип поля Items.');
     }
 
     return items.map((Object? item) {
@@ -101,7 +114,8 @@ class ApiClient {
         return item;
       }
       if (item is Map) {
-        return item.map((dynamic key, dynamic value) => MapEntry(key.toString(), value));
+        return item.map(
+            (dynamic key, dynamic value) => MapEntry(key.toString(), value));
       }
       throw const ApiParsingException('Елемент Items має неочікуваний формат.');
     }).toList();

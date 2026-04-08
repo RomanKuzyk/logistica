@@ -29,6 +29,7 @@
 - Не змінювати бізнес-процеси без окремого плану.
 - Не покладатися на iOS-specific API.
 - Зберігати максимально близьку UX/flow-поведінку до legacy app.
+- Не додавати новий функціонал, якого не було в legacy app.
 
 ## 5) Tooling status
 - У поточному host-середовищі **не встановлені** `flutter` і `dart`.
@@ -80,11 +81,25 @@
   - `AuthController`
 - Реалізовано початкові UI flow:
   - auth/bootstrap gate
-  - registration page
+  - scanner-based registration from start screen
   - settings page
-  - work menu shell
-- Реєстрація нового користувача на цьому етапі підтримує manual employee code entry.
-- QR scanner capture ще не реалізований і залишається окремим наступним кроком.
+  - work menu shell з ближчим legacy parity
+  - scanner capture page
+  - receive order search page
+  - receive order results list
+  - receive order detail flow
+- Перший scanner/search parity already перенесено для receive mode:
+  - підтримані scanner formats `qr`, `code128`, `ean13`, `ean8`, `code39`
+  - перенесено legacy tracking normalization
+  - manual input і scanner input використовують один і той самий пошуковий flow
+  - start screen, settings screen, work menu і receive search screen приведені ближче до `01–12` screenshot parity
+  - receive detail тепер має parity-oriented дії для:
+    - `ORDER_LIST`
+    - `TRABLES_LIST`
+    - `REJECT_ORDER_BUY`
+    - local receive validations (`фото перевізного`, `сума`, `Без НП`)
+  - `Фото перевізного` / `Фото прийома` / `Друк стікера` поки лишаються незавершеними, бо legacy flow залежить від S3 upload + `SAVE_PHOTO`
+  - перший Android debug APK уже збирається через Docker
 
 ## 9) Secret/config strategy
 - Legacy iOS app тримає backend secrets у коді, але Flutter rewrite цього не повторює.
@@ -118,4 +133,26 @@
   - `flutter pub get` — ok
   - `flutter analyze` — ok
   - `flutter test` — ok
-  - `flutter build apk --debug` — розпочато, підтверджено Android-side dependency setup; повний build лишається окремою наступною валідацією
+  - `flutter build apk --debug` — ok
+- Додано перший реальний feature port поверх bootstrap shell:
+  - `features/scanner_capture`
+  - `features/order_search`
+- Для receive mode вже перенесено:
+  - `QRCodeScanner.swift` -> `ScannerCapturePage`
+  - `truncateTracking(...)`
+  - `ORDER_BUY_SEARCH`
+  - branching `0 results / 1 result / many results`
+  - `ORDER_LIST`
+  - `TRABLES_LIST`
+  - `REJECT_ORDER_BUY`
+  - local validations перед `RESIVE_ORDER_BUY`
+- Підтверджено, що повна parity для receive media flow вимагає legacy-compatible шляху:
+  - capture file
+  - binary upload у S3/Amplify
+  - лише потім `SAVE_PHOTO`
+- Отже `RESIVE_ORDER_BUY` end-to-end навмисно не замикається фальшивим local stub без завершення media path.
+- Робочий Android artifact зараз збирається у:
+  - `build/app/outputs/flutter-apk/app-debug.apk`
+- Для локальних збірок використовується:
+  - `config/dart_defines.local.json`
+  - він не комітиться, але його значення вбудовуються в локально зібраний APK.

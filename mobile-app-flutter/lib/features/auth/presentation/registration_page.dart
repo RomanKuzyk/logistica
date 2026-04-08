@@ -54,7 +54,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            Text('Register new user', style: Theme.of(context).textTheme.headlineSmall),
+            Text('Register new user',
+                style: Theme.of(context).textTheme.headlineSmall),
             const SizedBox(height: 8),
             Text(
               'Перший етап порту підтримує ручне введення employee code. QR scanner буде підключений окремим кроком.',

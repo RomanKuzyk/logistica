@@ -36,11 +36,13 @@ class AuthController extends ChangeNotifier {
     try {
       backendVersion = await _services.authRepository.fetchBackendVersion();
     } catch (error, stackTrace) {
-      _services.logger.warning('VERSION lookup failed', error: error, stackTrace: stackTrace);
+      _services.logger.warning('VERSION lookup failed',
+          error: error, stackTrace: stackTrace);
     }
 
     try {
-      final DeviceRegistration registration = await _services.authRepository.checkDeviceRegistration();
+      final DeviceRegistration registration =
+          await _services.authRepository.checkDeviceRegistration();
       deviceId = registration.deviceId;
 
       if (!registration.isRegistered) {
@@ -49,16 +51,19 @@ class AuthController extends ChangeNotifier {
         return;
       }
 
-      currentUser = await _services.authRepository.loadRegisteredUser(registration);
+      currentUser =
+          await _services.authRepository.loadRegisteredUser(registration);
       status = AuthStatus.readyToStart;
       notifyListeners();
     } on ApiException catch (error, stackTrace) {
-      _services.logger.error('Auth bootstrap failed', error: error, stackTrace: stackTrace);
+      _services.logger
+          .error('Auth bootstrap failed', error: error, stackTrace: stackTrace);
       status = AuthStatus.error;
       errorMessage = error.message;
       notifyListeners();
     } catch (error, stackTrace) {
-      _services.logger.error('Unexpected auth bootstrap failure', error: error, stackTrace: stackTrace);
+      _services.logger.error('Unexpected auth bootstrap failure',
+          error: error, stackTrace: stackTrace);
       status = AuthStatus.error;
       errorMessage = error.toString();
       notifyListeners();
@@ -71,16 +76,19 @@ class AuthController extends ChangeNotifier {
     notifyListeners();
 
     try {
-      currentUser = await _services.authRepository.registerDeviceToEmployee(employeeCode.trim());
+      currentUser = await _services.authRepository
+          .registerDeviceToEmployee(employeeCode.trim());
       status = AuthStatus.readyToStart;
       notifyListeners();
     } on ApiException catch (error, stackTrace) {
-      _services.logger.error('Employee registration failed', error: error, stackTrace: stackTrace);
+      _services.logger.error('Employee registration failed',
+          error: error, stackTrace: stackTrace);
       status = AuthStatus.error;
       errorMessage = 'Registered error: ${error.message}';
       notifyListeners();
     } catch (error, stackTrace) {
-      _services.logger.error('Unexpected registration failure', error: error, stackTrace: stackTrace);
+      _services.logger.error('Unexpected registration failure',
+          error: error, stackTrace: stackTrace);
       status = AuthStatus.error;
       errorMessage = 'Registered error: $error';
       notifyListeners();
@@ -97,7 +105,8 @@ class AuthController extends ChangeNotifier {
       currentUser = null;
       await bootstrap();
     } on ApiException catch (error, stackTrace) {
-      _services.logger.error('Disconnect failed', error: error, stackTrace: stackTrace);
+      _services.logger
+          .error('Disconnect failed', error: error, stackTrace: stackTrace);
       status = AuthStatus.error;
       errorMessage = 'Unregistered error: ${error.message}';
       notifyListeners();

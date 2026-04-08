@@ -9,7 +9,8 @@ class ApiSigner {
   final AppConfig _config;
 
   String signRequestJson(String requestJson) {
-    final String payload = '${_config.apiUser}${_config.apiPassword}$requestJson${_config.apiSalt}';
+    final String payload =
+        '${_config.apiUser}${_config.apiPassword}$requestJson${_config.apiSalt}';
     return md5.convert(utf8.encode(payload)).toString();
   }
 }

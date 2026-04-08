@@ -62,15 +62,24 @@
   - auth/bootstrap
   - settings
   - work menu shell
+- Реалізовано перший production-relevant feature slice:
+  - scanner capture
+  - receive order search (`ORDER_BUY_SEARCH`)
+  - tracking normalization parity з legacy iOS
+  - closer parity for start/settings/work menu and receive list/detail flow
+  - `ORDER_LIST`
+  - `TRABLES_LIST`
+  - `REJECT_ORDER_BUY`
+  - local receive validations
+- Зібрано перший робочий Android debug APK з локальними `dart-define`.
 - Підтверджено, що в host-середовищі відсутні `flutter` і `dart`, але Docker toolchain уже достатній для базової валідації.
 - Перевірено curated Codex skills: готового Flutter/Android skill немає.
 - Створено локальний custom skill `~/.codex/skills/flutter-android-workflow/`.
 
 ### Найближчі практичні задачі
-- Встановити Flutter SDK і Android toolchain.
-- Додати scanner capture flow.
-- Додати receive order flow.
-- Додати media upload flow.
+- Додати legacy S3/media upload flow для `SAVE_PHOTO`.
+- Замкнути `RESIVE_ORDER_BUY` end-to-end після media parity.
+- Перенести unpacking flow.
 - Почати Android MVP за execution backlog з `mobile-app-ios/docs/flutter-screen-mapping-and-backlog.md`.
 
 ## 4) `BAF / 1C`

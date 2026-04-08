@@ -16,13 +16,33 @@ class AppSectionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: ListTile(
-        leading: Icon(icon),
-        title: Text(title),
-        subtitle: Text(subtitle),
-        trailing: const Icon(Icons.chevron_right),
-        onTap: onTap,
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8),
+      child: FilledButton(
+        onPressed: onTap,
+        style: FilledButton.styleFrom(
+          shape: const RoundedRectangleBorder(),
+          padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 16),
+        ),
+        child: Row(
+          children: <Widget>[
+            Icon(icon),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(title, style: const TextStyle(fontSize: 18)),
+                  const SizedBox(height: 2),
+                  Text(
+                    subtitle,
+                    style: const TextStyle(fontSize: 12),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
