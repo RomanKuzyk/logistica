@@ -4,6 +4,7 @@
 
 - `api-nodejs/` — production Node.js backend / інтеграційний шар
 - `mobile-app-ios/` — legacy iOS mobile app
+- `mobile-app-flutter/` — новий Flutter rewrite project hub
 - `baf/` — окремий BAF repo
 - `baf/baf-configuration/` — каталог зі snapshot dump конфігурації BAF/1C
 
@@ -28,6 +29,8 @@
 ### Mobile app
 - [`mobile-app-ios/AGENTS.md`](mobile-app-ios/AGENTS.md)
 - [`mobile-app-ios/KNOWLEDGE.md`](mobile-app-ios/KNOWLEDGE.md)
+- [`mobile-app-flutter/AGENTS.md`](mobile-app-flutter/AGENTS.md)
+- [`mobile-app-flutter/KNOWLEDGE.md`](mobile-app-flutter/KNOWLEDGE.md)
 
 ### BAF
 - [`baf/README.md`](baf/README.md)

@@ -22,6 +22,17 @@
   - `mobile-app-ios/KNOWLEDGE.md`
   - `mobile-app-ios/docs/*`
 
+### `mobile-app-flutter/`
+- Статус: новий Flutter rewrite project hub
+- Призначення:
+  - Android-first порт legacy mobile app
+  - planning/bootstrap docs
+  - підготовка нового кросплатформеного клієнта
+- Основні knowledge файли:
+  - `mobile-app-flutter/AGENTS.md`
+  - `mobile-app-flutter/KNOWLEDGE.md`
+  - `mobile-app-flutter/docs/*`
+
 ### `baf/`
 - Статус: окремий BAF repo
 - Призначення:
@@ -47,6 +58,7 @@
 ## Правило source of truth
 - Backend runtime: `api-nodejs/`
 - Mobile analysis: `mobile-app-ios/` branch `1.0.0`
+- Flutter rewrite planning: `mobile-app-flutter/`
 - BAF snapshot analysis: `baf/baf-configuration/`
 
 ## Git hosting map

@@ -44,7 +44,26 @@
 - Виділити must-have phase 1 для нового клієнта.
 - Окремо описати друк, scanner flow, photo/upload, manifest flow.
 
-## 3) `BAF / 1C`
+## 3) `mobile-app-flutter`
+
+### Поточний стан
+- Створено новий каталог `mobile-app-flutter/` як стартову точку для Flutter rewrite.
+- Додано:
+  - `AGENTS.md`
+  - `KNOWLEDGE.md`
+  - `docs/project-bootstrap.md`
+  - `docs/tooling-and-skills.md`
+- Підтверджено, що в поточному середовищі відсутні `flutter` і `dart`, тому поки підготовлено лише planning/bootstrap layer.
+- Перевірено curated Codex skills: готового Flutter/Android skill немає.
+- Створено локальний custom skill `~/.codex/skills/flutter-android-workflow/`.
+
+### Найближчі практичні задачі
+- Встановити Flutter SDK і Android toolchain.
+- Згенерувати базовий Flutter scaffold.
+- Зафіксувати project structure для feature-based implementation.
+- Почати Android MVP за execution backlog з `mobile-app-ios/docs/flutter-screen-mapping-and-backlog.md`.
+
+## 4) `BAF / 1C`
 
 ### Поточний стан
 - Створено окремий BAF repo:
@@ -63,7 +82,7 @@
 - Побудувати більш чітку карту доменної моделі й бізнес-процесів.
 - Після наступного dump порівняти його з `baf/baf-configuration` і зрозуміти, чи були реальні зміни.
 
-## 4) Platform-level
+## 5) Platform-level
 
 ### Поточний стан
 - Workspace уже має root-level:

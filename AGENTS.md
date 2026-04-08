@@ -4,6 +4,7 @@
 Ти працюєш у workspace всієї логістичної платформи GlobalCars. Це не один проект, а кілька повʼязаних частин, які еволюціонують разом:
 - `api-nodejs/` — інтеграційний та RPC backend
 - `mobile-app-ios/` — legacy iOS клієнт
+- `mobile-app-flutter/` — новий Flutter rewrite project hub
 - `baf/` — окремий BAF repo
 - `baf/baf-configuration/` — каталог зі snapshot-вивантаженням конфігурації BAF/1C
 
@@ -47,6 +48,8 @@
   - [`api-nodejs/KNOWLEDGE.md`](api-nodejs/KNOWLEDGE.md)
   - [`mobile-app-ios/AGENTS.md`](mobile-app-ios/AGENTS.md)
   - [`mobile-app-ios/KNOWLEDGE.md`](mobile-app-ios/KNOWLEDGE.md)
+  - [`mobile-app-flutter/AGENTS.md`](mobile-app-flutter/AGENTS.md)
+  - [`mobile-app-flutter/KNOWLEDGE.md`](mobile-app-flutter/KNOWLEDGE.md)
   - [`baf/AGENTS.md`](baf/AGENTS.md)
   - [`baf/KNOWLEDGE.md`](baf/KNOWLEDGE.md)
   - [`baf/docs/export-workflow.md`](baf/docs/export-workflow.md)

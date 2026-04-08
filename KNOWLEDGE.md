@@ -10,6 +10,9 @@
 - `mobile-app-ios/`
   - legacy iOS mobile app
   - source of truth для аналізу: branch `1.0.0`
+- `mobile-app-flutter/`
+  - новий Flutter rewrite project hub
+  - Android-first напрям без зміни бізнес-процесів
 - `baf/`
   - окремий BAF repo
 - `baf/baf-configuration/`
@@ -39,10 +42,14 @@
   - [`mobile-app-ios/KNOWLEDGE.md`](mobile-app-ios/KNOWLEDGE.md)
   - [`mobile-app-ios/docs/mobile-app-assessment.md`](mobile-app-ios/docs/mobile-app-assessment.md)
   - [`mobile-app-ios/docs/mobile-api-inventory.md`](mobile-app-ios/docs/mobile-api-inventory.md)
+  - [`mobile-app-flutter/KNOWLEDGE.md`](mobile-app-flutter/KNOWLEDGE.md)
+  - [`mobile-app-flutter/docs/project-bootstrap.md`](mobile-app-flutter/docs/project-bootstrap.md)
+  - [`mobile-app-flutter/docs/tooling-and-skills.md`](mobile-app-flutter/docs/tooling-and-skills.md)
 
 ## 4) Поточна картина системи
 - `api-nodejs` — operational центр інтеграцій між mobile/BAF/зовнішніми сервісами.
 - `mobile-app-ios` — legacy клієнт складу/логістики, тісно привʼязаний до `/api/v1` та `/ext/*`.
+- `mobile-app-flutter` — новий workspace для Android-first Flutter rewrite на базі досліджень legacy app.
 - `baf/` — окремий BAF repo.
 - `baf/baf-configuration/` — dump-каталог усередині BAF repo.
 
@@ -124,3 +131,7 @@
   - `logistica-baf`
 - Зафіксовано clone/sync workflow для submodules.
 - Зафіксовано, що ця схема без structural changes переноситься на Forgejo.
+- Додано `mobile-app-flutter/` як новий project hub для Flutter rewrite.
+- Зафіксовано, що в середовищі наразі немає `flutter` і `dart`, тому старт виконано з planning/bootstrap docs.
+- Перевірено curated Codex skills: готового Flutter/Android skill не знайдено.
+- Створено локальний custom skill `~/.codex/skills/flutter-android-workflow/`.
