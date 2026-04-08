@@ -79,7 +79,10 @@ class OrderSearchController extends ChangeNotifier {
       final List<OrderBuySearchItem> items = switch (mode) {
         WorkMode.receive => await _repository.searchReceiveOrders(query),
         WorkMode.unpack => await _repository.searchUnpackingOrders(query),
-        _ => throw const ApiParsingException('Цей режим ще не реалізований.'),
+        WorkMode.reprint => await _repository.searchReceiveOrders(query),
+        WorkMode.details => await _repository.searchAllOrders(query),
+        WorkMode.manifest =>
+          throw const ApiParsingException('Цей режим ще не реалізований.'),
       };
       results = items;
       totalCod = items.fold<double>(

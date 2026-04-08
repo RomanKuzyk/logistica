@@ -66,6 +66,7 @@
   - scanner capture
   - receive order search (`ORDER_BUY_SEARCH`)
   - unpacking search (`ORDER_BUY_SEARCH_UNPACKING`)
+  - order details search (`ORDER_ALL_BUY_SEARCH`)
   - tracking normalization parity з legacy iOS
   - closer parity for start/settings/work menu and receive list/detail flow
   - `ORDER_LIST`
@@ -73,6 +74,8 @@
   - `REJECT_ORDER_BUY`
   - local receive validations
   - unpacking summary/item UI shells
+  - reprint action shell
+  - manifest list/scan shells
 - Зібрано перший робочий Android debug APK з локальними `dart-define`.
 - `01–12` screenshot batch уже суттєво підтягнуто по візуальному parity; далі лишається добивати receive media path і наступні flow.
 - Підтверджено, що в host-середовищі відсутні `flutter` і `dart`, але Docker toolchain уже достатній для базової валідації.

@@ -92,6 +92,9 @@
   - unpacking search page
   - unpacking summary shell
   - unpacking item shell
+  - reprint search/action shell
+  - manifest list/scan shell
+  - order details search/read-only preview shell
 - Перший scanner/search parity already перенесено для receive mode:
   - підтримані scanner formats `qr`, `code128`, `ean13`, `ean8`, `code39`
   - перенесено legacy tracking normalization
@@ -109,6 +112,15 @@
     - `ORDER_BUY_SEARCH_UNPACKING`
     - search/list routing
     - visual shells для `14–18`
+  - для `Передрукувати` уже підключено:
+    - search routing
+    - visual action shell
+  - для `Деталі замовлення (PL)` уже підключено:
+    - `ORDER_ALL_BUY_SEARCH`
+    - read-only preview shell
+  - для `Формування маніфесту` уже підключено:
+    - list shell
+    - scan shell
 
 ## 9) Secret/config strategy
 - Legacy iOS app тримає backend secrets у коді, але Flutter rewrite цього не повторює.

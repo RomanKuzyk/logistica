@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_app_flutter/app/app_services.dart';
 import 'package:mobile_app_flutter/features/auth/domain/auth_user.dart';
+import 'package:mobile_app_flutter/features/manifest/presentation/manifest_list_page.dart';
 import 'package:mobile_app_flutter/features/order_search/domain/work_mode.dart';
 import 'package:mobile_app_flutter/features/order_search/presentation/order_search_page.dart';
 
@@ -13,12 +14,6 @@ class WorkMenuPage extends StatelessWidget {
 
   final AuthUser user;
   final AppServices services;
-
-  void _showPlaceholder(BuildContext context, String feature) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('$feature буде реалізовано наступними кроками.')),
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -84,15 +79,39 @@ class WorkMenuPage extends StatelessWidget {
           ),
           _LegacyMenuButton(
             title: 'Передрукувати',
-            onTap: () => _showPlaceholder(context, 'Reprint'),
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute<void>(
+                  builder: (_) => OrderSearchPage(
+                    services: services,
+                    mode: WorkMode.reprint,
+                  ),
+                ),
+              );
+            },
           ),
           _LegacyMenuButton(
             title: 'Формування маніфесту',
-            onTap: () => _showPlaceholder(context, 'Manifest'),
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute<void>(
+                  builder: (_) => const ManifestListPage(),
+                ),
+              );
+            },
           ),
           _LegacyMenuButton(
             title: 'Деталі замовлення (PL)',
-            onTap: () => _showPlaceholder(context, 'Order details'),
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute<void>(
+                  builder: (_) => OrderSearchPage(
+                    services: services,
+                    mode: WorkMode.details,
+                  ),
+                ),
+              );
+            },
           ),
         ],
       ),

@@ -3,9 +3,12 @@ import 'package:mobile_app_flutter/app/app_services.dart';
 import 'package:mobile_app_flutter/features/order_search/data/order_search_repository.dart';
 import 'package:mobile_app_flutter/features/order_search/domain/order_buy_search_item.dart';
 import 'package:mobile_app_flutter/features/order_search/domain/work_mode.dart';
+import 'package:mobile_app_flutter/features/order_search/presentation/order_details_preview_page.dart';
 import 'package:mobile_app_flutter/features/order_search/presentation/order_result_list_page.dart';
+import 'package:mobile_app_flutter/features/order_search/presentation/reprint_action_page.dart';
 import 'package:mobile_app_flutter/features/order_search/presentation/order_search_controller.dart';
 import 'package:mobile_app_flutter/features/order_search/presentation/order_search_detail_page.dart';
+import 'package:mobile_app_flutter/features/order_search/presentation/unpacking_summary_page.dart';
 import 'package:mobile_app_flutter/features/scanner_capture/presentation/scanner_capture_page.dart';
 
 class OrderSearchPage extends StatefulWidget {
@@ -84,10 +87,15 @@ class _OrderSearchPageState extends State<OrderSearchPage> {
         if (results.length == 1) {
           Navigator.of(context).push(
             MaterialPageRoute<void>(
-              builder: (_) => OrderSearchDetailPage(
-                order: results.first,
-                services: widget.services,
-              ),
+              builder: (_) => switch (widget.mode) {
+                WorkMode.unpack => UnpackingSummaryPage(order: results.first),
+                WorkMode.reprint => ReprintActionPage(order: results.first),
+                WorkMode.details => OrderDetailsPreviewPage(order: results.first),
+                _ => OrderSearchDetailPage(
+                    order: results.first,
+                    services: widget.services,
+                  ),
+              },
             ),
           );
         } else if (results.length > 1) {
@@ -96,6 +104,7 @@ class _OrderSearchPageState extends State<OrderSearchPage> {
               builder: (_) => OrderResultListPage(
                 results: results,
                 services: widget.services,
+                mode: widget.mode,
               ),
             ),
           );

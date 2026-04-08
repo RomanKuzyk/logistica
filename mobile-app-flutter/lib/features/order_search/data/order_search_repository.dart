@@ -24,6 +24,15 @@ class OrderSearchRepository {
 
     return items.map(OrderBuySearchItemMapper.fromApi).toList();
   }
+
+  Future<List<OrderBuySearchItem>> searchAllOrders(String filter) async {
+    final List<Map<String, dynamic>> items = await _apiClient.execute(
+      function: 'ORDER_ALL_BUY_SEARCH',
+      parameter: filter,
+    );
+
+    return items.map(OrderBuySearchItemMapper.fromApi).toList();
+  }
 }
 
 class OrderBuySearchItemMapper {

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:mobile_app_flutter/app/app_services.dart';
 import 'package:mobile_app_flutter/features/order_search/domain/order_buy_search_item.dart';
 import 'package:mobile_app_flutter/features/order_search/domain/work_mode.dart';
+import 'package:mobile_app_flutter/features/order_search/presentation/order_details_preview_page.dart';
+import 'package:mobile_app_flutter/features/order_search/presentation/reprint_action_page.dart';
 import 'package:mobile_app_flutter/features/order_search/presentation/order_search_detail_page.dart';
 import 'package:mobile_app_flutter/features/order_search/presentation/unpacking_summary_page.dart';
 
@@ -51,12 +53,15 @@ class OrderResultListPage extends StatelessWidget {
             onTap: () {
               Navigator.of(context).push(
                 MaterialPageRoute<void>(
-                  builder: (_) => mode == WorkMode.unpack
-                      ? UnpackingSummaryPage(order: item)
-                      : OrderSearchDetailPage(
-                          order: item,
-                          services: services,
-                        ),
+                  builder: (_) => switch (mode) {
+                    WorkMode.unpack => UnpackingSummaryPage(order: item),
+                    WorkMode.reprint => ReprintActionPage(order: item),
+                    WorkMode.details => OrderDetailsPreviewPage(order: item),
+                    _ => OrderSearchDetailPage(
+                        order: item,
+                        services: services,
+                      ),
+                  },
                 ),
               );
             },
