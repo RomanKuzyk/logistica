@@ -178,8 +178,18 @@ class _OrderSearchDetailPageState extends State<OrderSearchDetailPage> {
   }
 
   void _showMessage(String message, {String title = 'Errors'}) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('$title: $message')),
+    showDialog<void>(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        title: Text(title),
+        content: Text(message),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: const Text('Done'),
+          ),
+        ],
+      ),
     );
   }
 
