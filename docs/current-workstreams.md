@@ -78,7 +78,12 @@
     - `UNPACKING_ORDER_BUY`
     - print-after-success flow
   - reprint print flow via `LABEL_ORDER`
-  - manifest list/scan shells
+  - manifest backend parity:
+    - `LIST_OPEN_MANIFEST`
+    - `LIST_MANIFEST_SHIPMENTS`
+    - `MANIFEST_ADD_DELETE`
+    - scanner add flow
+    - delete-from-manifest flow
   - order details preview with image/site link behavior
 - Для media parity уже підключено:
   - official Amplify Flutter auth/storage stack під існуючий Cognito/S3 contract
@@ -105,8 +110,9 @@
 ### Найближчі практичні задачі
 - Дозвірити весь screenshot baseline `01–12` і наступні batches до повного visual parity.
 - Дозавершити receive detail end-to-end на реальному девайсі після media parity.
-- Підтягнути manifest backend parity.
-- Добити решту reprint/details edge cases без redesign.
+- Добити решту details edge cases без redesign.
+- Перенести scanner document/cell flows.
+- Лишити print hardening на фінальний етап.
 - Продовжити Android MVP за execution backlog з `mobile-app-ios/docs/flutter-screen-mapping-and-backlog.md`.
 
 ## 4) `BAF / 1C`

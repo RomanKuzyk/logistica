@@ -173,5 +173,5 @@ Flutter implementation strategy:
   - `/ext/print/LABEL_ORDER/...`
 - Ще не імплементовано:
   - receive flow print parity
-  - manifest flow backend parity
+  - scanner document/cell flows
   - решта ancillary flows beyond current screenshot baseline

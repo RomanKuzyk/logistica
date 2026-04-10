@@ -245,6 +245,6 @@
 1. Дозвірити `01–12` і наступні screenshot batches до повного visual parity.
 2. Зафіксувати screenshot-by-screenshot checklist у docs.
 3. Довести `RESIVE_ORDER_BUY` та receive print parity до production-level repeatability.
-4. Перенести `Формування маніфесту`.
-5. Закрити решту `Деталі замовлення (PL)` edge cases.
+4. Закрити решту `Деталі замовлення (PL)` edge cases.
+5. Перенести scanner document/cell flows.
 6. Доробити ancillary flows після screenshot-backed screens.

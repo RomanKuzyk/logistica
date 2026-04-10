@@ -105,7 +105,9 @@ class _WorkMenuPageState extends State<WorkMenuPage> {
             enabled: _selectedMode != WorkMode.manifest,
             onTap: () => _openMode(
               WorkMode.manifest,
-              const ManifestListPage(),
+              ManifestListPage(
+                services: widget.services,
+              ),
             ),
           ),
           _LegacyMenuButton(

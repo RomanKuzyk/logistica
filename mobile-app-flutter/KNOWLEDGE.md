@@ -94,6 +94,7 @@
   - unpacking item flow
   - reprint search/action flow
   - manifest list/scan shell
+  - manifest backend parity via `LIST_OPEN_MANIFEST`, `LIST_MANIFEST_SHIPMENTS`, `MANIFEST_ADD_DELETE`
   - order details search/read-only preview
 - Перший scanner/search parity already перенесено для receive mode:
   - підтримані scanner formats `qr`, `code128`, `ean13`, `ean8`, `code39`
@@ -124,8 +125,12 @@
     - `ORDER_ALL_BUY_SEARCH`
     - read-only preview with real image/site link handling
   - для `Формування маніфесту` уже підключено:
-    - list shell
-    - scan shell
+    - `LIST_OPEN_MANIFEST`
+    - `LIST_MANIFEST_SHIPMENTS`
+    - `MANIFEST_ADD_DELETE`
+    - scanner add flow
+    - delete-from-manifest flow
+    - legacy success/error alerts
 
 ## 9) Secret/config strategy
 - Legacy iOS app тримає backend secrets у коді, але Flutter rewrite цього не повторює.
@@ -213,3 +218,5 @@
   - artifact: `build/gc-logistica.apk`
 - Для reprint flow уже перенесено server-backed друк через `/ext/print/LABEL_ORDER/...`.
 - Для details preview прибрано placeholder-поведінку там, де legacy app уже вміла показати image/site link.
+
+- 2026-04-10: manifest flow переведено з shell-стану в реальний backend-backed slice без redesign; друк свідомо лишається останнім великим блоком.

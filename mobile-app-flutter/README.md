@@ -60,9 +60,9 @@
 ## Найближчі кроки
 1. Дозвірити решту screenshot baseline за межами `01–12`.
 2. Добити receive print parity замість placeholder button.
-3. Перенести manifest flow backend parity.
-4. Доробити решту details/reprint edge cases без redesign.
-5. Добити ancillary work menu flows без redesign.
+3. Доробити решту details edge cases без redesign.
+4. Перенести scanner document/cell flows.
+5. Лишити print hardening на фінальний етап.
 
 ## Поточний Android artifact
 - Debug APK збирається в:
