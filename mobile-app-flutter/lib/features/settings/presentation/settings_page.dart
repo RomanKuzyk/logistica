@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:mobile_app_flutter/core/media/legacy_media_service.dart';
 import 'package:mobile_app_flutter/core/storage/local_settings_store.dart';
@@ -53,16 +55,12 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 
   Future<void> _syncNow() async {
-    final summary = await widget.mediaService.syncPendingUploads();
-    if (!mounted) {
-      return;
-    }
     await showLegacyAlertDialog(
       context,
       title: 'Information',
-      message:
-          'Сінхронізація завершена.\nУспішно: ${summary.succeeded}\nПомилок: ${summary.failed}\nЗалишилось: ${summary.remaining}',
+      message: 'Розпочата сінхронізація ..',
     );
+    unawaited(widget.mediaService.syncPendingUploads());
   }
 
   Future<void> _disconnect() async {

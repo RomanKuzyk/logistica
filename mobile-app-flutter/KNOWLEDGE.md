@@ -275,3 +275,9 @@
   - helper button `Скинути локальну суму COD (...)`;
   - helper card `Знайдено: ... / Відкриття списку ...`;
   - причина: цього видимого UI немає у screenshot/code baseline legacy iOS.
+- Прибрано ще кілька non-legacy fallback/UI additions:
+  - dev/helper тексти на стартовому register/auth екрані;
+  - inline error text на auth gate замінено назад на modal alert-поведінку;
+  - expanded sync summary у settings замінено на legacy `Розпочата сінхронізація ..`;
+  - receive print placeholder `Функція друку буде підключена окремо.` замінено на реальний `LABEL_ORDER_BUY` print path;
+  - seller-link fallback alerts і текстові image placeholders прибрано, бо в legacy iOS ці user-facing тексти не підтверджені.

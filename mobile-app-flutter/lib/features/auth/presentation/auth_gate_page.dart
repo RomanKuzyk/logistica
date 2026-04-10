@@ -4,6 +4,7 @@ import 'package:mobile_app_flutter/features/auth/presentation/auth_controller.da
 import 'package:mobile_app_flutter/features/scanner_capture/presentation/scanner_capture_page.dart';
 import 'package:mobile_app_flutter/features/settings/presentation/settings_page.dart';
 import 'package:mobile_app_flutter/features/work_menu/presentation/work_menu_page.dart';
+import 'package:mobile_app_flutter/shared/widgets/legacy_alert_dialog.dart';
 
 class AuthGatePage extends StatefulWidget {
   const AuthGatePage({super.key, required this.services});
@@ -16,6 +17,7 @@ class AuthGatePage extends StatefulWidget {
 
 class _AuthGatePageState extends State<AuthGatePage> {
   late final AuthController _controller;
+  String? _lastPresentedErrorMessage;
 
   @override
   void initState() {
@@ -76,6 +78,7 @@ class _AuthGatePageState extends State<AuthGatePage> {
     return AnimatedBuilder(
       animation: _controller,
       builder: (BuildContext context, _) {
+        _scheduleLegacyErrorDialogIfNeeded();
         return Scaffold(
           backgroundColor: Colors.white,
           appBar: AppBar(
@@ -107,6 +110,27 @@ class _AuthGatePageState extends State<AuthGatePage> {
     );
   }
 
+  void _scheduleLegacyErrorDialogIfNeeded() {
+    final String? message = _controller.errorMessage;
+    if (_controller.status != AuthStatus.error ||
+        message == null ||
+        message.isEmpty ||
+        message == _lastPresentedErrorMessage) {
+      return;
+    }
+    _lastPresentedErrorMessage = message;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) {
+        return;
+      }
+      showLegacyAlertDialog(
+        context,
+        title: 'Atantion',
+        message: message,
+      );
+    });
+  }
+
   Widget _buildBody() {
     switch (_controller.status) {
       case AuthStatus.loading:
@@ -125,16 +149,14 @@ class _AuthGatePageState extends State<AuthGatePage> {
           helperText:
               'Для початку використання програми\nбудь ласка, відскануйте qr код з особистого кабінету',
           onPrimaryPressed: _startRegistrationScan,
-          errorMessage: _controller.errorMessage,
         );
       case AuthStatus.registering:
         return _StartScreen(
-          buttonLabel: 'Registering...',
+          buttonLabel: 'Зачекайте...',
           appVersionLabel: widget.services.appVersionLabel,
           helperText:
               'Для початку використання програми\nбудь ласка, відскануйте qr код з особистого кабінету',
           onPrimaryPressed: null,
-          errorMessage: _controller.errorMessage,
           showProgress: true,
         );
       case AuthStatus.readyToStart:
@@ -150,12 +172,11 @@ class _AuthGatePageState extends State<AuthGatePage> {
         );
       case AuthStatus.error:
         return _StartScreen(
-          buttonLabel: 'Retry',
+          buttonLabel: 'Розпочати',
           appVersionLabel: widget.services.appVersionLabel,
           helperText:
               'Для початку використання програми\nбудь ласка, відскануйте qr код з особистого кабінету',
           onPrimaryPressed: _controller.bootstrap,
-          errorMessage: _controller.errorMessage ?? 'Unknown error',
         );
     }
   }
@@ -167,7 +188,6 @@ class _StartScreen extends StatelessWidget {
     required this.appVersionLabel,
     required this.helperText,
     required this.onPrimaryPressed,
-    this.errorMessage,
     this.showProgress = false,
   });
 
@@ -175,7 +195,6 @@ class _StartScreen extends StatelessWidget {
   final String appVersionLabel;
   final String helperText;
   final VoidCallback? onPrimaryPressed;
-  final String? errorMessage;
   final bool showProgress;
 
   @override
@@ -229,14 +248,6 @@ class _StartScreen extends StatelessWidget {
         if (showProgress) ...<Widget>[
           const SizedBox(height: 12),
           const Center(child: CircularProgressIndicator()),
-        ],
-        if (errorMessage != null && errorMessage!.isNotEmpty) ...<Widget>[
-          const SizedBox(height: 12),
-          Text(
-            errorMessage!,
-            textAlign: TextAlign.center,
-            style: TextStyle(color: Theme.of(context).colorScheme.error),
-          ),
         ],
         const Spacer(),
         Text(

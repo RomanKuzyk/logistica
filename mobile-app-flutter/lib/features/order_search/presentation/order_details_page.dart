@@ -68,25 +68,13 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
   Future<void> _openSellerSite() async {
     final Uri? uri = Uri.tryParse(widget.order.link);
     if (uri == null) {
-      await showLegacyAlertDialog(
-        context,
-        title: 'Information',
-        message: 'Некоректне посилання продавця',
-      );
       return;
     }
 
-    final bool launched = await launchUrl(
+    await launchUrl(
       uri,
       mode: LaunchMode.externalApplication,
     );
-    if (!launched && mounted) {
-      await showLegacyAlertDialog(
-        context,
-        title: 'Information',
-        message: 'Не вдалося відкрити сайт продавця',
-      );
-    }
   }
 
   @override
@@ -267,17 +255,6 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
   Widget _buildImagePlaceholder() {
     return Container(
       color: const Color(0xFFF7F7F7),
-      alignment: Alignment.center,
-      child: const Text(
-        'Sorry\nIMAGE\nNOT AVAILABLE',
-        textAlign: TextAlign.center,
-        style: TextStyle(
-          fontSize: 26,
-          height: 1,
-          color: Color(0xFFCFCFCF),
-          fontWeight: FontWeight.w700,
-        ),
-      ),
     );
   }
 }

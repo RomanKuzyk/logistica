@@ -52,16 +52,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
           children: <Widget>[
             Text('Register new user',
                 style: Theme.of(context).textTheme.headlineSmall),
-            const SizedBox(height: 8),
-            Text(
-              'Перший етап порту підтримує ручне введення employee code. QR scanner буде підключений окремим кроком.',
-              style: Theme.of(context).textTheme.bodyMedium,
-            ),
             const SizedBox(height: 12),
-            if (widget.deviceId != null) ...<Widget>[
-              SelectableText('Device ID: ${widget.deviceId!}'),
-              const SizedBox(height: 12),
-            ],
             TextField(
               controller: _employeeCodeController,
               decoration: const InputDecoration(

@@ -169,17 +169,13 @@ class _UnpackingItemPageState extends State<UnpackingItemPage> {
   Future<void> _openSellerSite(String link) async {
     final Uri? uri = Uri.tryParse(link);
     if (uri == null) {
-      _showMessage('Некоректне посилання продавця.', title: 'Link');
       return;
     }
 
-    final bool launched = await launchUrl(
+    await launchUrl(
       uri,
       mode: LaunchMode.externalApplication,
     );
-    if (!launched && mounted) {
-      _showMessage('Не вдалося відкрити сайт продавця.', title: 'Link');
-    }
   }
 
   void _ensureControllers(List<UnpackingOrderItemState> items) {
@@ -499,18 +495,7 @@ class _UnpackingOrderCard extends StatelessWidget {
 
   Widget _buildImagePlaceholder() {
     return Container(
-      alignment: Alignment.center,
       color: Colors.white,
-      child: const Text(
-        'Sorry\nIMAGE\nNOT AVAILABLE',
-        textAlign: TextAlign.center,
-        style: TextStyle(
-          fontSize: 26,
-          height: 1,
-          color: Color(0xFFCFCFCF),
-          fontWeight: FontWeight.w700,
-        ),
-      ),
     );
   }
 }
