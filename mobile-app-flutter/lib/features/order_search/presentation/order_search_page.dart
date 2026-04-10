@@ -256,27 +256,9 @@ class _OrderSearchPageState extends State<OrderSearchPage> {
                 enabled: !_controller.isBusy,
                 onPressed: _openScanner,
               ),
-              if (_controller.totalCod > 0) ...<Widget>[
-                const SizedBox(height: 12),
-                OutlinedButton.icon(
-                  onPressed: _controller.clearTotal,
-                  icon: const Icon(Icons.clear_all),
-                  label: Text(
-                      'Скинути локальну суму COD (${_controller.totalCod.toStringAsFixed(2)})'),
-                ),
-              ],
               const SizedBox(height: 24),
               if (_controller.isBusy)
                 const Center(child: CircularProgressIndicator()),
-              if (_controller.results.length > 1)
-                Card(
-                  child: ListTile(
-                    title: Text('Знайдено: ${_controller.results.length}'),
-                    subtitle: const Text(
-                      'Відкриття списку відбувається автоматично, як у legacy flow.',
-                    ),
-                  ),
-                ),
             ],
           ),
         );

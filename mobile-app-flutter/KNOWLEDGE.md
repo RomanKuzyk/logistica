@@ -271,3 +271,7 @@
 - Зафіксовано `docs/remaining-parity-blockers.md`:
   - 5 visible legacy work menu flows уже мають backend-backed Flutter slices;
   - решта незакритого scope винесена в blockers: print hardening, device-level verification, hidden utility entry points, pickup shipment-registration, orphan/old IMAI flow.
+- Прибрано non-legacy helper UI з search screens:
+  - helper button `Скинути локальну суму COD (...)`;
+  - helper card `Знайдено: ... / Відкриття списку ...`;
+  - причина: цього видимого UI немає у screenshot/code baseline legacy iOS.
