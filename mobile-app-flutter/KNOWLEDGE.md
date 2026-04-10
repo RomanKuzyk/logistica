@@ -137,6 +137,17 @@
     - `SCANNER_READDOCUMENT_RESULT`
     - `SCANNER_PUSHDOCUMENT`
     - prefix-based логіку `-...`, `+...`, barcode payload
+  - для pickup/USA ancillary slice уже підключено:
+    - `MK_COURIER_USA_LIST_PICKUP`
+    - `MK_COURIER_USA_LIST_PICKUP_SHIPMENTS`
+    - `LIST_CONTRAGENT_ON_PHONE_USA`
+    - `CREATE_PICKUP_ON_ROUTE`
+    - `REGISTERED_CONTRAGENT_OPENID`
+    - `SMS`
+    - `CHANGE_STATUS2`
+    - `PICKUPUSA_FINISH_CONTRAGENT`
+    - `SET_TIME_STATUS_PICKUP`
+    - legacy списки cancel reasons і pickup time options
 
 ## 9) Secret/config strategy
 - Legacy iOS app тримає backend secrets у коді, але Flutter rewrite цього не повторює.
@@ -242,3 +253,17 @@
   - print hardening;
   - user-facing entry point для scanner-documents utility;
   - ancillary/hidden legacy flows (courier / pickup / USA / SMS).
+- Додано SCLAlertView-like shared dialog для ближчого parity з legacy alert патернами:
+  - warning/info/success variants;
+  - circular top icon;
+  - full-width `Done` button;
+  - без переходу на SnackBar для operator-facing помилок.
+- Додано перший pickup/USA/SMS ancillary slice на базі legacy `UICourierUSA*`, `SMS*`, `CancelPickup`, `ProcessingPickupAddScanShipments`:
+  - pickup list/detail;
+  - call/SMS/cancel/time/finish-confirmation screens;
+  - create pickup by phone/contragent lookup;
+  - status and finish-confirmation RPC calls.
+- Обмеження pickup/USA slice:
+  - цей flow поки не підключений до видимого Flutter work menu, бо в legacy entry point не підтверджений як активний screenshot-backed пункт;
+  - shipment registration subflows (`CREATE_ORDER_PARCEL_NEW`, `CREATE_ORDER_PARCEL_NEW_AGENTS` і повʼязані scanner/detail price screens) ще не перенесені;
+  - SMS шаблон у legacy використовує courier phone з `globalUSER.Phone`, а поточна Flutter auth модель поки не зберігає це поле окремо.

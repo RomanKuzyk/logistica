@@ -162,6 +162,23 @@
 - shipment add/scan;
 - time/status actions.
 
+#### Current implementation status
+- Частково перенесено:
+  - pickup list/detail;
+  - phone action через platform dialer;
+  - SMS template selection і `SMS` RPC;
+  - cancel reason selection і `CHANGE_STATUS2`;
+  - time selection і `SET_TIME_STATUS_PICKUP`;
+  - contragent lookup/create pickup через `LIST_CONTRAGENT_ON_PHONE_USA`, `REGISTERED_CONTRAGENT_OPENID`, `CREATE_PICKUP_ON_ROUTE`;
+  - finish contragent pickup через `PICKUPUSA_FINISH_CONTRAGENT`.
+- Ще не завершено:
+  - visible menu/entry point, бо legacy active entry point не підтверджений screenshot-backed flow;
+  - shipment add/scan subflows;
+  - `CREATE_ORDER_PARCEL_NEW`;
+  - `CREATE_ORDER_PARCEL_NEW_AGENTS`;
+  - повʼязані detail price / calculate / scanner screens;
+  - device-level verification.
+
 ### Phase H — Media / background / print hardening
 Ціль: закрити platform integrations до production-ready стану.
 
@@ -232,12 +249,18 @@
   - `UNPACKING_ORDER_BUY`
   - print-after-success path
 - reprint print path via `LABEL_ORDER` already connected.
+- order details read-only path via real `ORDER_LIST` already connected.
+- manifest path via `LIST_OPEN_MANIFEST`, `LIST_MANIFEST_SHIPMENTS`, `MANIFEST_ADD_DELETE` already connected.
+- scanner-documents utility path via `SCANNER_READDOCUMENT_*`, `SCANNER_READDOCUMENT_RESULT`, `SCANNER_PUSHDOCUMENT` already connected.
+- pickup/USA/SMS ancillary slice partially connected.
 
 ### Still missing before parity can be called operationally complete
 - `RESIVE_ORDER_BUY` final device-level verification against legacy edge cases;
 - receive/reprint print hardening;
 - final visual parity pass по всіх screenshot batches beyond `01–12`;
 - user-facing entry point і device-level verification для scanner-documents utility;
+- user-facing entry point і device-level verification для pickup/USA ancillary slice;
+- pickup shipment-registration subflows;
 - ancillary legacy flows beyond current screenshot baseline.
 
 ## Найближчий порядок робіт
@@ -245,6 +268,6 @@
 1. Дозвірити `01–12` і наступні screenshot batches до повного visual parity.
 2. Зафіксувати screenshot-by-screenshot checklist у docs.
 3. Довести `RESIVE_ORDER_BUY` і `UNPACKING_ORDER_BUY` до production-level repeatability.
-4. Дозвірити `Деталі замовлення (PL)` і scanner-documents utility на реальному девайсі.
-5. Доробити ancillary flows після screenshot-backed screens.
+4. Дозвірити `Деталі замовлення (PL)`, scanner-documents utility і pickup/USA ancillary slice на реальному девайсі.
+5. Доробити pickup shipment-registration subflows або зафіксувати їх як non-MVP blocker.
 6. Лишити print hardening на фінал.

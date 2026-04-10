@@ -28,6 +28,18 @@
     - `SCANNER_READDOCUMENT_RESULT`
     - `SCANNER_PUSHDOCUMENT`
     - legacy `-` / `+` / barcode logic;
+  - pickup/USA/SMS ancillary slice:
+    - `MK_COURIER_USA_LIST_PICKUP`
+    - `MK_COURIER_USA_LIST_PICKUP_SHIPMENTS`
+    - `LIST_CONTRAGENT_ON_PHONE_USA`
+    - `CREATE_PICKUP_ON_ROUTE`
+    - `REGISTERED_CONTRAGENT_OPENID`
+    - `SMS`
+    - `CHANGE_STATUS2`
+    - `PICKUPUSA_FINISH_CONTRAGENT`
+    - `SET_TIME_STATUS_PICKUP`
+    - legacy cancel reasons and pickup time options;
+  - SCLAlertView-like legacy alert dialog shell для operator-facing errors/warnings;
   - official Amplify-based S3 media path для Flutter:
     - camera capture
     - PNG normalization
@@ -64,12 +76,10 @@
 
 ## Найближчі кроки
 1. Дозвірити решту screenshot baseline за межами `01–12`.
-2. Довести до device-level parity `Деталі замовлення (PL)` і scanner-documents utility.
-3. Перенести ancillary legacy flows:
-   - courier / pickup / USA
-   - SMS-related screens
-   - інші приховані операторські utility screens
-4. Лишити print hardening і receive/reprint print parity на фінальний етап.
+2. Довести до device-level parity `Деталі замовлення (PL)`, scanner-documents utility і pickup/USA ancillary slice.
+3. Довирішити user-facing entry points для hidden/закоментованих legacy utility screens.
+4. Доробити shipment-registration subflows у pickup/USA, якщо вони мають входити в Android MVP.
+5. Лишити print hardening і receive/reprint print parity на фінальний етап.
 
 ## Поточний Android artifact
 - Debug APK збирається в:

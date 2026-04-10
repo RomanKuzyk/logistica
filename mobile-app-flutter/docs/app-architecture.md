@@ -27,6 +27,7 @@
 - media upload
 - scanner
 - printing
+- pickup/USA ancillary
 
 3. **Shared UI / models**
 - базові DTO/model objects
@@ -160,6 +161,14 @@ Flutter implementation strategy:
   - `LegacyPrintService`
   - `UnpackingRepository`
   - `UnpackingController`
+  - `ScannerDocumentsRepository`
+  - `ScannerDocumentsPage`
+  - `PickupRepository`
+  - `PickupListPage`
+  - `PickupDetailPage`
+  - `PickupSmsSelectPage`
+  - `PickupCancelPage`
+  - `PickupConfirmationPage`
 - Поточний UI шар для bootstrap/settings/work menu/receive search ведеться з explicit орієнтацією на legacy screenshot parity `01–12`, без redesign.
 - Перший Android debug APK уже збирається через Docker toolchain.
 - Уже замкнуто receive media path:
@@ -175,7 +184,14 @@ Flutter implementation strategy:
   - `SCANNER_READDOCUMENT_*`
   - `SCANNER_READDOCUMENT_RESULT`
   - `SCANNER_PUSHDOCUMENT`
+- Частково перенесено pickup/USA ancillary path:
+  - pickup list/detail;
+  - contragent lookup/create pickup;
+  - SMS/cancel/time/finish-confirmation screens;
+  - legacy cancel/time option constants.
 - Ще не імплементовано:
   - receive flow print parity
   - user-facing entry point для scanner-documents utility
+  - user-facing entry point для pickup/USA ancillary flow
+  - pickup shipment-registration subflows
   - решта ancillary flows beyond current screenshot baseline

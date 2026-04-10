@@ -90,6 +90,19 @@
     - `SCANNER_READDOCUMENT_RESULT`
     - `SCANNER_PUSHDOCUMENT`
     - legacy `-` / `+` / barcode logic
+  - pickup/USA/SMS ancillary slice:
+    - pickup list/detail
+    - call/SMS/cancel/time/finish-confirmation screens
+    - contragent phone lookup/create pickup path
+    - `MK_COURIER_USA_LIST_PICKUP`
+    - `MK_COURIER_USA_LIST_PICKUP_SHIPMENTS`
+    - `LIST_CONTRAGENT_ON_PHONE_USA`
+    - `CREATE_PICKUP_ON_ROUTE`
+    - `REGISTERED_CONTRAGENT_OPENID`
+    - `SMS`
+    - `CHANGE_STATUS2`
+    - `PICKUPUSA_FINISH_CONTRAGENT`
+    - `SET_TIME_STATUS_PICKUP`
 - Для media parity уже підключено:
   - official Amplify Flutter auth/storage stack під існуючий Cognito/S3 contract
   - camera capture
@@ -118,7 +131,11 @@
 - Дозвірити screenshot batches beyond `01–12` до повного visual parity.
 - Лишити print hardening на фінальний етап.
 - Вирішити user-facing entry point для scanner-documents utility, бо в legacy menu він був прихований/закоментований.
-- Доробити ancillary legacy flows: courier / pickup / USA / SMS.
+- Вирішити user-facing entry point для pickup/USA ancillary slice, бо legacy active entry point ще не підтверджений screenshot-backed flow.
+- Доробити pickup shipment-registration subflows або зафіксувати їх як non-MVP blocker:
+  - `CREATE_ORDER_PARCEL_NEW`
+  - `CREATE_ORDER_PARCEL_NEW_AGENTS`
+  - повʼязані scanner/detail price screens.
 - Продовжити Android MVP за execution backlog з `mobile-app-ios/docs/flutter-screen-mapping-and-backlog.md`.
 
 ## 4) `BAF / 1C`
