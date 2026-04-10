@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:mobile_app_flutter/app/app_services.dart';
 import 'package:mobile_app_flutter/core/api/api_exceptions.dart';
 import 'package:mobile_app_flutter/core/media/media_exceptions.dart';
-import 'package:mobile_app_flutter/core/printing/legacy_print_service.dart';
 import 'package:mobile_app_flutter/features/order_search/data/unpacking_repository.dart';
 import 'package:mobile_app_flutter/features/order_search/domain/order_buy_search_item.dart';
 import 'package:mobile_app_flutter/features/order_search/domain/trable.dart';
@@ -39,7 +38,6 @@ class _UnpackingItemPageState extends State<UnpackingItemPage> {
     _controller = UnpackingController(
       repository: UnpackingRepository(apiClient: widget.services.apiClient),
       mediaService: widget.services.mediaService,
-      printService: widget.services.printService,
       logger: widget.services.logger,
     )..load(widget.order.idRef);
   }
@@ -124,9 +122,16 @@ class _UnpackingItemPageState extends State<UnpackingItemPage> {
           title: 'Completed',
           message: 'Замовлення оброблено. Дякую !',
         );
+        if (!mounted) {
+          return;
+        }
       }
 
-      await _showPrintAlertIfNeeded(outcome.printResult);
+      await showLegacyAlertDialog(
+        context,
+        title: 'Print',
+        message: 'Printing is not available yet.',
+      );
 
       if (!mounted) {
         return;
@@ -138,31 +143,6 @@ class _UnpackingItemPageState extends State<UnpackingItemPage> {
       }
     } on ApiException catch (error) {
       _showMessage('Error : ${error.message}', title: 'Помилка');
-    }
-  }
-
-  Future<void> _showPrintAlertIfNeeded(LegacyPrintResult result) async {
-    switch (result.status) {
-      case LegacyPrintStatus.completed:
-        return;
-      case LegacyPrintStatus.cancelled:
-        return showLegacyAlertDialog(
-          context,
-          title: 'Print',
-          message: 'User push cancel button...',
-        );
-      case LegacyPrintStatus.dataUnavailable:
-        return showLegacyAlertDialog(
-          context,
-          title: 'Print',
-          message: 'Sorry print is not compleated data is null..',
-        );
-      case LegacyPrintStatus.failed:
-        return showLegacyAlertDialog(
-          context,
-          title: 'Print',
-          message: 'Sorry print is not compleated..: ${result.errorMessage}',
-        );
     }
   }
 

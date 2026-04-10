@@ -160,6 +160,11 @@
 - Для зручності додано helper script:
   - `scripts/flutter-docker`
   - `GC_API_EXT_URL` окремо задається через `dart-define`, бо print path у legacy app йде через `/ext/`
+- Для media parity source of truth = active legacy Amplify config у `../mobile-app-ios/amplifyconfiguration.json`:
+  - `bucket = images-gs-ep182751-prod`
+  - `region = eu-central-1`
+  - `identity pool = eu-central-1:cc9227a4-9426-4043-886e-ea993d4df500`
+- Старі AWS сліди в `Constants.swift` і `DNOFFICE/---awsconfiguration.json` не вважати canonical source для Flutter media config.
 
 ## 10) Журнал змін
 ### 2026-04-08
@@ -281,3 +286,15 @@
   - expanded sync summary у settings замінено на legacy `Розпочата сінхронізація ..`;
   - receive print placeholder `Функція друку буде підключена окремо.` замінено на реальний `LABEL_ORDER_BUY` print path;
   - seller-link fallback alerts і текстові image placeholders прибрано, бо в legacy iOS ці user-facing тексти не підтверджені.
+- Після уточнення scope друк у видимих Flutter flows навмисно переведено в explicit unavailable state:
+  - receive;
+  - unpacking;
+  - reprint;
+  - замість напівробочого Android print path показується простий alert `Print / Printing is not available yet.`
+- Додано formal execution baseline:
+  - `docs/visible-flow-parity-checklist.md`
+  - у ньому окремо зафіксовано стан 5 видимих legacy flows:
+    - code/contract parity;
+    - UI parity;
+    - runtime parity;
+    - blockers до operational parity.

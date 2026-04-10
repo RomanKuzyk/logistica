@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:mobile_app_flutter/app/app_services.dart';
 import 'package:mobile_app_flutter/core/api/api_exceptions.dart';
 import 'package:mobile_app_flutter/core/media/media_exceptions.dart';
-import 'package:mobile_app_flutter/core/printing/legacy_print_service.dart';
 import 'package:mobile_app_flutter/features/order_search/data/receive_order_repository.dart';
 import 'package:mobile_app_flutter/features/order_search/domain/order_buy_search_item.dart';
 import 'package:mobile_app_flutter/features/order_search/domain/order_item.dart';
@@ -189,28 +188,7 @@ class _OrderSearchDetailPageState extends State<OrderSearchDetailPage> {
   }
 
   Future<void> _printLabel() async {
-    final LegacyPrintResult result = await widget.services.printService
-        .printOrderBuyLabel(widget.order.idRef);
-    if (!mounted) {
-      return;
-    }
-    switch (result.status) {
-      case LegacyPrintStatus.completed:
-        Navigator.of(context).pop();
-        return;
-      case LegacyPrintStatus.cancelled:
-        return _showMessage('User push cancel button...', title: 'Print');
-      case LegacyPrintStatus.dataUnavailable:
-        return _showMessage(
-          'Sorry print is not compleated data is null..',
-          title: 'Print',
-        );
-      case LegacyPrintStatus.failed:
-        return _showMessage(
-          'Sorry print is not compleated..: ${result.errorMessage}',
-          title: 'Print',
-        );
-    }
+    _showMessage('Printing is not available yet.', title: 'Print');
   }
 
   void _showMessage(String message, {String title = 'Errors'}) {

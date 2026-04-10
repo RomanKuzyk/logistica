@@ -52,6 +52,11 @@ cp config/dart_defines.example.json config/dart_defines.local.json
   - `GC_AWS_IDENTITY_POOL_ID`
   - `GC_AWS_STORAGE_BUCKET`
 
+Для legacy parity media-upload використовувати active значення з `../mobile-app-ios/amplifyconfiguration.json`:
+- `GC_AWS_REGION = eu-central-1`
+- `GC_AWS_IDENTITY_POOL_ID = eu-central-1:cc9227a4-9426-4043-886e-ea993d4df500`
+- `GC_AWS_STORAGE_BUCKET = images-gs-ep182751-prod`
+
 ### Відкрити shell у контейнері
 ```bash
 docker compose run --rm flutter

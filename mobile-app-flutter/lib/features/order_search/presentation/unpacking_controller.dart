@@ -3,7 +3,6 @@ import 'package:mobile_app_flutter/core/api/api_exceptions.dart';
 import 'package:mobile_app_flutter/core/logging/app_logger.dart';
 import 'package:mobile_app_flutter/core/media/legacy_media_service.dart';
 import 'package:mobile_app_flutter/core/media/legacy_photo_type.dart';
-import 'package:mobile_app_flutter/core/printing/legacy_print_service.dart';
 import 'package:mobile_app_flutter/features/order_search/data/unpacking_repository.dart';
 import 'package:mobile_app_flutter/features/order_search/domain/legacy_rpc_result.dart';
 import 'package:mobile_app_flutter/features/order_search/domain/trable.dart';
@@ -13,16 +12,13 @@ class UnpackingController extends ChangeNotifier {
   UnpackingController({
     required UnpackingRepository repository,
     required LegacyMediaService mediaService,
-    required LegacyPrintService printService,
     required AppLogger logger,
   })  : _repository = repository,
         _mediaService = mediaService,
-        _printService = printService,
         _logger = logger;
 
   final UnpackingRepository _repository;
   final LegacyMediaService _mediaService;
-  final LegacyPrintService _printService;
   final AppLogger _logger;
 
   bool isLoading = false;
@@ -176,17 +172,10 @@ class UnpackingController extends ChangeNotifier {
 
     if (result.isSuccess) {
       _replace(index, items[index].copyWith(disabled: true));
-      final LegacyPrintResult printResult =
-          await _printService.printParcelBarcode(result.idRef);
-      return UnpackingSubmitOutcome(result: result, printResult: printResult);
+      return UnpackingSubmitOutcome(result: result);
     }
 
-    return UnpackingSubmitOutcome(
-      result: result,
-      printResult: const LegacyPrintResult(
-        status: LegacyPrintStatus.completed,
-      ),
-    );
+    return UnpackingSubmitOutcome(result: result);
   }
 
   Future<T> _runBusy<T>(Future<T> Function() operation) async {
@@ -212,9 +201,7 @@ class UnpackingController extends ChangeNotifier {
 class UnpackingSubmitOutcome {
   const UnpackingSubmitOutcome({
     required this.result,
-    required this.printResult,
   });
 
   final LegacyRpcResult result;
-  final LegacyPrintResult printResult;
 }

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_app_flutter/app/app_services.dart';
-import 'package:mobile_app_flutter/core/printing/legacy_print_service.dart';
 import 'package:mobile_app_flutter/features/order_search/domain/order_buy_search_item.dart';
 import 'package:mobile_app_flutter/shared/widgets/legacy_alert_dialog.dart';
 
@@ -19,39 +18,12 @@ class ReprintActionPage extends StatefulWidget {
 }
 
 class _ReprintActionPageState extends State<ReprintActionPage> {
-  bool _busy = false;
-
   Future<void> _print() async {
-    setState(() => _busy = true);
-    final LegacyPrintResult result =
-        await widget.services.printService.printOrderLabel(widget.order.idRef);
-    if (!mounted) {
-      return;
-    }
-    setState(() => _busy = false);
-
-    switch (result.status) {
-      case LegacyPrintStatus.completed:
-        return;
-      case LegacyPrintStatus.cancelled:
-        return showLegacyAlertDialog(
-          context,
-          title: 'Print',
-          message: 'User push cancel button...',
-        );
-      case LegacyPrintStatus.dataUnavailable:
-        return showLegacyAlertDialog(
-          context,
-          title: 'Print',
-          message: 'Sorry print is not compleated data is null..',
-        );
-      case LegacyPrintStatus.failed:
-        return showLegacyAlertDialog(
-          context,
-          title: 'Print',
-          message: 'Sorry print is not compleated..: ${result.errorMessage}',
-        );
-    }
+    await showLegacyAlertDialog(
+      context,
+      title: 'Print',
+      message: 'Printing is not available yet.',
+    );
   }
 
   @override
@@ -111,7 +83,7 @@ class _ReprintActionPageState extends State<ReprintActionPage> {
             SizedBox(
               height: 52,
               child: FilledButton(
-                onPressed: _busy ? null : _print,
+                onPressed: _print,
                 style: FilledButton.styleFrom(
                   backgroundColor: const Color(0xFF1877F2),
                   foregroundColor: Colors.white,
@@ -121,7 +93,7 @@ class _ReprintActionPageState extends State<ReprintActionPage> {
                     fontWeight: FontWeight.w400,
                   ),
                 ),
-                child: Text(_busy ? 'Зачекайте...' : 'Друк стікера'),
+                child: const Text('Друк стікера'),
               ),
             ),
           ],

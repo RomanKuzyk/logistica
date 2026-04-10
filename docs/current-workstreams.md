@@ -130,6 +130,10 @@
   - hidden scanner-documents/pickup entry points;
   - pickup shipment-registration subflows;
   - orphan/old IMAI flow.
+- Додано `mobile-app-flutter/docs/visible-flow-parity-checklist.md`:
+  - formal status для 5 видимих legacy menu flows;
+  - окремо зафіксовано `code/UI/runtime parity`;
+  - це тепер робочий execution baseline для Flutter migration.
 
 ### Найближчі практичні задачі
 - Дозвірити весь screenshot baseline `01–12` і наступні batches до повного visual parity.

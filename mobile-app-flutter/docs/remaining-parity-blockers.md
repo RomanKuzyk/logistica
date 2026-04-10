@@ -10,6 +10,9 @@
 
 Ці 5 напрямів у Flutter уже мають backend-backed implementation slice. Залишкові роботи нижче або потребують реального device/backend verification, або не мають підтвердженого активного entry point у legacy UI.
 
+Formal checklist по цих 5 flows:
+- `docs/visible-flow-parity-checklist.md`
+
 ## Блокери перед operational parity
 
 ### 1. Print hardening
