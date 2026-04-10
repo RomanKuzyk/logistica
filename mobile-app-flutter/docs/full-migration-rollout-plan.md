@@ -232,6 +232,8 @@
 
 ## Поточний статус відносно плану
 
+Детальний список того, що лишається блокером або потребує device-level перевірки, винесено в `docs/remaining-parity-blockers.md`.
+
 ### Already done
 - Docker-based Android build environment;
 - перший робочий debug APK;

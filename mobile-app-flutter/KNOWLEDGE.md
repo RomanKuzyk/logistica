@@ -60,6 +60,7 @@
 - `docs/app-architecture.md`
 - `docs/full-migration-rollout-plan.md`
 - `docs/legacy-alert-and-validation-patterns.md`
+- `docs/remaining-parity-blockers.md`
 - Legacy migration docs:
   - `../mobile-app-ios/docs/flutter-android-migration-plan.md`
   - `../mobile-app-ios/docs/flutter-screen-mapping-and-backlog.md`
@@ -267,3 +268,6 @@
   - цей flow поки не підключений до видимого Flutter work menu, бо в legacy entry point не підтверджений як активний screenshot-backed пункт;
   - shipment registration subflows (`CREATE_ORDER_PARCEL_NEW`, `CREATE_ORDER_PARCEL_NEW_AGENTS` і повʼязані scanner/detail price screens) ще не перенесені;
   - SMS шаблон у legacy використовує courier phone з `globalUSER.Phone`, а поточна Flutter auth модель поки не зберігає це поле окремо.
+- Зафіксовано `docs/remaining-parity-blockers.md`:
+  - 5 visible legacy work menu flows уже мають backend-backed Flutter slices;
+  - решта незакритого scope винесена в blockers: print hardening, device-level verification, hidden utility entry points, pickup shipment-registration, orphan/old IMAI flow.

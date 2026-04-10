@@ -73,6 +73,7 @@
 - `docs/app-architecture.md`
 - `docs/full-migration-rollout-plan.md`
 - `docs/legacy-alert-and-validation-patterns.md`
+- `docs/remaining-parity-blockers.md`
 
 ## Найближчі кроки
 1. Дозвірити решту screenshot baseline за межами `01–12`.

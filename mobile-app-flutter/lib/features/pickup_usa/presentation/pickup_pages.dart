@@ -849,7 +849,7 @@ class _PickupConfirmationPageState extends State<PickupConfirmationPage> {
             context,
             title: 'Atantion',
             message:
-                'Flow depends on shipment-registration screens, які ще не перенесено.',
+                'Loading error : shipment registration flow is unavailable.',
           );
           return;
         case PickupConfirmationMode.finishContragent:

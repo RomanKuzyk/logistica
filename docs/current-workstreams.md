@@ -124,10 +124,16 @@
   - спочатку visual parity за screenshot baseline;
   - потім interaction/backend parity;
   - без нового функціоналу.
+- У `mobile-app-flutter/docs/remaining-parity-blockers.md` зафіксовано залишкові блокери:
+  - print hardening;
+  - device-level verification;
+  - hidden scanner-documents/pickup entry points;
+  - pickup shipment-registration subflows;
+  - orphan/old IMAI flow.
 
 ### Найближчі практичні задачі
 - Дозвірити весь screenshot baseline `01–12` і наступні batches до повного visual parity.
-- Дозавершити receive/unpacking/details/scanner utility end-to-end на реальному девайсі.
+- Дозавершити receive/unpacking/details/scanner utility/pickup slice end-to-end на реальному девайсі.
 - Дозвірити screenshot batches beyond `01–12` до повного visual parity.
 - Лишити print hardening на фінальний етап.
 - Вирішити user-facing entry point для scanner-documents utility, бо в legacy menu він був прихований/закоментований.
