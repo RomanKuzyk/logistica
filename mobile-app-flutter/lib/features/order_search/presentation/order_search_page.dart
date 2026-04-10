@@ -3,7 +3,7 @@ import 'package:mobile_app_flutter/app/app_services.dart';
 import 'package:mobile_app_flutter/features/order_search/data/order_search_repository.dart';
 import 'package:mobile_app_flutter/features/order_search/domain/order_buy_search_item.dart';
 import 'package:mobile_app_flutter/features/order_search/domain/work_mode.dart';
-import 'package:mobile_app_flutter/features/order_search/presentation/order_details_preview_page.dart';
+import 'package:mobile_app_flutter/features/order_search/presentation/order_details_page.dart';
 import 'package:mobile_app_flutter/features/order_search/presentation/order_result_list_page.dart';
 import 'package:mobile_app_flutter/features/order_search/presentation/reprint_action_page.dart';
 import 'package:mobile_app_flutter/features/order_search/presentation/order_search_controller.dart';
@@ -100,8 +100,8 @@ class _OrderSearchPageState extends State<OrderSearchPage> {
                     order: results.first,
                     services: widget.services,
                   ),
-                WorkMode.details =>
-                  OrderDetailsPreviewPage(order: results.first),
+                WorkMode.details => OrderDetailsPage(
+                    order: results.first, services: widget.services),
                 _ => OrderSearchDetailPage(
                     order: results.first,
                     services: widget.services,

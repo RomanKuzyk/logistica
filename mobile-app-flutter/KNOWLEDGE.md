@@ -123,7 +123,8 @@
     - `LABEL_ORDER` print path
   - для `Деталі замовлення (PL)` уже підключено:
     - `ORDER_ALL_BUY_SEARCH`
-    - read-only preview with real image/site link handling
+    - real `ORDER_LIST`-driven read-only details screen
+    - image/site link handling
   - для `Формування маніфесту` уже підключено:
     - `LIST_OPEN_MANIFEST`
     - `LIST_MANIFEST_SHIPMENTS`
@@ -131,6 +132,11 @@
     - scanner add flow
     - delete-from-manifest flow
     - legacy success/error alerts
+  - для scanner-documents utility уже підключено:
+    - `SCANNER_READDOCUMENT_*`
+    - `SCANNER_READDOCUMENT_RESULT`
+    - `SCANNER_PUSHDOCUMENT`
+    - prefix-based логіку `-...`, `+...`, barcode payload
 
 ## 9) Secret/config strategy
 - Legacy iOS app тримає backend secrets у коді, але Flutter rewrite цього не повторює.
@@ -217,6 +223,22 @@
   - `make apk`
   - artifact: `build/gc-logistica.apk`
 - Для reprint flow уже перенесено server-backed друк через `/ext/print/LABEL_ORDER/...`.
-- Для details preview прибрано placeholder-поведінку там, де legacy app уже вміла показати image/site link.
 
-- 2026-04-10: manifest flow переведено з shell-стану в реальний backend-backed slice без redesign; друк свідомо лишається останнім великим блоком.
+### 2026-04-10
+- Manifest flow переведено з shell-стану в реальний backend-backed slice без redesign.
+- `Деталі замовлення (PL)` переведено з placeholder preview у реальний `ORDER_LIST`-driven read-only flow.
+- Додано scanner-documents utility slice на базі legacy `UIProcessScanner.swift`:
+  - локальний dedup scanned barcodes;
+  - document number binding через `+...`;
+  - document scan через `-...`;
+  - shipment push до backend через `SCANNER_PUSHDOCUMENT`.
+- Core screenshot-backed operator flows фактично замкнуті без redesign:
+  - receive
+  - unpacking
+  - reprint base path
+  - manifest
+  - details
+- На фінал лишаються:
+  - print hardening;
+  - user-facing entry point для scanner-documents utility;
+  - ancillary/hidden legacy flows (courier / pickup / USA / SMS).

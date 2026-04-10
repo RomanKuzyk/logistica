@@ -22,7 +22,12 @@
     - document type validation
     - print-after-success parity
   - reprint print path for `LABEL_ORDER`;
-  - read-only order details preview з реальним image/site link behavior;
+  - read-only order details parity через реальний `ORDER_LIST` flow;
+  - scanner documents/cell utility slice:
+    - `SCANNER_READDOCUMENT_*`
+    - `SCANNER_READDOCUMENT_RESULT`
+    - `SCANNER_PUSHDOCUMENT`
+    - legacy `-` / `+` / barcode logic;
   - official Amplify-based S3 media path для Flutter:
     - camera capture
     - PNG normalization
@@ -59,10 +64,12 @@
 
 ## Найближчі кроки
 1. Дозвірити решту screenshot baseline за межами `01–12`.
-2. Добити receive print parity замість placeholder button.
-3. Доробити решту details edge cases без redesign.
-4. Перенести scanner document/cell flows.
-5. Лишити print hardening на фінальний етап.
+2. Довести до device-level parity `Деталі замовлення (PL)` і scanner-documents utility.
+3. Перенести ancillary legacy flows:
+   - courier / pickup / USA
+   - SMS-related screens
+   - інші приховані операторські utility screens
+4. Лишити print hardening і receive/reprint print parity на фінальний етап.
 
 ## Поточний Android artifact
 - Debug APK збирається в:

@@ -171,7 +171,11 @@ Flutter implementation strategy:
   - print-after-success parity
 - Уже замкнуто reprint path:
   - `/ext/print/LABEL_ORDER/...`
+- Уже замкнуто scanner-documents utility path:
+  - `SCANNER_READDOCUMENT_*`
+  - `SCANNER_READDOCUMENT_RESULT`
+  - `SCANNER_PUSHDOCUMENT`
 - Ще не імплементовано:
   - receive flow print parity
-  - scanner document/cell flows
+  - user-facing entry point для scanner-documents utility
   - решта ancillary flows beyond current screenshot baseline

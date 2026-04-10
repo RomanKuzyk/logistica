@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mobile_app_flutter/app/app_services.dart';
 import 'package:mobile_app_flutter/features/order_search/domain/order_buy_search_item.dart';
 import 'package:mobile_app_flutter/features/order_search/domain/work_mode.dart';
-import 'package:mobile_app_flutter/features/order_search/presentation/order_details_preview_page.dart';
+import 'package:mobile_app_flutter/features/order_search/presentation/order_details_page.dart';
 import 'package:mobile_app_flutter/features/order_search/presentation/reprint_action_page.dart';
 import 'package:mobile_app_flutter/features/order_search/presentation/order_search_detail_page.dart';
 import 'package:mobile_app_flutter/features/order_search/presentation/unpacking_summary_page.dart';
@@ -62,7 +62,8 @@ class OrderResultListPage extends StatelessWidget {
                         order: item,
                         services: services,
                       ),
-                    WorkMode.details => OrderDetailsPreviewPage(order: item),
+                    WorkMode.details =>
+                      OrderDetailsPage(order: item, services: services),
                     _ => OrderSearchDetailPage(
                         order: item,
                         services: services,

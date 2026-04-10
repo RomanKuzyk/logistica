@@ -84,7 +84,12 @@
     - `MANIFEST_ADD_DELETE`
     - scanner add flow
     - delete-from-manifest flow
-  - order details preview with image/site link behavior
+  - read-only order details parity via real `ORDER_LIST` flow
+  - scanner documents/cell utility slice:
+    - `SCANNER_READDOCUMENT_*`
+    - `SCANNER_READDOCUMENT_RESULT`
+    - `SCANNER_PUSHDOCUMENT`
+    - legacy `-` / `+` / barcode logic
 - Для media parity уже підключено:
   - official Amplify Flutter auth/storage stack під існуючий Cognito/S3 contract
   - camera capture
@@ -98,7 +103,7 @@
 - З кореня workspace працює:
   - `make apk`
   - artifact: `mobile-app-flutter/build/gc-logistica.apk`
-- `01–12` screenshot batch уже суттєво підтягнуто по візуальному parity; далі лишається добивати receive media path і наступні flow.
+- `01–12` screenshot batch уже суттєво підтягнуто по візуальному parity; receive media path, details flow і manifest already підключені.
 - Підтверджено, що в host-середовищі відсутні `flutter` і `dart`, але Docker toolchain уже достатній для базової валідації.
 - Перевірено curated Codex skills: готового Flutter/Android skill немає.
 - Створено локальний custom skill `~/.codex/skills/flutter-android-workflow/`.
@@ -109,10 +114,11 @@
 
 ### Найближчі практичні задачі
 - Дозвірити весь screenshot baseline `01–12` і наступні batches до повного visual parity.
-- Дозавершити receive detail end-to-end на реальному девайсі після media parity.
-- Добити решту details edge cases без redesign.
-- Перенести scanner document/cell flows.
+- Дозавершити receive/unpacking/details/scanner utility end-to-end на реальному девайсі.
+- Дозвірити screenshot batches beyond `01–12` до повного visual parity.
 - Лишити print hardening на фінальний етап.
+- Вирішити user-facing entry point для scanner-documents utility, бо в legacy menu він був прихований/закоментований.
+- Доробити ancillary legacy flows: courier / pickup / USA / SMS.
 - Продовжити Android MVP за execution backlog з `mobile-app-ios/docs/flutter-screen-mapping-and-backlog.md`.
 
 ## 4) `BAF / 1C`

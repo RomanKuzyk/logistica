@@ -233,18 +233,18 @@
   - print-after-success path
 - reprint print path via `LABEL_ORDER` already connected.
 
-### Still missing before receive flow is operational
+### Still missing before parity can be called operationally complete
 - `RESIVE_ORDER_BUY` final device-level verification against legacy edge cases;
-- receive print parity;
-- full visual parity по всіх receive detail states;
-- manifest backend parity;
-- remaining work menu flows beyond current screenshot baseline.
+- receive/reprint print hardening;
+- final visual parity pass по всіх screenshot batches beyond `01–12`;
+- user-facing entry point і device-level verification для scanner-documents utility;
+- ancillary legacy flows beyond current screenshot baseline.
 
 ## Найближчий порядок робіт
 
 1. Дозвірити `01–12` і наступні screenshot batches до повного visual parity.
 2. Зафіксувати screenshot-by-screenshot checklist у docs.
-3. Довести `RESIVE_ORDER_BUY` та receive print parity до production-level repeatability.
-4. Закрити решту `Деталі замовлення (PL)` edge cases.
-5. Перенести scanner document/cell flows.
-6. Доробити ancillary flows після screenshot-backed screens.
+3. Довести `RESIVE_ORDER_BUY` і `UNPACKING_ORDER_BUY` до production-level repeatability.
+4. Дозвірити `Деталі замовлення (PL)` і scanner-documents utility на реальному девайсі.
+5. Доробити ancillary flows після screenshot-backed screens.
+6. Лишити print hardening на фінал.
