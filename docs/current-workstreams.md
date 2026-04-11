@@ -140,6 +140,9 @@
 - Дозавершити receive/unpacking/details/scanner utility/pickup slice end-to-end на реальному девайсі.
 - Дозвірити screenshot batches beyond `01–12` до повного visual parity.
 - Лишити print hardening на фінальний етап.
+- Закрити `settings` duplicate-run issue:
+  - `Сінхронізувати вже` зараз допускає повторний запуск sync підряд;
+  - це не stuck-state, але варто додати простий in-flight lock / disabled state на час sync.
 - Вирішити user-facing entry point для scanner-documents utility, бо в legacy menu він був прихований/закоментований.
 - Вирішити user-facing entry point для pickup/USA ancillary slice, бо legacy active entry point ще не підтверджений screenshot-backed flow.
 - Доробити pickup shipment-registration subflows або зафіксувати їх як non-MVP blocker:
