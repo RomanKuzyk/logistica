@@ -44,7 +44,114 @@
 - Виділити must-have phase 1 для нового клієнта.
 - Окремо описати друк, scanner flow, photo/upload, manifest flow.
 
-## 3) `BAF / 1C`
+## 3) `mobile-app-flutter`
+
+### Поточний стан
+- Створено новий каталог `mobile-app-flutter/` як стартову точку для Flutter rewrite.
+- Додано:
+  - `AGENTS.md`
+  - `KNOWLEDGE.md`
+  - `docs/project-bootstrap.md`
+  - `docs/tooling-and-skills.md`
+- Додано реальний Flutter scaffold:
+  - `android/`
+  - `ios/`
+  - `lib/`
+  - `pubspec.yaml`
+- Реалізовано початковий application layer:
+  - auth/bootstrap
+  - settings
+  - work menu shell
+- Реалізовано перший production-relevant feature slice:
+  - scanner capture
+  - receive order search (`ORDER_BUY_SEARCH`)
+  - unpacking search (`ORDER_BUY_SEARCH_UNPACKING`)
+  - order details search (`ORDER_ALL_BUY_SEARCH`)
+  - tracking normalization parity з legacy iOS
+  - closer parity for start/settings/work menu and receive list/detail flow
+  - `ORDER_LIST`
+  - `TRABLES_LIST`
+  - `REJECT_ORDER_BUY`
+  - local receive validations
+  - unpacking end-to-end parity:
+    - item photo / documents photo
+    - `UNPACKING_ORDER_BUY`
+    - print-after-success flow
+  - reprint print flow via `LABEL_ORDER`
+  - manifest backend parity:
+    - `LIST_OPEN_MANIFEST`
+    - `LIST_MANIFEST_SHIPMENTS`
+    - `MANIFEST_ADD_DELETE`
+    - scanner add flow
+    - delete-from-manifest flow
+  - read-only order details parity via real `ORDER_LIST` flow
+  - scanner documents/cell utility slice:
+    - `SCANNER_READDOCUMENT_*`
+    - `SCANNER_READDOCUMENT_RESULT`
+    - `SCANNER_PUSHDOCUMENT`
+    - legacy `-` / `+` / barcode logic
+  - pickup/USA/SMS ancillary slice:
+    - pickup list/detail
+    - call/SMS/cancel/time/finish-confirmation screens
+    - contragent phone lookup/create pickup path
+    - `MK_COURIER_USA_LIST_PICKUP`
+    - `MK_COURIER_USA_LIST_PICKUP_SHIPMENTS`
+    - `LIST_CONTRAGENT_ON_PHONE_USA`
+    - `CREATE_PICKUP_ON_ROUTE`
+    - `REGISTERED_CONTRAGENT_OPENID`
+    - `SMS`
+    - `CHANGE_STATUS2`
+    - `PICKUPUSA_FINISH_CONTRAGENT`
+    - `SET_TIME_STATUS_PICKUP`
+- Для media parity уже підключено:
+  - official Amplify Flutter auth/storage stack під існуючий Cognito/S3 contract
+  - camera capture
+  - PNG normalization
+  - direct upload to S3
+  - `SAVE_PHOTO`
+  - local pending-upload queue
+  - manual sync через settings
+- Зібрано перший робочий Android debug APK з локальними `dart-define`.
+- App name already виставлено як `GlobalCars Logistica`.
+- З кореня workspace працює:
+  - `make apk`
+  - artifact: `mobile-app-flutter/build/gc-logistica.apk`
+- `01–12` screenshot batch уже суттєво підтягнуто по візуальному parity; receive media path, details flow і manifest already підключені.
+- Підтверджено, що в host-середовищі відсутні `flutter` і `dart`, але Docker toolchain уже достатній для базової валідації.
+- Перевірено curated Codex skills: готового Flutter/Android skill немає.
+- Створено локальний custom skill `~/.codex/skills/flutter-android-workflow/`.
+- У `mobile-app-flutter/docs/full-migration-rollout-plan.md` зафіксовано повний rollout order:
+  - спочатку visual parity за screenshot baseline;
+  - потім interaction/backend parity;
+  - без нового функціоналу.
+- У `mobile-app-flutter/docs/remaining-parity-blockers.md` зафіксовано залишкові блокери:
+  - print hardening;
+  - device-level verification;
+  - hidden scanner-documents/pickup entry points;
+  - pickup shipment-registration subflows;
+  - orphan/old IMAI flow.
+- Додано `mobile-app-flutter/docs/visible-flow-parity-checklist.md`:
+  - formal status для 5 видимих legacy menu flows;
+  - окремо зафіксовано `code/UI/runtime parity`;
+  - це тепер робочий execution baseline для Flutter migration.
+
+### Найближчі практичні задачі
+- Дозвірити весь screenshot baseline `01–12` і наступні batches до повного visual parity.
+- Дозавершити receive/unpacking/details/scanner utility/pickup slice end-to-end на реальному девайсі.
+- Дозвірити screenshot batches beyond `01–12` до повного visual parity.
+- Лишити print hardening на фінальний етап.
+- Закрити `settings` duplicate-run issue:
+  - `Сінхронізувати вже` зараз допускає повторний запуск sync підряд;
+  - це не stuck-state, але варто додати простий in-flight lock / disabled state на час sync.
+- Вирішити user-facing entry point для scanner-documents utility, бо в legacy menu він був прихований/закоментований.
+- Вирішити user-facing entry point для pickup/USA ancillary slice, бо legacy active entry point ще не підтверджений screenshot-backed flow.
+- Доробити pickup shipment-registration subflows або зафіксувати їх як non-MVP blocker:
+  - `CREATE_ORDER_PARCEL_NEW`
+  - `CREATE_ORDER_PARCEL_NEW_AGENTS`
+  - повʼязані scanner/detail price screens.
+- Продовжити Android MVP за execution backlog з `mobile-app-ios/docs/flutter-screen-mapping-and-backlog.md`.
+
+## 4) `BAF / 1C`
 
 ### Поточний стан
 - Створено окремий BAF repo:
@@ -63,7 +170,7 @@
 - Побудувати більш чітку карту доменної моделі й бізнес-процесів.
 - Після наступного dump порівняти його з `baf/baf-configuration` і зрозуміти, чи були реальні зміни.
 
-## 4) Platform-level
+## 5) Platform-level
 
 ### Поточний стан
 - Workspace уже має root-level:
