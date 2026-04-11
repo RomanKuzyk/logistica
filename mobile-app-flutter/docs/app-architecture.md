@@ -107,8 +107,10 @@ Flutter implementation strategy:
 - user-facing текст не нормалізувати без потреби
 - legacy mobile compatibility lessons врахувати:
   - backend error payload shape має бути очікуваним для client parser
-- Flutter не несе legacy iOS workaround для `errorsstack.message`:
-  - для нового Flutter клієнта `errorsstack` обробляється як plain string, як це зараз повертає backend
+- Flutter parser для `errorsstack` підтримує обидва варіанти:
+  - plain string;
+  - object з `message`;
+- це дозволяє не ламатися на змішаному legacy/new backend error payload shape
 
 ## Media/upload architecture
 Для Flutter обрано такий шлях:

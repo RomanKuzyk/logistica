@@ -208,8 +208,8 @@
 - Отже `RESIVE_ORDER_BUY` end-to-end навмисно не замикається фальшивим local stub без завершення media path.
 - Для Flutter прийнято окреме правило compatibility:
   - Flutter хендлить backend помилки так, як вони приходять зараз;
-  - `errorsstack` трактується як string;
-  - legacy iOS-specific compatibility object для `errorsstack.message` не переноситься.
+  - `errorsstack` приймається і як string, і як object з `message`;
+  - це робить Flutter сумісним і з поточним plain-string backend error, і з legacy-shaped object payload.
 - Робочий Android artifact зараз збирається у:
   - `build/app/outputs/flutter-apk/app-debug.apk`
 - Для локальних збірок використовується:
@@ -298,3 +298,7 @@
     - UI parity;
     - runtime parity;
     - blockers до operational parity.
+- Додано окремий error-handling audit:
+  - `docs/error-handling-parity-checklist.md`
+  - підтверджено, що receive/unpacking/manifest/details/search/auth переважно показують business/backend помилки через modal alerts;
+  - окремо зафіксовано залишковий gap: `unpacking` load error state зараз inline, а не alert.
