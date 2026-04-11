@@ -124,3 +124,7 @@
   - `logistica-baf`
 - Зафіксовано clone/sync workflow для submodules.
 - Зафіксовано, що ця схема без structural changes переноситься на Forgejo.
+- Додано `mobile-app-flutter/` як новий project hub для Flutter rewrite.
+- Зафіксовано, що в середовищі наразі немає `flutter` і `dart`, тому старт виконано з planning/bootstrap docs.
+- Перевірено curated Codex skills: готового Flutter/Android skill не знайдено.
+- Створено локальний custom skill `~/.codex/skills/flutter-android-workflow/`.
