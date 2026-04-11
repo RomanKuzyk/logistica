@@ -31,6 +31,7 @@ class _UnpackingItemPageState extends State<UnpackingItemPage> {
       <String, TextEditingController>{};
   final Map<String, TextEditingController> _commentControllers =
       <String, TextEditingController>{};
+  String? _lastPresentedLoadError;
 
   @override
   void initState() {
@@ -186,11 +187,36 @@ class _UnpackingItemPageState extends State<UnpackingItemPage> {
     showLegacyAlertDialog(context, title: title, message: message);
   }
 
+  void _scheduleLoadErrorDialogIfNeeded() {
+    final String? message = _controller.errorMessage;
+    if (message == null ||
+        message.isEmpty ||
+        message == _lastPresentedLoadError) {
+      return;
+    }
+    _lastPresentedLoadError = message;
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      if (!mounted) {
+        return;
+      }
+      await showLegacyAlertDialog(
+        context,
+        title: 'Errors',
+        message: 'Error : $message',
+      );
+      if (!mounted) {
+        return;
+      }
+      Navigator.of(context).pop();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
       animation: _controller,
       builder: (BuildContext context, _) {
+        _scheduleLoadErrorDialogIfNeeded();
         _ensureControllers(_controller.items);
         return Scaffold(
           backgroundColor: Colors.white,
@@ -227,15 +253,7 @@ class _UnpackingItemPageState extends State<UnpackingItemPage> {
     }
 
     if (_controller.errorMessage != null) {
-      return Center(
-        child: Padding(
-          padding: const EdgeInsets.all(24),
-          child: Text(
-            _controller.errorMessage!,
-            textAlign: TextAlign.center,
-          ),
-        ),
-      );
+      return const SizedBox.shrink();
     }
 
     if (_controller.items.isEmpty) {

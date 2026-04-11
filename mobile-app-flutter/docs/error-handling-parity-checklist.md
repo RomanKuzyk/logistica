@@ -88,14 +88,15 @@ Printing тут оцінюється лише з точки зору user-facing
 **Transport / parsing**
 - `ApiException` на submit показується через alert.
 
-**Поточний parity gap**
-- load error на етапі завантаження item list зараз відображається inline text state, а не modal alert:
-  - `mobile-app-flutter/lib/features/order_search/presentation/unpacking_item_page.dart`
+**Load error parity**
+- load error на етапі завантаження item list переведено на modal alert:
+  - показується `Errors / Error : ...`
+  - після dismiss екран повертається назад, щоб не залишати користувача на broken blank state
 - це не crash path, але це не повна legacy alert parity.
 
 **Статус**
 - `submit error handling`: good
-- `load error alert parity`: partial
+- `load error alert parity`: good
 
 ### 5. Manifest (`Формування маніфесту`)
 **Business errors**
@@ -119,9 +120,6 @@ Printing тут оцінюється лише з точки зору user-facing
 - `no-crash expectation`: good
 
 ## Residual gaps
-### Confirmed
-- `unpacking` load error uses inline text instead of modal alert.
-
 ### Still needs device verification
 - camera permission denied / capture failure on real Android devices;
 - S3 upload failures during `SAVE_PHOTO` path on real devices;
@@ -134,5 +132,4 @@ Printing тут оцінюється лише з точки зору user-facing
   - business errors не мають губитися мовчки;
   - вони переважно доходять до modal alert;
   - кейс на кшталт `Проведіть звірку каси!` не виглядає як crash-risk path у поточній Flutter реалізації.
-- Головний явний незакритий parity gap у цьому зрізі:
-  - `unpacking` load error state.
+- У вже перевірених visible flows явного незакритого modal-alert gap більше не залишилось.

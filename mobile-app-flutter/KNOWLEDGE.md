@@ -301,4 +301,6 @@
 - Додано окремий error-handling audit:
   - `docs/error-handling-parity-checklist.md`
   - підтверджено, що receive/unpacking/manifest/details/search/auth переважно показують business/backend помилки через modal alerts;
-  - окремо зафіксовано залишковий gap: `unpacking` load error state зараз inline, а не alert.
+  - окремий `unpacking` load error gap закрито:
+    - load failure тепер теж іде через modal alert;
+    - після dismiss Flutter повертає користувача назад, а не лишає на broken inline state.
