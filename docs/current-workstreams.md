@@ -164,18 +164,11 @@
   - розуміння `UA_LIST_ACCOUNT`
   - wallet/import flows
   - звірки endpoint-ів і доменних процесів
-- Для mobile receive/unpacking/photo scope досліджено проблему автора `web`:
-  - підтверджено, що це наслідок технічної HTTP-сесії `web`, а не окрема UI-проблема;
-  - у BAF dump already внесено backward-compatible fix, який для цього scope підставляє автора через бізнес-виконавця (`Исполнитель`) замість сліпого `ПараметрыСеанса.ТекущийПользователь`.
 
 ### Найближчі практичні задачі
 - Перенести частину BAF-specific knowledge з `api-nodejs` у `baf/` та `baf/baf-configuration/`.
 - Побудувати більш чітку карту доменної моделі й бізнес-процесів.
 - Після наступного dump порівняти його з `baf/baf-configuration` і зрозуміти, чи були реальні зміни.
-- Якщо знадобиться exact mobile attribution, окремо змінити wire contract:
-  - mobile payload має передавати `UserIdRef` / `EmployeeIdRef`;
-  - Node.js має прокидувати його в 1С;
-  - BAF має брати його як higher-priority source автора.
 
 ## 5) Platform-level
 
