@@ -26,9 +26,17 @@ class _WorkMenuPageState extends State<WorkMenuPage> {
     setState(() {
       _selectedMode = mode;
     });
-    await Navigator.of(context).push(
-      MaterialPageRoute<void>(builder: (_) => page),
-    );
+    try {
+      await Navigator.of(context).push(
+        MaterialPageRoute<void>(builder: (_) => page),
+      );
+    } finally {
+      if (mounted) {
+        setState(() {
+          _selectedMode = null;
+        });
+      }
+    }
   }
 
   @override
