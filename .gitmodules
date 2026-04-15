@@ -6,7 +6,7 @@
 	url = git@github.com:RomanKuzyk/logistica-mobile-app-ios.git
 [submodule "mobile-app-flutter"]
 	path = mobile-app-flutter
-	url = git@github.com:RomanKuzyk/logistica-mobile-app-flutter.git
+	url = https://github.com/RomanKuzyk/logistica-mobile-app-flutter.git
 [submodule "baf"]
 	path = baf
 	url = git@github.com:RomanKuzyk/logistica-baf.git
