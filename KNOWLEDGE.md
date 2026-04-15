@@ -49,7 +49,7 @@
 ## 5) Робочі домовленості
 - Не змішувати git-історії проектів.
 - Root folder **ініціалізований як parent git repo**.
-- `api-nodejs/`, `mobile-app-ios/` і `baf/` підключені як submodules.
+- `api-nodejs/`, `mobile-app-ios/`, `mobile-app-flutter/` і `baf/` підключені як submodules.
 - Якщо BAF частина зростатиме далі, треба:
   - розвивати `baf/` як окремий repo із власними docs/scripts;
   - переносити BAF-specific docs з тимчасових згадок у `api-nodejs` у BAF-level docs;
@@ -61,6 +61,7 @@
 - Submodules:
   - `api-nodejs` → `git@github.com:RomanKuzyk/logistica-nodejs.git`
   - `mobile-app-ios` → `git@github.com:RomanKuzyk/logistica-mobile-app-ios.git`
+  - `mobile-app-flutter` → `git@github.com:RomanKuzyk/logistica-mobile-app-flutter.git`
   - `baf` → `git@github.com:RomanKuzyk/logistica-baf.git`
 - Практичне правило:
   - спочатку пушити зміни в submodule repo;
@@ -80,7 +81,7 @@
 
 ## 8) Forgejo migration note
 - Поточна структура свідомо зроблена сумісною з майбутнім переїздом на self-hosted Forgejo.
-- Для міграції достатньо змінити remotes у 4 repo і URLs у `.gitmodules`.
+- Для міграції достатньо змінити remotes у 5 repo і URLs у `.gitmodules`.
 - Workspace layout при цьому міняти не треба.
 
 ## 9) Правила документування
@@ -116,7 +117,7 @@
 
 ### 2026-04-08
 - `logistica/` оформлено як parent git repo.
-- `api-nodejs/`, `mobile-app-ios/` і `baf/` підключено як submodules.
+- `api-nodejs/`, `mobile-app-ios/`, `mobile-app-flutter/` і `baf/` підключено як submodules.
 - Структуру remotes підготовлено під GitHub repo:
   - `logistica`
   - `logistica-nodejs`

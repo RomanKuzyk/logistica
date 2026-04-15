@@ -4,7 +4,7 @@
 - `logistica/`
   - parent git repo
   - platform-level docs і coordination context
-  - submodule pointers на `api-nodejs`, `mobile-app-ios`, `baf`
+  - submodule pointers на `api-nodejs`, `mobile-app-ios`, `mobile-app-flutter`, `baf`
 
 ## Repo / snapshot map
 
@@ -56,5 +56,7 @@
   - `git@github.com:RomanKuzyk/logistica-nodejs.git`
 - mobile:
   - `git@github.com:RomanKuzyk/logistica-mobile-app-ios.git`
+- flutter:
+  - `git@github.com:RomanKuzyk/logistica-mobile-app-flutter.git`
 - BAF:
   - `git@github.com:RomanKuzyk/logistica-baf.git`
