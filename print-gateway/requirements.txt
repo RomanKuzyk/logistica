@@ -1,0 +1,11 @@
+fastapi==0.115.12
+uvicorn[standard]==0.34.2
+httpx==0.28.1
+pillow==11.2.1
+
+# Brother QL (network / raw 9100)
+brother_ql==0.9.4
+
+# PDF render (pure python wheel friendly)
+pypdfium2==4.30.0
+

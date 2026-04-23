@@ -1,0 +1,12 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Local debug artifacts
+tmp_*/
+tmp-margin-test/
+tmp_margin_test/
+
+# Editor / OS
+.DS_Store

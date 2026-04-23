@@ -14,6 +14,9 @@
   - окремий BAF repo
 - `baf/baf-configuration/`
   - каталог зі snapshot-вивантаженням конфігурації BAF/1C
+- `print-gateway/`
+  - прототип LAN сервісу друку для Brother QL-810W (DK-22223)
+  - приймає `pdfUrl` і друкує етикетку в локальній мережі
 
 ## 2) Як читати цей workspace
 - Root docs = крос-репозиторний контекст.
@@ -39,6 +42,9 @@
   - [`mobile-app-ios/KNOWLEDGE.md`](mobile-app-ios/KNOWLEDGE.md)
   - [`mobile-app-ios/docs/mobile-app-assessment.md`](mobile-app-ios/docs/mobile-app-assessment.md)
   - [`mobile-app-ios/docs/mobile-api-inventory.md`](mobile-app-ios/docs/mobile-api-inventory.md)
+  - [`mobile-app-flutter/KNOWLEDGE.md`](mobile-app-flutter/KNOWLEDGE.md)
+- Друк (print-gateway):
+  - [`print-gateway/README.md`](print-gateway/README.md)
 
 ## 4) Поточна картина системи
 - `api-nodejs` — operational центр інтеграцій між mobile/BAF/зовнішніми сервісами.
@@ -135,3 +141,11 @@
 - Зафіксовано, що в середовищі наразі немає `flutter` і `dart`, тому старт виконано з planning/bootstrap docs.
 - Перевірено curated Codex skills: готового Flutter/Android skill не знайдено.
 - Створено локальний custom skill `~/.codex/skills/flutter-android-workflow/`.
+
+### 2026-04-23
+- Друк етикеток (MVP, Brother QL-810W + DK-22223):
+  - додано `print-gateway/` (LAN HTTP сервіс), який приймає `pdfUrl` і друкує на Brother через raw 9100;
+  - зафіксовано, що на continuous tape принтер додає мінімальні фізичні поля для різу (~3мм + ~3мм), тому фізичні 30мм виходять через ~24мм “контенту”;
+  - додано керований `side padding` (quiet zones) як проміжний варіант між `contain` та full-width.
+- BAF:
+  - задокументовано, як формується PDF для `PRINT_PARCELS_BARCODE` і що саме в макеті `Ярлык` впливає на відступи.

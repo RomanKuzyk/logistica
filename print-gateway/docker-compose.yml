@@ -1,0 +1,33 @@
+services:
+  print-gateway:
+    build:
+      context: .
+    environment:
+      # NOTE: Docker Compose не підтримує optional env_file.
+      # Тому беремо значення з environment / --env-file / shell env.
+      PG_BIND: ${PG_BIND:-0.0.0.0:8089}
+      PG_PRINTER_IP: ${PG_PRINTER_IP:-192.168.123.119}
+      PG_PRINTER_MODEL: ${PG_PRINTER_MODEL:-QL-810W}
+      PG_DPI: ${PG_DPI:-300}
+      # Для QL-810W + DK-22223 (continuous tape) фізичні 50×30мм досягаємо через
+      # 24мм контенту + мінімальні фізичні поля принтера при різі (~3мм+~3мм).
+      PG_LABEL_HEIGHT_MM: ${PG_LABEL_HEIGHT_MM:-24}
+      PG_BROTHER_LABEL: ${PG_BROTHER_LABEL:-50}
+      PG_BACKEND: ${PG_BACKEND:-network}
+      PG_PRINTER_URI: ${PG_PRINTER_URI:-}
+      PG_DRY_RUN: ${PG_DRY_RUN:-0}
+      PG_CUT_COMPENSATION_MM: ${PG_CUT_COMPENSATION_MM:-0}
+      PG_CROP_TOP_MM: ${PG_CROP_TOP_MM:-0}
+      PG_CROP_BOTTOM_MM: ${PG_CROP_BOTTOM_MM:-0}
+      PG_TRIM_THRESHOLD: ${PG_TRIM_THRESHOLD:-245}
+      PG_TRIM_PAD_PX: ${PG_TRIM_PAD_PX:-2}
+      # Для штрихкодів: тримаємо невеликі білі поля з боків (quiet zones),
+      # але не робимо надто вузько як при `contain`.
+      PG_FIT_MODE: ${PG_FIT_MODE:-width_fill}
+      PG_SIDE_PADDING_MM: ${PG_SIDE_PADDING_MM:-2}
+      PG_VERTICAL_FIT: ${PG_VERTICAL_FIT:-stretch}
+      PG_CUT_MODE: ${PG_CUT_MODE:-cut_at_end}
+      PG_FEED_MARGIN_DOTS: ${PG_FEED_MARGIN_DOTS:-0}
+    ports:
+      - "8089:8089"
+    restart: unless-stopped
